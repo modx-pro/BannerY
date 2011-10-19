@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="bannerx" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM">
+
+    <object class="bxAd" table="bannerx_ads" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <field key="url" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
+        <field key="image" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
+        <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+
+        <composite alias="Positions" class="bxAdPosition" local="id" foreign="ad" cardinality="many" owner="local" />
+    </object>
+
+    <object class="bxPosition" table="bannerx_positions" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+        <composite alias="Ads" class="bxAdPosition" local="id" foreign="position" cardinality="many" owner="local" />
+    </object>
+
+    <object class="bxAdPosition" table="bannerx_ads_positions" extends="xPDOSimpleObject">
+        <field key="ad" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+        <field key="position" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+
+        <aggregate alias="Ad" class="bxAd" local="ad" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Position" class="bxPosition" local="position" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+</model>
