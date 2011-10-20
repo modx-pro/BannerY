@@ -30,6 +30,6 @@ $positions = $modx->getIterator('bxPosition', $c);
 /* iterate */
 $list = array();
 foreach ($positions as $position) {
-    $list[]= $position;
+    $list[]= $position->toArray();
 }
 return $this->outputArray($list,$count);

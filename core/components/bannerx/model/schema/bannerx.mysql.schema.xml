@@ -8,11 +8,13 @@
         <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
 
         <composite alias="Positions" class="bxAdPosition" local="id" foreign="ad" cardinality="many" owner="local" />
+        <composite alias="Clicks" class="bxClick" local="id" foreign="ad" cardinality="many" owner="local" />
     </object>
 
     <object class="bxPosition" table="bannerx_positions" extends="xPDOSimpleObject">
         <field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
         <composite alias="Ads" class="bxAdPosition" local="id" foreign="position" cardinality="many" owner="local" />
+        <composite alias="Clicks" class="bxClick" local="id" foreign="position" cardinality="many" owner="local" />
     </object>
 
     <object class="bxAdPosition" table="bannerx_ads_positions" extends="xPDOSimpleObject">
@@ -35,4 +37,4 @@
         <aggregate alias="Position" class="bxPosition" local="position" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
-</model>
+</model>¡

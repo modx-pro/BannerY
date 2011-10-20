@@ -19,22 +19,20 @@ $c->sortby($sort,$dir);
 if ($isLimit) $c->limit($limit,$start);
 $ads = $modx->getIterator('bxAd', $c);
 
-$positions = $modx->getCollection('bxPosition');
-foreach($positions as $position) {
-    $positions[] = $position->get('id');
-}
-
 /* iterate */
 $list = array();
 foreach ($ads as $ad) {
-    $adPositions = $ad->getMany('Positions');
+
     $adPositionList = array();
+    $adPositions = $ad->getMany('Positions');
     foreach($adPositions as $adPosition) {
         $adPositionList[] = $adPosition->get('position');
     }
 
     $ad = $ad->toArray();
     $ad['positions'] = $adPositionList;
+    $ad['clicks'] = $modx->getCount('bxClick', array('ad' => $ad['id']));
+
     $list[] = $ad;
 }
 return $this->outputArray($list,$count);

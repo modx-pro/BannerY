@@ -60,7 +60,7 @@ Bannerx.grid.Ads = function(config) {
         id: 'bannerx-grid-ads'
         ,url: Bannerx.config.connectorUrl
         ,baseParams: { action: 'mgr/ads/getlist' }
-        ,fields: ['id','name', 'url', 'image', 'active', 'positions']
+        ,fields: ['id','name', 'url', 'image', 'active', 'positions', 'clicks']
         ,paging: true
         ,border: false
         ,frame: false
@@ -80,6 +80,10 @@ Bannerx.grid.Ads = function(config) {
             header: _('bannerx.ads.url')
             ,dataIndex: 'url'
             ,sortable: true
+        },{
+            header: _('bannerx.ads.clicks')
+            ,dataIndex: 'clicks'
+            ,sortable: false
         }]
         ,tbar: [{
             text: _('bannerx.ads.new')

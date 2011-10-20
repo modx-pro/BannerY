@@ -55,5 +55,13 @@ $xpdo_meta_map['bxAd']= array (
       'cardinality' => 'many',
       'owner' => 'local',
     ),
+    'Clicks' => 
+    array (
+      'class' => 'bxClick',
+      'local' => 'id',
+      'foreign' => 'ad',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
   ),
 );

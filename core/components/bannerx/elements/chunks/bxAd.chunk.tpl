@@ -1,1 +1,1 @@
-<a href="[[+url]]"><img src="[[+image]]" alt="[[+name]]" /></a>
+<a href="bannerclick/[[+adposition]]"><img src="[[+image]]" alt="[[+name]]" /></a>

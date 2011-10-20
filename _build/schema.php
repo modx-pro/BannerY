@@ -24,6 +24,7 @@ $manager = $modx->getManager();
 $manager->createObjectContainer('bxAd');
 $manager->createObjectContainer('bxPosition');
 $manager->createObjectContainer('bxAdPosition');
+$manager->createObjectContainer('bxClick');
 
 echo 'Finished!';
 exit();

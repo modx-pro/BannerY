@@ -11,7 +11,7 @@ $output = '';
 
 if($position > 0) {
     $c = $modx->newQuery('bxAd');
-    $c->select('bxAd.id AS id, bxAd.name AS name, bxAd.image AS image, bxAd.url AS url, pos.position AS position');
+    $c->select('bxAd.id AS id, bxAd.name AS name, bxAd.image AS image, bxAd.url AS url, pos.id AS adposition');
     $c->leftJoin('bxAdPosition', 'pos', 'pos.ad=bxAd.id');
     $c->where(array(
                     'bxAd.active' => 1,
