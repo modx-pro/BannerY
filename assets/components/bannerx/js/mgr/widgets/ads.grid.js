@@ -125,9 +125,9 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
             });
         }
         this.AdWindow.setTitle(_('bannerx.ads.update'));
+        this.AdWindow.show(e.target);
         Ext.getCmp('bannerx-window-ad').reset();
         Ext.getCmp('bannerx-window-ad').setValues(this.menu.record);
-        this.AdWindow.show(e.target);
         this.enablePositions(this.menu.record.positions);
         Ext.getCmp('currimg').setSrc('/'+this.menu.record.image);
     }
@@ -146,7 +146,6 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
         });
     }
     ,enablePositions: function(positions) {
-        console.log(positions);
         var checkboxgroup = Ext.getCmp('positions');
         Ext.each(checkboxgroup.items.items, function(item) {
             if( positions.indexOf(item.inputValue) !== -1) {
@@ -167,7 +166,6 @@ Bannerx.window.Ad = function(config) {
         ,title: _('bannerx.ads.new')
         ,url: Bannerx.config.connectorUrl
         ,fileUpload: true
-        ,keys: []
         ,baseParams: {
             action: 'mgr/ads/update'
         }
@@ -175,8 +173,7 @@ Bannerx.window.Ad = function(config) {
             {
                 xtype: 'hidden'
                 ,name: 'id'
-            },
-            {
+            },{
                 xtype: 'textfield'
                 ,fieldLabel: _('bannerx.ads.name')
                 ,name: 'name'

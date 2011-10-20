@@ -1,6 +1,5 @@
 <?php
 $ad = $modx->getObject('bxAd', array('id' => $scriptProperties['id']));
-$modx->log(MODX_LOG_LEVEL_ERROR, var_export($scriptProperties, true));
 
 if(!is_object($ad)) {
     $ad = $modx->newObject('bxAd');

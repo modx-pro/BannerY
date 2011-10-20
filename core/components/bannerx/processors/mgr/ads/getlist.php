@@ -35,7 +35,6 @@ foreach ($ads as $ad) {
 
     $ad = $ad->toArray();
     $ad['positions'] = $adPositionList;
-    $modx->log(MODX_LOG_LEVEL_ERROR, var_export($ad, true));
     $list[] = $ad;
 }
 return $this->outputArray($list,$count);

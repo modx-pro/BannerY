@@ -1,0 +1,1 @@
+<a href="[[+url]]"><img src="[[+image]]" alt="[[+name]]" /></a>
