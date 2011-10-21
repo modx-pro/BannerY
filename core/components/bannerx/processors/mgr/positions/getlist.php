@@ -8,7 +8,7 @@
 /* setup default properties */
 $isLimit = !empty($scriptProperties['limit']);
 $start = $modx->getOption('start',$scriptProperties,0);
-$limit = $modx->getOption('limit',$scriptProperties,20);
+$limit = $modx->getOption('limit',$scriptProperties,5);
 $sort = $modx->getOption('sort',$scriptProperties,'id');
 $dir = $modx->getOption('dir',$scriptProperties,'ASC');
 $query = $modx->getOption('query',$scriptProperties,'');
@@ -30,6 +30,8 @@ $positions = $modx->getIterator('bxPosition', $c);
 /* iterate */
 $list = array();
 foreach ($positions as $position) {
-    $list[]= $position->toArray();
+    $position = $position->toArray();
+    $position['clicks'] = $modx->getCount('bxClick', array('position' => $position['id']));
+    $list[]= $position;
 }
 return $this->outputArray($list,$count);

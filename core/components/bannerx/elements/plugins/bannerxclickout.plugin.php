@@ -13,17 +13,26 @@ if ($modx->event->name == 'OnPageNotFound') {
             $c->limit(1);
             $ad = $modx->getObject('bxAd', $c);
             if(is_object($ad)) {
-                $click = $modx->newObject('bxclick');
-                $click->fromArray(
-                    array(
-                        'ad' => $ad->get('id'),
-                        'position' => $ad->get('position'),
-                        'clickdate' => strftime("%Y-%m-%d %H:%M:%S"),
-                        'referer' => $_SERVER['HTTP_REFERER'],
-                        'ip' => $_SERVER['REMOTE_ADDR']
-                    )
-                );
-                $click->save();
+
+                $clickCount = $modx->getCount('bxClick', array(
+                    'ad' => $ad->get('id'),
+                    'position' => $ad->get('position'),
+                    'ip' => $_SERVER['REMOTE_ADDR'],
+                    'clickdate:LIKE' => strftime("%Y-%m-%d").'%'
+                ));
+                if($clickCount == 0) {
+                    $click = $modx->newObject('bxclick');
+                    $click->fromArray(
+                        array(
+                            'ad' => $ad->get('id'),
+                            'position' => $ad->get('position'),
+                            'clickdate' => strftime("%Y-%m-%d %H:%M:%S"),
+                            'referer' => $_SERVER['HTTP_REFERER'],
+                            'ip' => $_SERVER['REMOTE_ADDR']
+                        )
+                    );
+                    $click->save();
+                }
                 $modx->sendRedirect($ad->get('url'));
             }
         }

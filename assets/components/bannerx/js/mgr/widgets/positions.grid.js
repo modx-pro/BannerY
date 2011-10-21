@@ -4,7 +4,7 @@ Bannerx.grid.Positions = function(config) {
         id: 'bannerx-grid-positions'
         ,url: Bannerx.config.connectorUrl
         ,baseParams: { action: 'mgr/positions/getlist' }
-        ,fields: ['id','name']
+        ,fields: ['id','name', 'clicks']
         ,paging: true
         ,border: false
         ,frame: false
@@ -20,6 +20,10 @@ Bannerx.grid.Positions = function(config) {
             header: _('bannerx.positions.name')
             ,dataIndex: 'name'
             ,sortable: true
+        },{
+            header: _('bannerx.positions.clicks')
+            ,dataIndex: 'clicks'
+            ,sortable: false
         }]
         ,tbar: [{
             text: _('bannerx.positions.new')

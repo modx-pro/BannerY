@@ -16,6 +16,7 @@ class BannerX {
         $assetsUrl = $this->modx->getOption('bannerx.assets_url',$config,$this->modx->getOption('assets_url').'components/bannerx/');
 
         $this->config = array_merge(array(
+            'baseUrl' => $modx->getOption('base_url'),
             'basePath' => $basePath,
             'corePath' => $basePath,
             'modelPath' => $basePath.'model/',

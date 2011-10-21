@@ -27,6 +27,14 @@ Bannerx.panel.Home = function(config) {
                     xtype: 'bannerx-grid-positions'
                     ,preventRender: true
                 }]
+            },{
+                title: _('bannerx.stats')
+                ,border: false
+                ,defaults: { autoHeight: true, border: false }
+                ,items: [{
+                    xtype: 'bannerx-panel-stats'
+                    ,preventRender: true
+                }]
             }]
         }]
     });
