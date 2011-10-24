@@ -8,6 +8,7 @@
 
 $modx->regClientStartupScript($bannerx->config['jsUrl'].'mgr/widgets/ads.grid.js');
 $modx->regClientStartupScript($bannerx->config['jsUrl'].'mgr/widgets/positions.grid.js');
+$modx->regClientStartupScript($bannerx->config['jsUrl'].'mgr/widgets/referrers.grid.js');
 $modx->regClientStartupScript($bannerx->config['jsUrl'].'mgr/widgets/stats.panel.js');
 $modx->regClientStartupScript($bannerx->config['jsUrl'].'mgr/widgets/home.panel.js');
 $modx->regClientStartupScript($bannerx->config['jsUrl'].'mgr/sections/index.js');

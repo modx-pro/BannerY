@@ -31,6 +31,9 @@ $_lang['bannerx.positions.remove.confirm'] = 'Are you sure you want to remove th
 $_lang['bannerx.positions.error.nf'] = 'Position not found';
 
 $_lang['bannerx.stats'] = 'Statistics';
+$_lang['bannerx.stats.clicks'] = 'Clicks';
+$_lang['bannerx.stats.referrers'] = 'Referrers';
+$_lang['bannerx.stats.referrer'] = 'Referrer';
 $_lang['bannerx.stats.thismonth'] = 'This month';
 $_lang['bannerx.stats.thisyear'] = 'This year';
 $_lang['bannerx.stats.today'] = 'Today';

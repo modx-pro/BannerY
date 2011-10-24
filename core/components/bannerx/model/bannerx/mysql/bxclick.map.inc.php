@@ -7,8 +7,7 @@ $xpdo_meta_map['bxClick']= array (
     'ad' => NULL,
     'position' => NULL,
     'clickdate' => NULL,
-    'resource' => NULL,
-    'referer' => NULL,
+    'referrer' => NULL,
     'ip' => NULL,
   ),
   'fieldMeta' => 
@@ -37,16 +36,7 @@ $xpdo_meta_map['bxClick']= array (
       'phptype' => 'datetime',
       'null' => true,
     ),
-    'resource' => 
-    array (
-      'dbtype' => 'integer',
-      'precision' => '10',
-      'attributes' => 'unsigned',
-      'phptype' => 'integer',
-      'null' => false,
-      'index' => 'index',
-    ),
-    'referer' => 
+    'referrer' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',
@@ -56,7 +46,7 @@ $xpdo_meta_map['bxClick']= array (
     'ip' => 
     array (
       'dbtype' => 'varchar',
-      'precision' => '255',
+      'precision' => '39',
       'phptype' => 'string',
       'null' => false,
     ),
