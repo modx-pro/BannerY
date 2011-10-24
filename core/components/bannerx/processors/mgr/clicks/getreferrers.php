@@ -4,14 +4,27 @@ $isLimit = !empty($scriptProperties['limit']);
 $limit = $modx->getOption('limit',$scriptProperties,20);
 $start = $modx->getOption('start',$scriptProperties,0);
 
+$conditions = array();
+if(!empty($period)) {
+    if($period == 'last month') {
+        $conditions['clickdate:LIKE'] = strftime('%Y-%m', strtotime('first day of last month'));
+    }
+    else {
+        $conditions['clickdate:LIKE'] =  strftime($period).'%';
+    }
+}
+
+
 $c = $modx->newQuery('bxClick');
 $c->select('COUNT(DISTINCT(referrer))');
+$c->andCondition($conditions);
 if ($c->prepare() && $c->stmt->execute()) {
     $rows = $c->stmt->fetchAll(PDO::FETCH_COLUMN);
     $count = (integer) reset($rows);
 
     $c = $modx->newQuery('bxClick');
     $c->select('COUNT(id) as clicks, referrer');
+    $c->andCondition($conditions);
     $c->groupby('referrer');
     $c->sortby('clicks', 'DESC');
 

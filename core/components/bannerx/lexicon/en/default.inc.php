@@ -35,6 +35,7 @@ $_lang['bannerx.stats.clicks'] = 'Clicks';
 $_lang['bannerx.stats.referrers'] = 'Referrers';
 $_lang['bannerx.stats.referrer'] = 'Referrer';
 $_lang['bannerx.stats.thismonth'] = 'This month';
+$_lang['bannerx.stats.lastmonth'] = 'Last month';
 $_lang['bannerx.stats.thisyear'] = 'This year';
 $_lang['bannerx.stats.today'] = 'Today';
 $_lang['bannerx.stats.overall'] = 'Overall';

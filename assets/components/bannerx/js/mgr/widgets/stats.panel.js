@@ -10,71 +10,23 @@ Bannerx.panel.Stats = function(config) {
             ,items: [{
                 title: _('bannerx.stats.clicks')
                 ,items: [{
-                            html: '<h2>'+_('bannerx.stats.today')+'</h2>'
-                            ,border: false
-                            ,cls: 'modx-page-header'
-                        },{
-                            xtype:'columnchart'
-                            ,url: Bannerx.config.baseUrl + 'manager/assets/ext3/resources/charts.swf'
-                            ,xField: 'name'
-                            ,yField: 'clicks'
-                            ,height: 200
-                            ,store: new Ext.data.JsonStore({
-                                url: Bannerx.config.connectorUrl
-                                ,baseParams: {
-                                    action: 'mgr/ads/getclicks'
-                                    ,period: '%Y-%m-%d'
-                                }
-                                ,fields: ['name', 'clicks']
-                                ,autoLoad: true
-                                ,root: 'results'
+                            xtype: 'modx-combo'
+                            ,id: 'bannerx-clicks-period'
+                            ,mode: 'local'
+                            ,store: new Ext.data.SimpleStore({
+                                fields: ['d','v']
+                                ,data: [[_('bannerx.stats.overall', '')],[_('bannerx.stats.today'),'%Y-%m-%d'],[_('bannerx.stats.thismonth'),'%Y-%m'],[_('bannerx.stats.lastmonth'),'last month'],[_('bannerx.stats.thisyear'),'%Y']]
                             })
-                        },{
-                            html: '<h2>'+_('bannerx.stats.thismonth')+'</h2>'
-                            ,border: false
-                            ,cls: 'modx-page-header'
-                        },{
-                            xtype:'columnchart'
-                            ,url: Bannerx.config.baseUrl + 'manager/assets/ext3/resources/charts.swf'
-                            ,xField: 'name'
-                            ,yField: 'clicks'
-                            ,height: 200
-                            ,store: new Ext.data.JsonStore({
-                                url: Bannerx.config.connectorUrl
-                                ,baseParams: {
-                                    action: 'mgr/ads/getclicks'
-                                    ,period: '%Y-%m'
-                                }
-                                ,fields: ['name', 'clicks']
-                                ,autoLoad: true
-                                ,root: 'results'
-                            })
-                        },{
-                            html: '<h2>'+_('bannerx.stats.thisyear')+'</h2>'
-                            ,border: false
-                            ,cls: 'modx-page-header'
+                            ,displayField: 'd'
+                            ,valueField: 'v'
+                            ,lazyRender: false
+                            ,listeners: {
+                                added: {fn:function(){this.setValue('');}}
+                                ,select: {fn:this.setPeriod,scope:this}
+                            }
                         },{
                             xtype:'columnchart'
-                            ,url: Bannerx.config.baseUrl + 'manager/assets/ext3/resources/charts.swf'
-                            ,xField: 'name'
-                            ,yField: 'clicks'
-                            ,height: 200
-                            ,store: new Ext.data.JsonStore({
-                                url: Bannerx.config.connectorUrl
-                                ,baseParams: {
-                                    action: 'mgr/ads/getclicks'
-                                    ,period: '%Y'
-                                }
-                                ,fields: ['name', 'clicks']
-                                ,autoLoad: true
-                                ,root: 'results'
-                            })
-                        },{
-                            html: '<h2>'+_('bannerx.stats.overall')+'</h2>'
-                            ,border: false
-                            ,cls: 'modx-page-header'
-                        },{
-                            xtype:'columnchart'
+                            ,id: 'clickchart'
                             ,url: Bannerx.config.baseUrl + 'manager/assets/ext3/resources/charts.swf'
                             ,xField: 'name'
                             ,yField: 'clicks'
@@ -94,10 +46,6 @@ Bannerx.panel.Stats = function(config) {
             },{
                 title: _('bannerx.stats.referrers')
                 ,items: [{
-                            html: '<h2>'+_('bannerx.stats.today')+'</h2>'
-                            ,border: false
-                            ,cls: 'modx-page-header'
-                        },{
                             xtype: 'bannerx-grid-referrers'
                         }
                 ]
@@ -106,5 +54,12 @@ Bannerx.panel.Stats = function(config) {
     });
     Bannerx.panel.Stats.superclass.constructor.call(this,config);
 };
-Ext.extend(Bannerx.panel.Stats,MODx.Panel);
+Ext.extend(Bannerx.panel.Stats,MODx.Panel,{
+     setPeriod: function(tf,nv,ov) {
+        var el = Ext.getCmp('clickchart');
+        var s = el.store;
+        s.baseParams.period = tf.getValue();
+        s.reload();
+    }
+});
 Ext.reg('bannerx-panel-stats',Bannerx.panel.Stats);

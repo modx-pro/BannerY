@@ -17,7 +17,12 @@ foreach ($ads as $ad) {
     $conditions = array();
     $conditions['ad'] = $ad['id'];
     if(!empty($period)) {
-        $conditions['clickdate:LIKE'] =  strftime($period).'%';
+        if($period == 'last month') {
+            $conditions['clickdate:LIKE'] = strftime('%Y-%m', strtotime('first day of last month')).'%';
+        }
+        else {
+            $conditions['clickdate:LIKE'] =  strftime($period).'%';
+        }
     }
     $clickC->andCondition($conditions);
     $ad['clicks'] = $modx->getCount('bxClick', $clickC);
