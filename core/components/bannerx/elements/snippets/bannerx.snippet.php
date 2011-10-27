@@ -4,7 +4,7 @@ $modx->lexicon->load('bannerx:default');
 
 $limit = $modx->getOption('limit', $scriptProperties, 5);
 $sortdir = $modx->getOption('sort', $scriptProperties, 'ASC');
-$sortby = $modx->getOption('sortby', $scriptProperties, 'id');
+$sortby = $modx->getOption('sortby', $scriptProperties, 'RAND()');
 $tpl = $modx->getOption('tpl', $scriptProperties, 'bxAd');
 $position = $modx->getOption('position', $scriptProperties, 0);
 $output = '';
