@@ -27,7 +27,7 @@ if ($modx->event->name == 'OnPageNotFound') {
                             'ad' => $ad->get('id'),
                             'position' => $ad->get('position'),
                             'clickdate' => strftime("%Y-%m-%d %H:%M:%S"),
-                            'referer' => $_SERVER['HTTP_REFERER'],
+                            'referrer' => $_SERVER['HTTP_REFERER'],
                             'ip' => $_SERVER['REMOTE_ADDR']
                         )
                     );
