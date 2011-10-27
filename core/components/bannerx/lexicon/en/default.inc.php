@@ -12,6 +12,7 @@ $_lang['bannerx.ads'] = 'Ads';
 $_lang['bannerx.ads.name'] = 'Name';
 $_lang['bannerx.ads.url'] = 'URL';
 $_lang['bannerx.ads.image'] = 'Image';
+$_lang['bannerx.ads.image.new'] = 'New image';
 $_lang['bannerx.ads.image.current'] = 'Current image';
 $_lang['bannerx.ads.active'] = 'Active';
 $_lang['bannerx.ads.clicks'] = 'Clicks';

@@ -27,7 +27,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
             Ext.getCmp('currimg').hide();
         }
         else {
-            this.el.dom.src = src;
+            this.el.dom.src = MODx.config.base_url + src;
             Ext.getCmp('currimg').show();
         }
     }
@@ -133,7 +133,7 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
         Ext.getCmp('bannerx-window-ad').reset();
         Ext.getCmp('bannerx-window-ad').setValues(this.menu.record);
         this.enablePositions(this.menu.record.positions);
-        Ext.getCmp('currimg').setSrc('/'+this.menu.record.image);
+        Ext.getCmp('currimg').setSrc(this.menu.record.image);
     }
     ,removeAd: function() {
         MODx.msg.confirm({
@@ -178,6 +178,10 @@ Bannerx.window.Ad = function(config) {
                 xtype: 'hidden'
                 ,name: 'id'
             },{
+                xtype: 'hidden'
+                ,name: 'image'
+                ,id: 'image'
+            },{
                 xtype: 'textfield'
                 ,fieldLabel: _('bannerx.ads.name')
                 ,name: 'name'
@@ -190,15 +194,24 @@ Bannerx.window.Ad = function(config) {
                 ,width: 300
                 ,allowBlank: false
             },{
-                xtype: 'modx-combo-browser'
-                ,fieldLabel: _('bannerx.ads.image')
-                ,name: 'image'
-                ,width: 300
-                ,allowBlank: false
-            },{
                 id: 'currimg'
                 ,fieldLabel: _('bannerx.ads.image.current')
                 ,xtype: 'image'
+            },{
+                xtype: 'modx-combo-browser'
+                ,fieldLabel: _('bannerx.ads.image.new')
+                ,name: 'newimage'
+                ,width: 300
+                ,allowBlank: false
+                ,listeners: {
+                    'select': {
+                        fn:function(data) {
+                            console.log(data);
+                            Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
+                            Ext.getCmp('image').setValue(data.fullRelativeUrl);
+                        }
+                    }
+                }
             },{
                 xtype: 'xcheckbox'
                 ,name: 'active'
