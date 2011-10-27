@@ -206,7 +206,6 @@ Bannerx.window.Ad = function(config) {
                 ,listeners: {
                     'select': {
                         fn:function(data) {
-                            console.log(data);
                             Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
                             Ext.getCmp('image').setValue(data.fullRelativeUrl);
                         }
