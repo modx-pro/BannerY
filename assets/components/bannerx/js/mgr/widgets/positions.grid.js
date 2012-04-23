@@ -36,7 +36,7 @@ Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
     getMenu: function() {
         var m = [{
                 text: _('bannerx.positions.remove')
-                ,handler: this.removePositions
+                ,handler: this.removePosition
             },{
                 text: _('bannerx.positions.update')
                 ,handler: this.updatePosition
