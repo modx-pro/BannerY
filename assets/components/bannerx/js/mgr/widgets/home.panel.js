@@ -6,7 +6,7 @@ Bannerx.panel.Home = function(config) {
         ,items: [{
             html: '<h2>'+_('bannerx.desc')+'</h2>'
             ,border: false
-            ,cls: 'modx-page-header'
+            ,cls: 'modx-page-header container'
         },{
             xtype: 'modx-tabs'
             ,bodyStyle: 'padding: 10px'
