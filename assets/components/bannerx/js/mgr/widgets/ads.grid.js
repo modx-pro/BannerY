@@ -1,3 +1,5 @@
+Ext.BLANK_IMAGE_URL = '/assets/components/bannerx/img/_blank.png'
+
 Ext.ux.Image = Ext.extend(Ext.Component, {
 
     url  : Ext.BLANK_IMAGE_URL,  //for initial src value
@@ -6,7 +8,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
         tag: 'img',
         src: Ext.BLANK_IMAGE_URL,
         cls: 'tng-managed-image',
-        width: '100',
+        width: 150,
         height: 100
     },
 //  Add our custom processing to the onRender phase.
@@ -27,7 +29,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
             Ext.getCmp('currimg').hide();
         }
         else {
-            this.el.dom.src = MODx.config.base_url + src;
+            this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?h=30&src='+src+'&wctx=web&w=150&h=100&zc=0&source=1';
             Ext.getCmp('currimg').show();
         }
     }
@@ -111,6 +113,7 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 		}
 		this.AdWindow = MODx.load({
 			xtype: 'bannerx-window-ad'
+			,update: 0
 			,listeners: {
 				'success': {fn:this.refresh,scope:this}
 				,'hide': {fn:this.destroy}
@@ -129,11 +132,13 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 		}
 		this.AdWindow = MODx.load({
 			xtype: 'bannerx-window-ad'
+			,update: 1
 			,listeners: {
 				'success': {fn:this.refresh,scope:this}
 				,'hide': {fn:this.destroy}
 			}
 		});
+		this.menu.record.newimage = this.menu.record.image;
         this.AdWindow.setTitle(_('bannerx.ads.update'));
         this.AdWindow.show(e.target);
         Ext.getCmp('bannerx-window-ad').reset();
@@ -205,7 +210,7 @@ Bannerx.window.Ad = function(config) {
                 ,xtype: 'image'
             },{
                 xtype: 'modx-combo-browser'
-                ,fieldLabel: _('bannerx.ads.image.new')
+                ,fieldLabel: config.update ? '' : _('bannerx.ads.image.new')
                 ,name: 'newimage'
                 ,width: 300
                 ,allowBlank: false
