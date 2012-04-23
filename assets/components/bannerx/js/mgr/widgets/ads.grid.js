@@ -94,13 +94,12 @@ Bannerx.grid.Ads = function(config) {
 Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
     getMenu: function() {
         var m = [{
-                text: _('bannerx.ads.remove')
-                ,handler: this.removeAd
-            },{
                 text: _('bannerx.ads.update')
                 ,handler: this.updateAd
-            }
-        ];
+            },'-',{
+                text: _('bannerx.ads.remove')
+                ,handler: this.removeAd
+            }];
         this.addContextMenuItem(m);
         return true;
     }

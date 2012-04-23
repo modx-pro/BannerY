@@ -35,13 +35,12 @@ Bannerx.grid.Positions = function(config) {
 Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
     getMenu: function() {
         var m = [{
-                text: _('bannerx.positions.remove')
-                ,handler: this.removePosition
-            },{
                 text: _('bannerx.positions.update')
                 ,handler: this.updatePosition
-            }
-        ];
+            },'-',{
+                text: _('bannerx.positions.remove')
+                ,handler: this.removePosition
+            }];
         this.addContextMenuItem(m);
         return true;
     }
