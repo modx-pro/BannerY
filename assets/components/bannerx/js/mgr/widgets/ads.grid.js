@@ -29,7 +29,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
             Ext.getCmp('currimg').hide();
         }
         else {
-            this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?h=30&src='+src+'&wctx=web&w=150&h=100&zc=0&source=1';
+            this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=web&w=150&h=100&zc=0&source=1';
             Ext.getCmp('currimg').show();
         }
     }
@@ -85,6 +85,11 @@ Bannerx.grid.Ads = function(config) {
             header: _('bannerx.ads.clicks')
             ,dataIndex: 'clicks'
             ,sortable: false
+        },{
+            header: _('bannerx.ads.image')
+            ,dataIndex: 'image'
+            ,sortable: false
+            ,renderer: this.renderImg
         }]
         ,tbar: [{
             text: _('bannerx.ads.new')
@@ -171,6 +176,14 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
             }
         });
     }
+	,renderImg: function(img) {
+		if (img.length > 0) {
+			if (!/(jpg|jpeg|png|gif|bmp)$/.test(img)) {return img;}
+			else if (/^(http|https)/.test(img)) {return '<img src="'+img+'" alt="" style="display:block;margin:auto;height:50px;" />'}
+			else {return '<img src="'+MODx.config.connectors_url+'system/phpthumb.php?&src='+img+'&wctx=web&h=50&zc=0&source=1" alt="" style="display:block;margin:auto;height:50px;" />'}
+		}
+		else {return '';}
+	}
 });
 Ext.reg('bannerx-grid-ads',Bannerx.grid.Ads);
 
