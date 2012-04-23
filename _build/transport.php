@@ -13,13 +13,11 @@ set_time_limit(0); /* makes sure our script doesn't timeout */
 
 $root = dirname(dirname(__FILE__)).'/';
 
-$root = $_SERVER['DOCUMENT_ROOT'].'/';
-
 $sources= array (
     'root' => $root,
-    'build' => $root .'_build_bannerx/',
-    'resolvers' => $root . '_build_bannerx/resolvers/',
-    'data' => $root . '_build_bannerx/data/',
+    'build' => $root .'_build/',
+    'resolvers' => $root . '_build/resolvers/',
+    'data' => $root . '_build/data/',
     'source_core' => $root.'core/components/bannerx',
     'lexicon' => $root . 'core/components/bannerx/lexicon/',
     'source_assets' => $root.'assets/components/bannerx',
@@ -66,14 +64,29 @@ $category= $modx->newObject('modCategory');
 $category->set('id',1);
 $category->set('category','BannerX');
 
-include $sources['data'].'transport.snippets.php';
-$category->addMany($snippets);
+$snippets = include $sources['data'].'transport.snippets.php';
+if (!is_array($snippets)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in snippets.');
+} else {
+    $category->addMany($snippets);
+    $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($snippets).' snippets.');
+}
 
-include $sources['data'].'transport.chunks.php';
-$category->addMany($chunks);
+$chunks = include $sources['data'].'transport.chunks.php';
+if (!is_array($chunks)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in chunks.');
+} else {
+    $category->addMany($chunks);
+    $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($chunks).' chunks.');
+}
 
-include $sources['data'].'transport.plugins.php';
-$category->addMany($plugins);
+$plugins = include $sources['data'].'transport.plugins.php';
+if (!is_array($plugins)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in plugins.');
+} else {
+    $category->addMany($plugins);
+    $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($plugins).' plugins.');
+}
 
 /* create category vehicle */
 $attr = array(

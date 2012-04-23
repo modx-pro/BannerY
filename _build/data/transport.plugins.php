@@ -15,3 +15,5 @@ if (is_array($events) && !empty($events)) {
 } else {
     $modx->log(xPDO::LOG_LEVEL_ERROR,'Could not find plugin events!');
 }
+
+return $plugins;
