@@ -95,6 +95,12 @@ Bannerx.grid.Ads = function(config) {
             text: _('bannerx.ads.new')
             ,handler: this.createAd
         }]
+        ,listeners: {
+			rowDblClick: function(grid, rowIndex, e) {
+				var row = grid.store.getAt(rowIndex);
+				this.updateAd(grid, e, row);
+			}
+		}
     });
     Bannerx.grid.Ads.superclass.constructor.call(this,config)
 };
@@ -129,7 +135,8 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
         Ext.getCmp('bannerx-window-ad').reset();
         Ext.getCmp('currimg').setSrc('');
     }
-    ,updateAd: function(btn,e) {
+    ,updateAd: function(btn,e, row) {
+		if (typeof(row) != 'undefined') {this.menu.record = row.data;}
 		if (Bannerx.positionsArray.length == 0) {
 			MODx.msg.alert(_('error'),_('bannerx.error.no_positions'));
 			Ext.getCmp('bannerx-tabs').setActiveTab('bannerx-positions');
@@ -194,6 +201,7 @@ Bannerx.window.Ad = function(config) {
         ,title: _('bannerx.ads.new')
         ,url: Bannerx.config.connectorUrl
         ,fileUpload: true
+        ,modal: true
         ,baseParams: {
             action: 'mgr/ads/update'
         }
