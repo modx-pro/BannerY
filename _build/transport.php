@@ -39,7 +39,7 @@ $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
-$builder->createPackage('bannerx','0.1.0','Alpha');
+$builder->createPackage('bannerx','0.2.0','beta');
 $builder->registerNamespace('bannerx',false,true,'{core_path}components/bannerx/');
 
 /* load action/menu */
@@ -123,7 +123,8 @@ $builder->putVehicle($vehicle);
 
 $builder->setPackageAttributes(array(
     'readme' => file_get_contents($sources['docs'] . 'readme.txt'),
-    'license' => file_get_contents($sources['docs'] . 'license.txt')
+    'license' => file_get_contents($sources['docs'] . 'license.txt'),
+    'changelog' => file_get_contents($sources['docs'] . 'changelog.txt')
 ));
 
 $builder->pack();
