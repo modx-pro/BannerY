@@ -106,6 +106,11 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
         return true;
     }
     ,createAd: function(btn,e) {
+		if (Bannerx.positionsArray.length == 0) {
+			MODx.msg.alert(_('error'),_('bannerx.error.no_positions'));
+			Ext.getCmp('bannerx-tabs').setActiveTab('bannerx-positions');
+			return false;
+		}
         if (!this.AdWindow) {
             this.AdWindow = MODx.load({
                 xtype: 'bannerx-window-ad'
@@ -120,6 +125,11 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
         Ext.getCmp('currimg').setSrc('');
     }
     ,updateAd: function(btn,e) {
+		if (Bannerx.positionsArray.length == 0) {
+			MODx.msg.alert(_('error'),_('bannerx.error.no_positions'));
+			Ext.getCmp('bannerx-tabs').setActiveTab('bannerx-positions');
+			return false;
+		}
         if (!this.AdWindow) {
             this.AdWindow = MODx.load({
                 xtype: 'bannerx-window-ad'

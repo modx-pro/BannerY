@@ -9,10 +9,12 @@ Bannerx.panel.Home = function(config) {
             ,cls: 'modx-page-header container'
         },{
             xtype: 'modx-tabs'
+            ,id: 'bannerx-tabs'
             ,bodyStyle: 'padding: 10px'
             ,defaults: { border: false ,autoHeight: true }
             ,items: [{
                 title: _('bannerx.ads')
+                ,id: 'bannerx-ads'
                 ,border: false
                 ,defaults: { autoHeight: true, border: false }
                 ,items: [{
@@ -21,6 +23,7 @@ Bannerx.panel.Home = function(config) {
                 }]
             },{
                 title: _('bannerx.positions')
+                ,id: 'bannerx-positions'
                 ,border: false
                 ,defaults: { autoHeight: true, border: false }
                 ,items: [{
@@ -29,6 +32,7 @@ Bannerx.panel.Home = function(config) {
                 }]
             },{
                 title: _('bannerx.stats')
+                ,id: 'bannerx-stats'
                 ,border: false
                 ,defaults: { autoHeight: true, border: false }
                 ,items: [{

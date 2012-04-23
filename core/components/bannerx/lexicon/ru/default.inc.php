@@ -40,3 +40,5 @@ $_lang['bannerx.stats.lastmonth'] = 'Прошлый месяц';
 $_lang['bannerx.stats.thisyear'] = 'Текущий год';
 $_lang['bannerx.stats.today'] = 'Сегодня';
 $_lang['bannerx.stats.overall'] = 'За все время';
+
+$_lang['bannerx.error.no_positions'] = 'Вы должны создать хотя бы одну позицию для размещения баннеров.';
