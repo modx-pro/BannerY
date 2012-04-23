@@ -12,6 +12,12 @@ Bannerx.panel.Home = function(config) {
             ,id: 'bannerx-tabs'
             ,bodyStyle: 'padding: 10px'
             ,defaults: { border: false ,autoHeight: true }
+			,stateful: true
+			,stateId: 'bannerx-tabs'
+			,stateEvents: ['tabchange']
+			,getState:function() {
+				return { activeTab:this.items.indexOf(this.getActiveTab()) };
+			}
             ,items: [{
                 title: _('bannerx.ads')
                 ,id: 'bannerx-ads'

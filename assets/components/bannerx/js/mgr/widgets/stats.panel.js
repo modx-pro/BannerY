@@ -6,7 +6,14 @@ Bannerx.panel.Stats = function(config) {
         ,items: [{
             xtype: 'modx-tabs'
             ,bodyStyle: 'padding: 10px'
+            ,id: 'bannerx-stats-tabs'
             ,defaults: { border: false ,autoHeight: true }
+			,stateful: true
+			,stateId: 'bannerx-stats-tabs'
+			,stateEvents: ['tabchange']
+			,getState:function() {
+				return { activeTab:this.items.indexOf(this.getActiveTab()) };
+			}
             ,items: [{
                 title: _('bannerx.stats.clicks')
                 ,items: [{
