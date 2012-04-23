@@ -49,9 +49,12 @@ Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
         if (!this.PositionWindow) {
             this.PositionWindow = MODx.load({
                 xtype: 'bannerx-window-position'
-                ,listeners: {
-                    'success': {fn:this.refresh,scope:this}
-                }
+				,listeners: {
+					'success':{fn:function() {
+						Ext.getCmp('bannerx-grid-positions').store.reload();
+						Bannerx.posStore.reload();
+					},scope:this}
+				}
             });
         }
         this.PositionWindow.show(e.target);
@@ -62,9 +65,12 @@ Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
         if (!this.PositionWindow) {
             this.PositionWindow = MODx.load({
                 xtype: 'bannerx-window-position'
-                ,listeners: {
-                    'success': {fn:this.refresh,scope:this}
-                }
+				,listeners: {
+					'success':{fn:function() {
+						Ext.getCmp('bannerx-grid-positions').store.reload();
+						Bannerx.posStore.reload();
+					},scope:this}
+				}
             });
         }
         this.PositionWindow.show(e.target);
@@ -82,7 +88,10 @@ Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success': {fn:this.refresh,scope:this}
+				'success':{fn:function() {
+					Ext.getCmp('bannerx-grid-positions').store.reload();
+					Bannerx.posStore.reload();
+				},scope:this}
             }
         });
     }

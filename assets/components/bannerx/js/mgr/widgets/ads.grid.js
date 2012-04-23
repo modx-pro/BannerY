@@ -35,9 +35,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 Ext.reg('image', Ext.ux.Image);
 
 Ext.onReady(function(){
-    Bannerx.positionsArray = new Array();
-
-    var posStore = new Ext.data.JsonStore({
+    Bannerx.posStore = new Ext.data.JsonStore({
        url: Bannerx.config.connectorUrl
       ,root: 'results'
       ,baseParams: { action: 'mgr/positions/getlist' }
@@ -45,13 +43,14 @@ Ext.onReady(function(){
       ,autoLoad: false
       ,listeners: {
           load: function(t, records, options) {
+			  Bannerx.positionsArray = new Array();
               for (var i=0; i<records.length; i++) {
                 Bannerx.positionsArray.push({name: "positions[]", inputValue: records[i].data.id, boxLabel: records[i].data.name});
               }
           }
       }
     });
-    posStore.load();
+    Bannerx.posStore.load();
 });
 
 Bannerx.grid.Ads = function(config) {
@@ -111,14 +110,13 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 			Ext.getCmp('bannerx-tabs').setActiveTab('bannerx-positions');
 			return false;
 		}
-        if (!this.AdWindow) {
-            this.AdWindow = MODx.load({
-                xtype: 'bannerx-window-ad'
-                ,listeners: {
-                    'success': {fn:this.refresh,scope:this}
-                }
-            });
-        }
+		this.AdWindow = MODx.load({
+			xtype: 'bannerx-window-ad'
+			,listeners: {
+				'success': {fn:this.refresh,scope:this}
+				,'hide': {fn:this.destroy}
+			}
+		});
         this.AdWindow.show(e.target);
         this.AdWindow.setTitle(_('bannerx.ads.new'));
         Ext.getCmp('bannerx-window-ad').reset();
@@ -130,14 +128,13 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 			Ext.getCmp('bannerx-tabs').setActiveTab('bannerx-positions');
 			return false;
 		}
-        if (!this.AdWindow) {
-            this.AdWindow = MODx.load({
-                xtype: 'bannerx-window-ad'
-                ,listeners: {
-                    'success': {fn:this.refresh,scope:this}
-                }
-            });
-        }
+		this.AdWindow = MODx.load({
+			xtype: 'bannerx-window-ad'
+			,listeners: {
+				'success': {fn:this.refresh,scope:this}
+				,'hide': {fn:this.destroy}
+			}
+		});
         this.AdWindow.setTitle(_('bannerx.ads.update'));
         this.AdWindow.show(e.target);
         Ext.getCmp('bannerx-window-ad').reset();
