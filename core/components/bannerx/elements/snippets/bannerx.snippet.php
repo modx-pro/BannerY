@@ -29,7 +29,7 @@ if($position > 0) {
     $ads = $modx->getCollection('bxAd', $c);
     foreach($ads as $ad) {
         $ad = $ad->toArray();
-        $output .= $modx->parseChunk($tpl, $ad);
+        $output .= $modx->getChunk($tpl, $ad);
     }
 }
 return $output;
