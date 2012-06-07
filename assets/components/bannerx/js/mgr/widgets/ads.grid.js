@@ -233,6 +233,8 @@ Bannerx.window.Ad = function(config) {
                 xtype: 'modx-combo-browser'
                 ,fieldLabel: config.update ? '' : _('bannerx.ads.image.new')
                 ,name: 'newimage'
+				,source: MODx.config.default_media_source
+				,hideFiles: true
                 ,width: 300
                 ,allowBlank: false
                 ,listeners: {
