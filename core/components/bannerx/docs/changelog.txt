@@ -1,6 +1,12 @@
 Changelog for BannerX.
 
 
+0.2.1 pl (30.08.2012)
+=============
+- Some UI changes and fixes
+- Browser now opens directory of current banner
+
+
 0.2.0 beta (23.04.2012)
 =============
 - Added russian lexicon

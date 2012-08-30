@@ -7,8 +7,9 @@ Bannerx.panel.Stats = function(config) {
             xtype: 'modx-tabs'
             ,bodyStyle: 'padding: 10px'
             ,id: 'bannerx-stats-tabs'
-            ,defaults: { border: false ,autoHeight: true }
+            ,defaults: {autoHeight: true }
 			,stateful: true
+			,border: true
 			,stateId: 'bannerx-stats-tabs'
 			,stateEvents: ['tabchange']
 			,getState:function() {
