@@ -33,7 +33,12 @@ if ($modx->event->name == 'OnPageNotFound') {
                     );
                     $click->save();
                 }
-                $modx->sendRedirect($ad->get('url'));
+                $url = $ad->get('url');
+                if (is_numeric($url) || preg_match('/\[\[.*?\]\]/', $url, $tmp)) {
+					$id = str_replace(array('[',']','~'), '', $url);
+					$url = $modx->makeUrl($id, '', '', 'full');
+				}
+                $modx->sendRedirect($url);
             }
         }
     }
