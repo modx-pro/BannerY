@@ -1,5 +1,10 @@
 Changelog for BannerX.
 
+0.2.2 pl (05.09.2012)
+=============
+- GET vars of clickout URL are now available as placeholders in banner URL (?id=123 => [[+id]])
+  (this change is sponsored by bungalowparkoverzicht.nl)
+- Class based processors
 
 0.2.1 pl (30.08.2012)
 =============
