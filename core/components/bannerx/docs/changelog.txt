@@ -1,10 +1,11 @@
 Changelog for BannerX.
 
-0.2.2 pl (05.09.2012)
+0.2.2 pl (06.09.2012)
 =============
+- Class based processors / controllers
 - GET vars of clickout URL are now available as placeholders in banner URL (?id=123 => [[+id]])
   (this change is sponsored by bungalowparkoverzicht.nl)
-- Class based processors
+
 
 0.2.1 pl (30.08.2012)
 =============
@@ -26,13 +27,6 @@ Changelog for BannerX.
 - Add showing update windows on double click in grid
 
 
-
 0.1.0 alpha
 =============
 - First public version
-
-
-
-
-
-

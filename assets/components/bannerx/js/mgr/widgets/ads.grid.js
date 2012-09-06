@@ -1,29 +1,27 @@
 Ext.BLANK_IMAGE_URL = '/assets/components/bannerx/img/_blank.png'
 
 Ext.ux.Image = Ext.extend(Ext.Component, {
-
-	url  : Ext.BLANK_IMAGE_URL,  //for initial src value
-
-	autoEl: {
-		tag: 'img',
-		src: Ext.BLANK_IMAGE_URL,
-		cls: 'tng-managed-image',
-		width: 'auto',
-		height: 100
-	},
+	url  : Ext.BLANK_IMAGE_URL  //for initial src value
+	,autoEl: {
+		tag: 'img'
+		,src: Ext.BLANK_IMAGE_URL
+		,cls: 'tng-managed-image'
+		,width: 'auto'
+		,height: 100
+	}
 //  Add our custom processing to the onRender phase.
 //  We add a ‘load’ listener to our element.
-	onRender: function() {
+	,onRender: function() {
 		Ext.ux.Image.superclass.onRender.apply(this, arguments);
 		this.el.on('load', this.onLoad, this);
 		if(this.url){
 			this.setSrc(this.url);
 		}
-	},
-	onLoad: function() {
+	}
+	,onLoad: function() {
 		this.fireEvent('load', this);
-	},
-	setSrc: function(src) {
+	}
+	,setSrc: function(src) {
 		if(src == '' || src == undefined) {
 			this.el.dom.src = Ext.BLANK_IMAGE_URL;
 			Ext.getCmp('currimg').hide();
@@ -35,25 +33,6 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 	}
 });
 Ext.reg('image', Ext.ux.Image);
-
-Ext.onReady(function(){
-	Bannerx.posStore = new Ext.data.JsonStore({
-	   url: Bannerx.config.connectorUrl
-	  ,root: 'results'
-	  ,baseParams: { action: 'mgr/positions/getlist' }
-	  ,fields: ["id", "name"]
-	  ,autoLoad: false
-	  ,listeners: {
-		  load: function(t, records, options) {
-			  Bannerx.positionsArray = new Array();
-			  for (var i=0; i<records.length; i++) {
-				Bannerx.positionsArray.push({name: "positions[]", inputValue: records[i].data.id, boxLabel: records[i].data.name});
-			  }
-		  }
-	  }
-	});
-	Bannerx.posStore.load();
-});
 
 Bannerx.grid.Ads = function(config) {
 	config = config || {};
@@ -87,7 +66,25 @@ Bannerx.grid.Ads = function(config) {
 			}
 		}
 	});
-	Bannerx.grid.Ads.superclass.constructor.call(this,config)
+
+    //positions store/array for checkboxes in add/update window
+    Bannerx.positionsArray = new Array();
+    Bannerx.posStore = new Ext.data.JsonStore({
+       url: Bannerx.config.connectorUrl
+      ,root: 'results'
+      ,baseParams: { action: 'mgr/positions/getlist' }
+      ,fields: ["id", "name"]
+      ,autoLoad: true
+      ,listeners: {
+          load: function(t, records, options) {
+              for (var i=0; i<records.length; i++) {
+                Bannerx.positionsArray.push({name: "positions[]", inputValue: records[i].data.id, boxLabel: records[i].data.name});
+              }
+          }
+      }
+    });
+
+    Bannerx.grid.Ads.superclass.constructor.call(this,config);
 };
 Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 	getMenu: function() {
@@ -266,12 +263,6 @@ Bannerx.window.Ad = function(config) {
 				,name: 'positions'
 			}
 		]
-		,keys: [{
-			key: Ext.EventObject.ENTER
-			,shift: true
-			,fn:  function() {this.submit() }
-			,scope: this
-		}]
 	});
 	Bannerx.window.Ad.superclass.constructor.call(this,config);
 };

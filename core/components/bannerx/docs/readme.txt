@@ -1,7 +1,7 @@
 #############################################################
 #          BannerX: show banner ads on your site            #
 #                                                           #
-# Version: 0.1.0 alpha                                      #
+# Version: 0.2.2 pl                                         #
 #                                                           #
 # Author: Jeroen Kenters Web Development / www.kenters.com  #
 #                                                           #
@@ -24,8 +24,3 @@ Create 1 or more ads
 
 To show the ads, use the BannerX snippet:
 [[BannerX? &position=`1` &sortby=`RAND()` &limit=`3`]]
-
-*** CHANGELOG ***
-
-Version 0.1.0
-- Initial release

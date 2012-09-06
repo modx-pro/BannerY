@@ -33,27 +33,6 @@ class BannerX {
     }
 
     /**
-     * Initializes the class into the proper context
-     *
-     * @access public
-     * @param string $ctx
-     */
-    public function initialize($ctx = 'web') {
-        switch ($ctx) {
-            case 'mgr':
-                $this->modx->lexicon->load('bannerx:default');
-
-                if (!$this->modx->loadClass('bannerxControllerRequest',$this->config['modelPath'].'bannerx/request/',true,true)) {
-                    return 'Could not load controller request handler.';
-                }
-                $this->request = new bannerxControllerRequest($this);
-                return $this->request->handleRequest();
-            break;
-        }
-        return true;
-    }
-
-    /**
      * Gets a Chunk and caches it; also falls back to file-based templates
      * for easier debugging.
      *
