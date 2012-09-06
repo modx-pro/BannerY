@@ -111,6 +111,9 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 			xtype: 'bannerx-window-ad'
 			,update: 0
 			,openTo: '/'
+            ,baseParams: {
+                action: 'mgr/ads/create'
+            }
 			,listeners: {
 				'success': {fn:this.refresh,scope:this}
 				,'hide': {fn:this.destroy}

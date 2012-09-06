@@ -59,7 +59,10 @@ Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
 						Ext.getCmp('bannerx-grid-positions').store.reload();
 						Bannerx.posStore.reload();
 					},scope:this}
-				}
+                }
+                ,baseParams: {
+                    action: 'mgr/positions/create'
+                }
 			});
 		}
 		this.PositionWindow.show(e.target);

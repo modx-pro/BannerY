@@ -14,7 +14,6 @@ if(!empty($period)) {
     }
 }
 
-
 $c = $modx->newQuery('bxClick');
 $c->select('COUNT(DISTINCT(referrer))');
 $c->andCondition($conditions);
