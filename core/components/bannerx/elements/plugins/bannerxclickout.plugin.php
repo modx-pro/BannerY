@@ -19,7 +19,7 @@ if ($modx->event->name == 'OnPageNotFound') {
                 'clickdate:LIKE' => strftime("%Y-%m-%d").'%'
             ));
             if($clickCount == 0) {
-                $click = $modx->newObject('bxclick');
+                $click = $modx->newObject('bxClick');
                 $click->fromArray(
                     array(
                         'ad' => $ad->get('id'),
@@ -38,10 +38,6 @@ if ($modx->event->name == 'OnPageNotFound') {
             $chunk->setContent($url);
             $url = $chunk->process($_GET);
 
-            if (is_numeric($url) || preg_match('/\[\[.*?\]\]/', $url, $tmp)) {
-                $id = str_replace(array('[',']','~'), '', $url);
-                $url = $modx->makeUrl($id, '', '', 'full');
-            }
             $modx->sendRedirect($url);
         }
     }
