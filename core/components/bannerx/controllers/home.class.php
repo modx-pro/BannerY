@@ -5,6 +5,7 @@ class BannerxHomeManagerController extends BannerxManagerController {
     }
     public function getPageTitle() { return $this->modx->lexicon('bannerx'); }
     public function loadCustomCssJs() {
+        $this->addJavascript($this->bannerx->config['jsUrl'].'mgr/plugins/dragdropgrid.js');
         $this->addJavascript($this->bannerx->config['jsUrl'].'mgr/widgets/ads.grid.js');
         $this->addJavascript($this->bannerx->config['jsUrl'].'mgr/widgets/positions.grid.js');
         $this->addJavascript($this->bannerx->config['jsUrl'].'mgr/widgets/referrers.grid.js');

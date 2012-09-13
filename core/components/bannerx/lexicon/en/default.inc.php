@@ -32,7 +32,9 @@ $_lang['bannerx.positions.remove'] = 'Remove position';
 $_lang['bannerx.positions.remove.confirm'] = 'Are you sure you want to remove this position?';
 $_lang['bannerx.positions.error.nf'] = 'Position not found';
 
-$_lang['bannerx.adposition.idx'] = 'Index of an ad';
+$_lang['bannerx.adposition.idx'] = 'Index';
+$_lang['bannerx.adposition.remove'] = 'Remove';
+$_lang['bannerx.adposition.remove.confirm'] = 'Are you sure you want to cancel displaying this banner in this position?';
 
 $_lang['bannerx.stats'] = 'Statistics';
 $_lang['bannerx.stats.clicks'] = 'Clicks';

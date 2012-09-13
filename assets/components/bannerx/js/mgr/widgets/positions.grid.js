@@ -158,7 +158,7 @@ Bannerx.grid.AdPositions = function(config) {
 		id: 'bannerx-grid-adpositions'
 		,url: Bannerx.config.connectorUrl
 		,baseParams: {
-			action: 'mgr/positions/getads'
+			action: 'mgr/adpositions/getlist'
 			,position: config.position || 0
 		}
 		,fields: ['id','name','idx','image']
@@ -166,12 +166,43 @@ Bannerx.grid.AdPositions = function(config) {
 		,anchor: '99%'
 		,disabled: config.update == 0 ? 1 : 0
 		,hidden: config.update == 0 ? 1 : 0
+		,pageSize: Math.round(MODx.config.default_per_page / 3)
 		,columns: [
-			{header: _('id'),dataIndex: 'id',sortable: false,width: 10}
+			{header: _('bannerx.adposition.idx'),dataIndex: 'idx',sortable: false, width: 25}
 			,{header: _('bannerx.ads.name'),dataIndex: 'name',sortable: false}
-			,{header: _('bannerx.adposition.idx'),dataIndex: 'idx',sortable: false}
-			,{header: _('bannerx.ads.image'),dataIndex: 'image',sortable: false, renderer: {fn:function(img) {return renderGridImage(img,30)}}}
+			,{header: _('bannerx.ads.image'),dataIndex: 'image',sortable: false, width: 50, renderer: {fn:function(img) {return renderGridImage(img,30)}}}
 		]
+		,plugins: [new Ext.ux.dd.GridDragDropRowOrder({
+			listeners: {
+				'afterrowmove': {
+					fn: function(drag, old_order, new_order, row) {
+						var row = row[0];
+						var grid = drag.grid;
+						var el = Ext.get('bannerx-grid-adpositions');
+						el.mask(_('loading'),'x-mask-loading')
+						MODx.Ajax.request({
+							url: Bannerx.config.connectorUrl
+							,params: {
+								action: 'mgr/adpositions/sort'
+								,id: row.data.id
+								,new_order: new_order
+								,old_order: old_order
+							}
+							,listeners: {
+								'success': {fn:function(r) {
+									el.unmask();
+									grid.refresh();
+								},scope:grid}
+								,'failure': {fn:function(r) {
+									el.unmask();
+								},scope:grid}
+							}
+						})
+					}
+					,scope: this
+				}
+			}
+		})]
 		/*
 		,tbar: [{
 			text: _('bannerx.positions.new')
@@ -188,6 +219,28 @@ Bannerx.grid.AdPositions = function(config) {
 	Bannerx.grid.AdPositions.superclass.constructor.call(this,config)
 };
 Ext.extend(Bannerx.grid.AdPositions,MODx.grid.Grid,{
+	getMenu: function() {
+		var m = [{
+				text: _('bannerx.adposition.remove')
+				,handler: this.removeAdPosition
+			}];
+		this.addContextMenuItem(m);
+		return true;
+	}
+	,removeAdPosition: function() {
+		MODx.msg.confirm({
+			title: _('bannerx.adposition.remove')
+			,text: _('bannerx.adposition.remove.confirm')
+			,url: this.config.url
+			,params: {
+				action: 'mgr/adpositions/remove'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn:this.refresh,scope:this}
+			}
+		});
+	}
 	/*
 	getMenu: function() {
 		var m = [{

@@ -75,6 +75,7 @@ Bannerx.grid.Ads = function(config) {
 	});
 
     //positions store/array for checkboxes in add/update window
+    Bannerx.positionsArray = new Array();
     Bannerx.posStore = new Ext.data.JsonStore({
        url: Bannerx.config.connectorUrl
       ,root: 'results'
@@ -83,7 +84,7 @@ Bannerx.grid.Ads = function(config) {
       ,autoLoad: true
       ,listeners: {
           load: function(t, records, options) {
-				Bannerx.positionsArray = new Array();
+				Bannerx.positionsArray = new Array;
 				for (var i=0; i<records.length; i++) {
 					Bannerx.positionsArray.push({name: "positions[]", inputValue: records[i].data.id, boxLabel: records[i].data.name});
 				}
@@ -146,6 +147,38 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 				openTo = tmp.substr(1)
 			}
 		}
+		
+		MODx.Ajax.request({
+			url: Bannerx.config.connectorUrl
+			,params: {
+				action: 'mgr/ads/get'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn:function(r) {
+					var record = r.object;
+
+					w = MODx.load({
+						xtype: 'bannerx-window-ad'
+						,update: 1
+						,openTo: openTo
+						,listeners: {
+							'success': {fn:this.refresh,scope:this}
+							,'hide': {fn:function() {this.getEl().remove()}}
+						}
+					});
+
+					record.newimage = record.image;
+					w.setTitle(_('bannerx.ads.update')).show(e.target,function() {w.setPosition(null,50)},this);
+					Ext.getCmp('bannerx-window-ad').reset();
+					Ext.getCmp('bannerx-window-ad').setValues(record);
+					this.enablePositions(record.positions);
+					Ext.getCmp('currimg').setSrc(record.image);
+				},scope:this}
+			}
+		});
+		
+		/*
 		w = MODx.load({
 			xtype: 'bannerx-window-ad'
 			,update: 1
@@ -155,12 +188,8 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 				,'hide': {fn:function() {this.getEl().remove()}}
 			}
 		});
-		this.menu.record.newimage = this.menu.record.image;
-		w.setTitle(_('bannerx.ads.update')).show(e.target,function() {w.setPosition(null,50)},this);
-		Ext.getCmp('bannerx-window-ad').reset();
-		Ext.getCmp('bannerx-window-ad').setValues(this.menu.record);
-		this.enablePositions(this.menu.record.positions);
-		Ext.getCmp('currimg').setSrc(this.menu.record.image);
+		*/
+
 	}
 	,removeAd: function() {
 		MODx.msg.confirm({

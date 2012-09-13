@@ -32,7 +32,10 @@ $_lang['bannerx.positions.remove'] = 'Удалить позицию';
 $_lang['bannerx.positions.remove.confirm'] = 'Вы уверены, что хотите удалить эту позицию?';
 $_lang['bannerx.positions.error.nf'] = 'Позиция не найдена';
 
-$_lang['bannerx.adposition.idx'] = 'Порядок баннера';
+$_lang['bannerx.adposition.idx'] = 'Индекс';
+$_lang['bannerx.adposition.remove'] = 'Убрать';
+$_lang['bannerx.adposition.remove.confirm'] = 'Вы уверены ,что хотите убрать показ баннера в этой позиции?';
+
 
 $_lang['bannerx.stats'] = 'Статистика';
 $_lang['bannerx.stats.clicks'] = 'Клики';
