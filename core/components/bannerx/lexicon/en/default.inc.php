@@ -21,6 +21,7 @@ $_lang['bannerx.ads.update'] = 'Update ad';
 $_lang['bannerx.ads.remove'] = 'Remove ad';
 $_lang['bannerx.ads.remove.confirm'] = 'Are you sure you want to remove this ad?';
 $_lang['bannerx.ads.error.nf'] = 'Ad not found';
+$_lang['bannerx.ads.description'] = 'Text of banner';
 
 $_lang['bannerx.positions'] = 'Positions';
 $_lang['bannerx.positions.name'] = 'Name';
@@ -30,6 +31,8 @@ $_lang['bannerx.positions.update'] = 'Update position';
 $_lang['bannerx.positions.remove'] = 'Remove position';
 $_lang['bannerx.positions.remove.confirm'] = 'Are you sure you want to remove this position?';
 $_lang['bannerx.positions.error.nf'] = 'Position not found';
+
+$_lang['bannerx.adposition.idx'] = 'Index of an ad';
 
 $_lang['bannerx.stats'] = 'Statistics';
 $_lang['bannerx.stats.clicks'] = 'Clicks';

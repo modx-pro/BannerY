@@ -21,6 +21,7 @@ $_lang['bannerx.ads.update'] = 'Обновить баннер';
 $_lang['bannerx.ads.remove'] = 'Удалить баннер';
 $_lang['bannerx.ads.remove.confirm'] = 'Вы уверены, что хотите удалить этот баннер?';
 $_lang['bannerx.ads.error.nf'] = 'Баннер не найден';
+$_lang['bannerx.ads.description'] = 'Текст баннера';
 
 $_lang['bannerx.positions'] = 'Позиции';
 $_lang['bannerx.positions.name'] = 'Название';
@@ -30,6 +31,8 @@ $_lang['bannerx.positions.update'] = 'Обновить позицию';
 $_lang['bannerx.positions.remove'] = 'Удалить позицию';
 $_lang['bannerx.positions.remove.confirm'] = 'Вы уверены, что хотите удалить эту позицию?';
 $_lang['bannerx.positions.error.nf'] = 'Позиция не найдена';
+
+$_lang['bannerx.adposition.idx'] = 'Порядок баннера';
 
 $_lang['bannerx.stats'] = 'Статистика';
 $_lang['bannerx.stats.clicks'] = 'Клики';

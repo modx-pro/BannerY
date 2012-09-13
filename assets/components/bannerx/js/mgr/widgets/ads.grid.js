@@ -36,24 +36,31 @@ Ext.reg('image', Ext.ux.Image);
 
 Bannerx.grid.Ads = function(config) {
 	config = config || {};
+	this.exp = new Ext.grid.RowExpander({
+		expandOnDblClick: false
+		,tpl : new Ext.Template('<p class="desc">{description}</p>')
+		,renderer : function(v, p, record){return record.data.description != '' ? '<div class="x-grid3-row-expander">&#160;</div>' : '&#160;';}
+	});
 	Ext.applyIf(config,{
 		id: 'bannerx-grid-ads'
 		,url: Bannerx.config.connectorUrl
 		,baseParams: { action: 'mgr/ads/getlist' }
-		,fields: ['id','name', 'url', 'image', 'active', 'positions', 'clicks']
+		,fields: ['id','name', 'url', 'image', 'active', 'positions', 'clicks', 'description']
 		,paging: true
 		,border: false
 		,frame: false
 		,remoteSort: true
 		,anchor: '97%'
 		,autoExpandColumn: 'name'
-		,columns: [
-			{header: _('id'),dataIndex: 'id',sortable: true,width: 10}
+		,plugins: this.exp
+		,columns: [this.exp
+			,{header: _('id'),dataIndex: 'id',sortable: true,width: 10}
 			,{header: _('bannerx.ads.name'),dataIndex: 'name',sortable: true}
 			,{header: _('bannerx.ads.url'),dataIndex: 'url',sortable: true}
 			,{header: _('bannerx.ads.clicks'),dataIndex: 'clicks',sortable: false}
 			,{header: _('bannerx.ads.active'),dataIndex: 'active',sortable: true, renderer: this.renderBoolean}
-			,{header: _('bannerx.ads.image'),dataIndex: 'image',sortable: false,renderer: this.renderImg}
+			,{header: _('bannerx.ads.image'),dataIndex: 'image',sortable: false,renderer: {fn:function(img) {return renderGridImage(img,30)}}}
+			,{header: _('bannerx.ads.description'),dataIndex: 'description',sortable: false, hidden: true}
 		]
 		,tbar: [{
 			text: _('bannerx.ads.new')
@@ -68,7 +75,6 @@ Bannerx.grid.Ads = function(config) {
 	});
 
     //positions store/array for checkboxes in add/update window
-    Bannerx.positionsArray = new Array();
     Bannerx.posStore = new Ext.data.JsonStore({
        url: Bannerx.config.connectorUrl
       ,root: 'results'
@@ -77,9 +83,10 @@ Bannerx.grid.Ads = function(config) {
       ,autoLoad: true
       ,listeners: {
           load: function(t, records, options) {
-              for (var i=0; i<records.length; i++) {
-                Bannerx.positionsArray.push({name: "positions[]", inputValue: records[i].data.id, boxLabel: records[i].data.name});
-              }
+				Bannerx.positionsArray = new Array();
+				for (var i=0; i<records.length; i++) {
+					Bannerx.positionsArray.push({name: "positions[]", inputValue: records[i].data.id, boxLabel: records[i].data.name});
+				}
           }
       }
     });
@@ -113,7 +120,7 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
             }
 			,listeners: {
 				'success': {fn:this.refresh,scope:this}
-				,'hide': {fn:this.destroy}
+				,'hide': {fn:function() {this.getEl().remove()}}
 			}
 		});
 		w.setTitle(_('bannerx.ads.new')).show(e.target,function() {w.setPosition(null,50)},this);
@@ -145,7 +152,7 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 			,openTo: openTo
 			,listeners: {
 				'success': {fn:this.refresh,scope:this}
-				,'hide': {fn:this.destroy}
+				,'hide': {fn:function() {this.getEl().remove()}}
 			}
 		});
 		this.menu.record.newimage = this.menu.record.image;
@@ -180,14 +187,6 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 			}
 		});
 	}
-	,renderImg: function(img) {
-		if (img.length > 0) {
-			if (!/(jpg|jpeg|png|gif|bmp)$/.test(img)) {return img;}
-			else if (/^(http|https)/.test(img)) {return '<img src="'+img+'" alt="" style="display:block;margin:auto;height:50px;" />'}
-			else {return '<img src="'+MODx.config.connectors_url+'system/phpthumb.php?&src='+img+'&wctx=web&h=50&zc=0&source=1" alt="" style="display:block;margin:auto;height:50px;" />'}
-		}
-		else {return '';}
-	}
 	,renderBoolean: function(value) {
 		if (value == 1) {return '<span style="color:green;">'+_('yes')+'</span>';}
 		else {return '<span style="color:red;">'+_('no')+'</span>';}
@@ -201,7 +200,7 @@ Bannerx.window.Ad = function(config) {
 		id: 'bannerx-window-ad'
 		,title: _('bannerx.ads.new')
 		,url: Bannerx.config.connectorUrl
-		,fileUpload: true
+		//,fileUpload: true
 		,modal: true
 		,width: 600
 		,baseParams: {
@@ -213,20 +212,44 @@ Bannerx.window.Ad = function(config) {
 			},{
 				xtype: 'hidden'
 				,name: 'image'
-				,anchor: '80%'
+				,anchor: '99%'
 				,id: 'image'
 			},{
 				xtype: 'textfield'
 				,fieldLabel: _('bannerx.ads.name')
 				,name: 'name'
-				,anchor: '80%'
+				,anchor: '99%'
 				,allowBlank: false
 			},{
-				xtype: 'textfield'
-				,fieldLabel: _('bannerx.ads.url')
-				,name: 'url'
-				,anchor: '80%'
-				,allowBlank: true
+				items: [{
+					layout: 'form'
+					,items: [{
+						layout: 'column'
+						,border: false
+						,items: [{
+							columnWidth: .8
+							,border: false
+							,layout: 'form'
+							,items: [{
+								xtype: 'textfield'
+								,fieldLabel: _('bannerx.ads.url')
+								,name: 'url'
+								,anchor: '99%'
+								,allowBlank: true
+							}]
+						},{
+							columnWidth: .2
+							,border: false
+							,layout: 'form'
+							,items: [{
+								xtype: 'xcheckbox'
+								,fieldLabel: _('bannerx.ads.active')
+								,name: 'active'
+								,inputValue: 1
+							}]
+						}]
+					}]
+				}]
 			},{
 				id: 'currimg'
 				,fieldLabel: _('bannerx.ads.image.current')
@@ -237,7 +260,7 @@ Bannerx.window.Ad = function(config) {
 				,name: 'newimage'
 				,source: MODx.config.default_media_source
 				,hideFiles: true
-				,anchor: '80%'
+				,anchor: '99%'
 				,allowBlank: false
 				,openTo: config.openTo || '/'
 				,listeners: {
@@ -249,11 +272,13 @@ Bannerx.window.Ad = function(config) {
 					}
 				}
 			},{
-				xtype: 'xcheckbox'
-				,name: 'active'
-				,inputValue: 1
-				,fieldLabel: _('bannerx.ads.active')
-				,labelAlign: 'right'
+				xtype: 'textarea'
+				,fieldLabel: _('bannerx.ads.description')
+				,name: 'description'
+				,anchor: '99%'
+				,height: 100
+				,allowBlank: true
+				,resize: true
 			},{
 				xtype: 'checkboxgroup'
 				,id: 'positions'
@@ -263,6 +288,12 @@ Bannerx.window.Ad = function(config) {
 				,name: 'positions'
 			}
 		]
+		,keys: [{
+			key: Ext.EventObject.ENTER
+			,shift: true
+			,fn:  function() {this.submit()}
+			,scope: this
+		}]
 	});
 	Bannerx.window.Ad.superclass.constructor.call(this,config);
 };

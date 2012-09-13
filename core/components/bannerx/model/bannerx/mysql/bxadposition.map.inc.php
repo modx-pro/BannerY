@@ -6,6 +6,7 @@ $xpdo_meta_map['bxAdPosition']= array (
   array (
     'ad' => NULL,
     'position' => NULL,
+	'idx' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -26,6 +27,14 @@ $xpdo_meta_map['bxAdPosition']= array (
       'phptype' => 'integer',
       'null' => false,
       'index' => 'index',
+    ),
+    'idx' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
     ),
   ),
   'aggregates' => 

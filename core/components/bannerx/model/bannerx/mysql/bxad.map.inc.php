@@ -8,6 +8,7 @@ $xpdo_meta_map['bxAd']= array (
     'url' => '',
     'image' => '',
     'active' => 0,
+	'description' => '',
   ),
   'fieldMeta' => 
   array (
@@ -49,14 +50,6 @@ $xpdo_meta_map['bxAd']= array (
       'dbtype' => 'text',
       'phptype' => 'string',
       'null' => true,
-    ),
-    'idx' => 
-    array (
-      'dbtype' => 'int',
-      'precision' => '10',
-      'phptype' => 'integer',
-      'null' => false,
-      'default' => 0,
     ),
   ),
   'composites' => 
