@@ -44,6 +44,20 @@ $xpdo_meta_map['bxAd']= array (
       'null' => false,
       'default' => 0,
     ),
+    'description' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => true,
+    ),
+    'idx' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
+    ),
   ),
   'composites' => 
   array (

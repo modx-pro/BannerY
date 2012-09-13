@@ -5,6 +5,8 @@
         <field key="url" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
         <field key="image" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
         <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+        <field key="description" dbtype="text" phptype="string" null="true" />
+        <field key="idx" dbtype="int" precision="11" phptype="integer" null="false" default="0" />
 
         <composite alias="Positions" class="bxAdPosition" local="id" foreign="ad" cardinality="many" owner="local" />
         <composite alias="Clicks" class="bxClick" local="id" foreign="ad" cardinality="many" owner="local" />
