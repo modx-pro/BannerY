@@ -1,5 +1,12 @@
 Changelog for BannerX.
 
+0.3.0 pl (13.09.2012)
+- Added text field "description" for Ads.
+- Ui improvements. Now you can view all Ads of Position in popup window and sort/remove them.
+- Added drag-n-drop sorting feature for Ads in Position for specifying exact order of displaying.
+- Added properties for snippet BannerX and new sortby - "idx".
+
+
 0.2.2 pl (06.09.2012)
 =============
 - Class based processors / controllers

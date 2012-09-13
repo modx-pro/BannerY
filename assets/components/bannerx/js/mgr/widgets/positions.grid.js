@@ -120,6 +120,7 @@ Bannerx.window.Position = function(config) {
 		,title: _('bannerx.positions.new')
 		,url: Bannerx.config.connectorUrl
 		,modal: true
+		,width: 600
 		,baseParams: {
 			action: 'mgr/positions/update'
 		}
@@ -205,15 +206,7 @@ Bannerx.grid.AdPositions = function(config) {
 		})]
 		/*
 		,tbar: [{
-			text: _('bannerx.positions.new')
-			,handler: this.createPosition
 		}]
-		,listeners: {
-			rowDblClick: function(grid, rowIndex, e) {
-				var row = grid.store.getAt(rowIndex);
-				this.updatePosition(grid, e, row);
-			}
-		}
 		*/
 	});
 	Bannerx.grid.AdPositions.superclass.constructor.call(this,config)
@@ -241,18 +234,5 @@ Ext.extend(Bannerx.grid.AdPositions,MODx.grid.Grid,{
 			}
 		});
 	}
-	/*
-	getMenu: function() {
-		var m = [{
-				text: _('bannerx.positions.update')
-				,handler: this.updatePosition
-			},'-',{
-				text: _('bannerx.positions.remove')
-				,handler: this.removePosition
-			}];
-		this.addContextMenuItem(m);
-		return true;
-	}
-	*/
 });
 Ext.reg('bannerx-grid-adpositions',Bannerx.grid.AdPositions);

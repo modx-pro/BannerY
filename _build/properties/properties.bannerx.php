@@ -21,7 +21,7 @@ $properties[0] = array(
 	array(
 		'name' => 'sortby',
 		'value' => 'RAND()',
-		'type' => 'textfield',
+		'type' => 'list',
 		'desc' => 'Return results in specified order. It can be any field of bxAd, "RAND()" or "idx" - index of ad in position.',
         'options' => array(
             array('text' => 'Random','value' => 'RAND()'),

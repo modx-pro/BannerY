@@ -37,7 +37,7 @@ $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
-$builder->createPackage('bannerx','0.2.2','pl');
+$builder->createPackage('bannerx','0.3.0','pl');
 $builder->registerNamespace('bannerx',false,true,'{core_path}components/bannerx/');
 
 /* load action/menu */
