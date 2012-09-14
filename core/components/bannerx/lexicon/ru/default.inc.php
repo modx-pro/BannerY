@@ -33,6 +33,7 @@ $_lang['bannerx.positions.clicks'] = 'Клики';
 $_lang['bannerx.positions.new'] = 'Новая позиция';
 $_lang['bannerx.positions.update'] = 'Обновить позицию';
 $_lang['bannerx.positions.remove'] = 'Удалить позицию';
+$_lang['bannerx.positions.select'] = 'Выберите позицию';
 $_lang['bannerx.positions.remove.confirm'] = 'Вы уверены, что хотите удалить эту позицию?';
 $_lang['bannerx.positions.error.nf'] = 'Позиция не найдена';
 $_lang['bannerx.positions.error.ns'] = 'Не указана позиция';

@@ -205,8 +205,8 @@ Bannerx.grid.AdPositions = function(config) {
 			}
 		})]
 		,tbar: [{
-			xtype: 'bannerx-filter-positions'
-			,id: 'bannerx-grid-adpositions-positionsfilter'
+			xtype: 'bannerx-filter-ads'
+			,id: 'bannerx-grid-adpositions-adsfilter'
 			,position: config.position
 			,mode: 'exclude'
 			,listeners: {
@@ -240,7 +240,7 @@ Ext.extend(Bannerx.grid.AdPositions,MODx.grid.Grid,{
 			,listeners: {
 				'success': {fn:function() {
 					this.refresh();
-					Ext.getCmp('bannerx-grid-adpositions-positionsfilter').store.reload();
+					Ext.getCmp('bannerx-grid-adpositions-adsfilter').store.reload();
 				},scope:this}
 			}
 		});

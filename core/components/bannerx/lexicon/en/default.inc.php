@@ -33,6 +33,7 @@ $_lang['bannerx.positions.clicks'] = 'Clicks';
 $_lang['bannerx.positions.new'] = 'New position';
 $_lang['bannerx.positions.update'] = 'Update position';
 $_lang['bannerx.positions.remove'] = 'Remove position';
+$_lang['bannerx.positions.select'] = 'Select position';
 $_lang['bannerx.positions.remove.confirm'] = 'Are you sure you want to remove this position?';
 $_lang['bannerx.positions.error.nf'] = 'Position not found';
 $_lang['bannerx.positions.error.ns'] = 'Position not set';

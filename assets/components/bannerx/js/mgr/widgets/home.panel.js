@@ -62,11 +62,11 @@ Ext.reg('bannerx-panel-home',Bannerx.panel.Home);
 
 // Search and combos
 /******************************************************/
-MODx.combo.positions = function(config) {
+MODx.combo.ads = function(config) {
 	config = config || {};
 	Ext.applyIf(config,{
-		name: 'position'
-		,hiddenName: 'position'
+		name: 'ad'
+		,hiddenName: 'ad'
 		,displayField: 'name'
 		,valueField: 'id'
 		,editable: true
@@ -79,6 +79,28 @@ MODx.combo.positions = function(config) {
 			action: 'mgr/ads/getlist'
 			,position: config.position || 0
 			,mode: config.mode || 0
+		}
+	});
+	MODx.combo.ads.superclass.constructor.call(this,config);
+};
+Ext.extend(MODx.combo.ads,MODx.combo.ComboBox);
+Ext.reg('bannerx-filter-ads',MODx.combo.ads);
+
+MODx.combo.positions = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		name: 'position'
+		,hiddenName: 'position'
+		,displayField: 'name'
+		,valueField: 'id'
+		,editable: true
+		,fields: ['name','id']
+		,pageSize: 10
+		//,value: ''
+		,emptyText: _('bannerx.positions.select')
+		,url: Bannerx.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/positions/getlist'
 		}
 	});
 	MODx.combo.positions.superclass.constructor.call(this,config);

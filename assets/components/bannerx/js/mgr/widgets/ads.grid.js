@@ -68,6 +68,14 @@ Bannerx.grid.Ads = function(config) {
 		},{
 			xtype: 'tbfill'
 		},{
+			xtype: 'bannerx-filter-positions'
+			,id: 'bannerx-grid-ads-positionsfilter'
+			,width: 200
+			,listeners: {'select': {fn: this.FilterByPosition, scope:this}}
+		},{
+			xtype: 'tbspacer'
+			,width: 10
+		}, {
 			xtype: 'bannerx-filter-byquery'
 			,id: 'bannerx-ads-filter-byquery'
 			,listeners: {
@@ -126,13 +134,21 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 	,FilterClear: function() {
 		var s = this.getStore();
 		s.baseParams.query = '';
+		s.baseParams.position = '';
 		Ext.getCmp('bannerx-ads-filter-byquery').reset();
+		Ext.getCmp('bannerx-grid-ads-positionsfilter').reset();
 		this.getBottomToolbar().changePage(1);
 		this.refresh();
 	}
 	,FilterByQuery: function(tf, nv, ov) {
 		var s = this.getStore();
 		s.baseParams.query = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,FilterByPosition: function(combo, row, idx) {
+		var s = this.getStore();
+		s.baseParams.position = row.id;
 		this.getBottomToolbar().changePage(1);
 		this.refresh();
 	}
