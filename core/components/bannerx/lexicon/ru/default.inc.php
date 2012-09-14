@@ -40,7 +40,6 @@ $_lang['bannerx.positions.error.ns'] = 'Не указана позиция';
 
 $_lang['bannerx.adposition.idx'] = 'Индекс';
 $_lang['bannerx.adposition.remove'] = 'Убрать';
-$_lang['bannerx.adposition.remove.confirm'] = 'Вы уверены, что хотите убрать показ баннера в этой позиции?';
 $_lang['bannerx.adposition.error.ae'] = 'Этот баннер уже включен для показа в данной позиции.';
 
 

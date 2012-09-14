@@ -40,7 +40,6 @@ $_lang['bannerx.positions.error.ns'] = 'Position not set';
 
 $_lang['bannerx.adposition.idx'] = 'Index';
 $_lang['bannerx.adposition.remove'] = 'Remove';
-$_lang['bannerx.adposition.remove.confirm'] = 'Are you sure you want to cancel displaying this banner in this position?';
 $_lang['bannerx.adposition.error.ae'] = 'This ad is already enabled in this position.';
 
 $_lang['bannerx.stats'] = 'Statistics';

@@ -253,10 +253,8 @@ Ext.extend(Bannerx.grid.AdPositions,MODx.grid.Grid,{
 		return true;
 	}
 	,removeAdPosition: function() {
-		MODx.msg.confirm({
-			title: _('bannerx.adposition.remove')
-			,text: _('bannerx.adposition.remove.confirm')
-			,url: this.config.url
+		MODx.Ajax.request({
+			url: Bannerx.config.connectorUrl
 			,params: {
 				action: 'mgr/adpositions/remove'
 				,id: this.menu.record.id
