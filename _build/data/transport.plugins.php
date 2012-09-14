@@ -3,9 +3,9 @@ $plugins = array();
 
 $plugins[0] = $modx->newObject('modPlugin');
 $plugins[0]->set('id', 0);
-$plugins[0]->set('name', 'BannerXClickout');
+$plugins[0]->set('name', 'BannerYClickout');
 $plugins[0]->set('description', 'Handle ad clicks');
-$plugins[0]->set('plugincode', file_get_contents($sources['source_core'].'/elements/plugins/bannerxclickout.plugin.php'));
+$plugins[0]->set('plugincode', file_get_contents($sources['source_core'].'/elements/plugins/banneryclickout.plugin.php'));
 
 /* add plugin events */
 $events = include $sources['data'].'transport.plugins.events.php';

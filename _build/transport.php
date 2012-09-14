@@ -1,8 +1,8 @@
 <?php
 /**
- * BannerX build script
+ * BannerY build script
  *
- * @package bannerx
+ * @package bannery
  * @subpackage build
  */
 $mtime = microtime();
@@ -18,10 +18,10 @@ $sources= array (
     'build' => $root .'_build/',
     'resolvers' => $root . '_build/resolvers/',
     'data' => $root . '_build/data/',
-    'source_core' => $root.'core/components/bannerx',
-    'lexicon' => $root . 'core/components/bannerx/lexicon/',
-    'source_assets' => $root.'assets/components/bannerx',
-    'docs' => $root.'core/components/bannerx/docs/',
+    'source_core' => $root.'core/components/bannery',
+    'lexicon' => $root . 'core/components/bannery/lexicon/',
+    'source_assets' => $root.'assets/components/bannery',
+    'docs' => $root.'core/components/bannery/docs/',
 );
 
 unset($root); // save memory
@@ -37,8 +37,8 @@ $modx->setLogTarget(XPDO_CLI_MODE ? 'ECHO' : 'HTML');
 
 $modx->loadClass('transport.modPackageBuilder','',false, true);
 $builder = new modPackageBuilder($modx);
-$builder->createPackage('bannerx','0.3.0','pl');
-$builder->registerNamespace('bannerx',false,true,'{core_path}components/bannerx/');
+$builder->createPackage('bannery','1.0.0','pl');
+$builder->registerNamespace('bannery',false,true,'{core_path}components/bannery/');
 
 /* load action/menu */
 $menu = include $sources['data'].'transport.menu.php';
@@ -62,7 +62,7 @@ unset($vehicle,$action); /* to keep memory low */
 /* create category */
 $category= $modx->newObject('modCategory');
 $category->set('id',1);
-$category->set('category','BannerX');
+$category->set('category','BannerY');
 
 $snippets = include $sources['data'].'transport.snippets.php';
 if (!is_array($snippets)) {

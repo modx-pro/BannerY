@@ -2,7 +2,7 @@
 /**
  * Define the MODX path constants necessary for core installation
  *
- * @package bannerx
+ * @package bannery
  * @subpackage build
  */
 define('MODX_BASE_PATH', dirname(dirname(dirname(__FILE__))) . '/');

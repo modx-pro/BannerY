@@ -1,6 +1,6 @@
 <?php
 /**
- * @package bannerx
+ * @package bannery
  * @subpackage build
  */
 $events = array();

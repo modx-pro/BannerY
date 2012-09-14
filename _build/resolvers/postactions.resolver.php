@@ -12,16 +12,16 @@ switch ($action) {
 		// Create a reference to MODx since this resolver is executed from WITHIN a modCategory
 		$modx =& $object->xpdo; 
 
-		if (!isset($modx->bannerx) || $modx->bannerx == null) {
-			$modx->addPackage('bannerx', $modx->getOption('core_path').'components/bannerx/model/');
-		    $modx->bannerx = $modx->getService('bannerx', 'BannerX', $modx->getOption('core_path').'components/bannerx/model/bannerx/');
+		if (!isset($modx->bannery) || $modx->bannery == null) {
+			$modx->addPackage('bannery', $modx->getOption('core_path').'components/bannery/model/');
+		    $modx->bannery = $modx->getService('bannery', 'BannerY', $modx->getOption('core_path').'components/bannery/model/bannery/');
 		}
 
 		$mgr = $modx->getManager();
-        $mgr->createObjectContainer('bxAd');
-        $mgr->createObjectContainer('bxPosition');
-        $mgr->createObjectContainer('bxAdPosition');
-        $mgr->createObjectContainer('bxClick');
+        $mgr->createObjectContainer('byAd');
+        $mgr->createObjectContainer('byPosition');
+        $mgr->createObjectContainer('byAdPosition');
+        $mgr->createObjectContainer('byClick');
 
 		$success = true;
 		break;

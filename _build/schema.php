@@ -3,7 +3,7 @@
 // you'll want to change this first line to point to the actual MODx install path
 define('MODX_BASE_PATH', $_SERVER['DOCUMENT_ROOT'].'/');
 define('MODX_CORE_PATH', MODX_BASE_PATH.'core/');
-define('COMPONENT_PATH', MODX_CORE_PATH.'/components/bannerx/');
+define('COMPONENT_PATH', MODX_CORE_PATH.'/components/bannery/');
 
 require_once (MODX_CORE_PATH . 'config/config.inc.php');
 include_once (MODX_CORE_PATH . 'model/modx/modx.class.php');
@@ -17,14 +17,14 @@ $builder = new modPackageBuilder($modx);
 // build the schema, using the PackageBuilder's buildSchema function. It takes 2 parameters:
 // - the location of the model directory where you want the files to generate to
 // - the schema xml file
-$builder->buildSchema(COMPONENT_PATH.'/model/', COMPONENT_PATH.'/model/schema/bannerx.mysql.schema.xml');
+$builder->buildSchema(COMPONENT_PATH.'/model/', COMPONENT_PATH.'/model/schema/bannery.mysql.schema.xml');
 
-$modx->addPackage('bannerx', $modx->getOption('core_path').'components/bannerx/model/');
+$modx->addPackage('bannery', $modx->getOption('core_path').'components/bannery/model/');
 $manager = $modx->getManager();
-$manager->createObjectContainer('bxAd');
-$manager->createObjectContainer('bxPosition');
-$manager->createObjectContainer('bxAdPosition');
-$manager->createObjectContainer('bxClick');
+$manager->createObjectContainer('byAd');
+$manager->createObjectContainer('byPosition');
+$manager->createObjectContainer('byAdPosition');
+$manager->createObjectContainer('byClick');
 
 echo 'Finished!';
 exit();
