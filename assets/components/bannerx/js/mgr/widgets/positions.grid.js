@@ -28,6 +28,17 @@ Bannerx.grid.Positions = function(config) {
 		,tbar: [{
 			text: _('bannerx.positions.new')
 			,handler: this.createPosition
+		},{
+			xtype: 'tbfill'
+		},{
+			xtype: 'bannerx-filter-byquery'
+			,id: 'bannerx-positions-filter-byquery'
+			,listeners: {
+				render: {fn: function(tf) {tf.getEl().addKeyListener(Ext.EventObject.ENTER, function() {this.FilterByQuery(tf);}, this);},scope: this}
+			}
+		},{
+			xtype: 'bannerx-filter-clear'
+			,listeners: {click: {fn: this.FilterClear, scope: this}}
 		}]
 		,listeners: {
 			rowDblClick: function(grid, rowIndex, e) {
@@ -49,6 +60,19 @@ Ext.extend(Bannerx.grid.Positions,MODx.grid.Grid,{
 			}];
 		this.addContextMenuItem(m);
 		return true;
+	}
+	,FilterClear: function() {
+		var s = this.getStore();
+		s.baseParams.query = '';
+		Ext.getCmp('bannerx-positions-filter-byquery').reset();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,FilterByQuery: function(tf, nv, ov) {
+		var s = this.getStore();
+		s.baseParams.query = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
 	}
 	,createPosition: function(btn,e) {
 		w = MODx.load({
