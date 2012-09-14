@@ -22,7 +22,7 @@ class AdPositionUpdateProcessor extends modObjectProcessor {
 		$new_order = $this->getProperty('new_order');
 		$old_order = $this->getProperty('old_order');
 		
-		if ($old_order > $old_order) {$direction = 'down';}
+		if ($new_order > $old_order) {$direction = 'down';}
 		else {$direction = 'up';}
 		
 		$positionads = $this->object->getPositionAds();
