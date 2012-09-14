@@ -6,7 +6,7 @@
  * @subpackage lexicon
  */
 $_lang['bannerx'] = 'BannerX';
-$_lang['bannerx.desc'] = 'Управление рекламой';
+$_lang['bannerx.desc'] = 'BannerX - управление рекламой';
 
 $_lang['bannerx.ads'] = 'Баннеры';
 $_lang['bannerx.ads.name'] = 'Название';
@@ -14,7 +14,7 @@ $_lang['bannerx.ads.url'] = 'URL';
 $_lang['bannerx.ads.image'] = 'Изображение';
 $_lang['bannerx.ads.image.new'] = 'Новое изображение';
 $_lang['bannerx.ads.image.current'] = 'Текущее изображение';
-$_lang['bannerx.ads.active'] = 'Активно';
+$_lang['bannerx.ads.active'] = 'Включен';
 $_lang['bannerx.ads.clicks'] = 'Клики';
 $_lang['bannerx.ads.new'] = 'Новый баннер';
 $_lang['bannerx.ads.update'] = 'Обновить баннер';
@@ -22,8 +22,8 @@ $_lang['bannerx.ads.remove'] = 'Удалить баннер';
 $_lang['bannerx.ads.remove.confirm'] = 'Вы уверены, что хотите удалить этот баннер?';
 $_lang['bannerx.ads.error.nf'] = 'Баннер не найден';
 $_lang['bannerx.ads.description'] = 'Текст баннера';
-$_lang['bannerx.ads.enable'] = 'Включить';
-$_lang['bannerx.ads.disable'] = 'Выключить';
+$_lang['bannerx.ads.enable'] = 'Включить баннер';
+$_lang['bannerx.ads.disable'] = 'Выключить баннер';
 
 $_lang['bannerx.positions'] = 'Позиции';
 $_lang['bannerx.positions.name'] = 'Название';
