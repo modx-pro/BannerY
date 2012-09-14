@@ -22,6 +22,8 @@ $_lang['bannerx.ads.remove'] = 'Remove ad';
 $_lang['bannerx.ads.remove.confirm'] = 'Are you sure you want to remove this ad?';
 $_lang['bannerx.ads.error.nf'] = 'Ad not found';
 $_lang['bannerx.ads.description'] = 'Text of banner';
+$_lang['bannerx.ads.enable'] = 'Enable';
+$_lang['bannerx.ads.disable'] = 'Disable';
 
 $_lang['bannerx.positions'] = 'Positions';
 $_lang['bannerx.positions.name'] = 'Name';

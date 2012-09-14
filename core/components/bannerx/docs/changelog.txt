@@ -5,6 +5,7 @@ Changelog for BannerX.
 - Ui improvements. Now you can view all Ads of Position in popup window and sort/remove them.
 - Added drag-n-drop sorting feature for Ads in Position for specifying exact order of displaying.
 - Added properties for snippet BannerX and new sortby - "idx".
+- Added quick enable\disable ads in context menu.
 
 
 0.2.2 pl (06.09.2012)

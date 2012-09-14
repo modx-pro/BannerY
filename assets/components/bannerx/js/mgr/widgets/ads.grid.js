@@ -95,14 +95,20 @@ Bannerx.grid.Ads = function(config) {
     Bannerx.grid.Ads.superclass.constructor.call(this,config);
 };
 Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
-	getMenu: function() {
-		var m = [{
-				text: _('bannerx.ads.update')
-				,handler: this.updateAd
-			},'-',{
-				text: _('bannerx.ads.remove')
-				,handler: this.removeAd
-			}];
+	getMenu: function(grid,idx) {
+		var row = grid.store.data.items[idx]
+		var m = new Array;
+		if (row.data.active == 0) {
+			m.push({text: _('bannerx.ads.enable'),handler: this.enableAd});
+		}
+		else {
+			m.push({text: _('bannerx.ads.disable'),handler: this.disableAd});
+		}
+		m.push(
+			{text: _('bannerx.ads.update'),handler: this.updateAd}
+			,'-'
+			,{text: _('bannerx.ads.remove'),handler: this.removeAd}
+		);
 		this.addContextMenuItem(m);
 		return true;
 	}
@@ -177,19 +183,6 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 				},scope:this}
 			}
 		});
-		
-		/*
-		w = MODx.load({
-			xtype: 'bannerx-window-ad'
-			,update: 1
-			,openTo: openTo
-			,listeners: {
-				'success': {fn:this.refresh,scope:this}
-				,'hide': {fn:function() {this.getEl().remove()}}
-			}
-		});
-		*/
-
 	}
 	,removeAd: function() {
 		MODx.msg.confirm({
@@ -204,6 +197,30 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 				'success': {fn:this.refresh,scope:this}
 			}
 		});
+	}
+	,enableAd: function() {
+		MODx.Ajax.request({
+			url: Bannerx.config.connectorUrl
+			,params: {
+				action: 'mgr/ads/enable'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn:this.refresh,scope:this}
+			}
+		})
+	}
+	,disableAd: function() {
+		MODx.Ajax.request({
+			url: Bannerx.config.connectorUrl
+			,params: {
+				action: 'mgr/ads/disable'
+				,id: this.menu.record.id
+			}
+			,listeners: {
+				'success': {fn:this.refresh,scope:this}
+			}
+		})
 	}
 	,enablePositions: function(positions) {
 		var checkboxgroup = Ext.getCmp('positions');

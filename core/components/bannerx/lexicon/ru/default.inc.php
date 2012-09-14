@@ -22,6 +22,8 @@ $_lang['bannerx.ads.remove'] = 'Удалить баннер';
 $_lang['bannerx.ads.remove.confirm'] = 'Вы уверены, что хотите удалить этот баннер?';
 $_lang['bannerx.ads.error.nf'] = 'Баннер не найден';
 $_lang['bannerx.ads.description'] = 'Текст баннера';
+$_lang['bannerx.ads.enable'] = 'Включить';
+$_lang['bannerx.ads.disable'] = 'Выключить';
 
 $_lang['bannerx.positions'] = 'Позиции';
 $_lang['bannerx.positions.name'] = 'Название';
