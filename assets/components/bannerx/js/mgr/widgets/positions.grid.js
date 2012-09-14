@@ -204,10 +204,18 @@ Bannerx.grid.AdPositions = function(config) {
 				}
 			}
 		})]
-		/*
 		,tbar: [{
+			xtype: 'bannerx-filter-positions'
+			,id: 'bannerx-grid-adpositions-positionsfilter'
+			,position: config.position
+			,mode: 'exclude'
+			,listeners: {
+				'select': {fn:function(combo,row,idx) {
+					this.addAdPosition(row.id, config.position, combo)
+					combo.clearValue();
+				}, scope:this}
+			}
 		}]
-		*/
 	});
 	Bannerx.grid.AdPositions.superclass.constructor.call(this,config)
 };
@@ -230,9 +238,28 @@ Ext.extend(Bannerx.grid.AdPositions,MODx.grid.Grid,{
 				,id: this.menu.record.id
 			}
 			,listeners: {
-				'success': {fn:this.refresh,scope:this}
+				'success': {fn:function() {
+					this.refresh();
+					Ext.getCmp('bannerx-grid-adpositions-positionsfilter').store.reload();
+				},scope:this}
 			}
 		});
+	}
+	,addAdPosition: function(ad, position, combo) {
+		MODx.Ajax.request({
+			url: Bannerx.config.connectorUrl
+			,params: {
+				action: 'mgr/adpositions/add'
+				,ad: ad
+				,position: position
+			}
+			,listeners: {
+				'success': {fn:function() {
+					this.refresh();
+					combo.store.reload();
+				},scope:this}
+			}
+		})
 	}
 });
 Ext.reg('bannerx-grid-adpositions',Bannerx.grid.AdPositions);

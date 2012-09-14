@@ -24,6 +24,8 @@ $_lang['bannerx.ads.error.nf'] = 'Баннер не найден';
 $_lang['bannerx.ads.description'] = 'Текст баннера';
 $_lang['bannerx.ads.enable'] = 'Включить баннер';
 $_lang['bannerx.ads.disable'] = 'Выключить баннер';
+$_lang['bannerx.ads.add'] = 'Добавить баннер';
+$_lang['bannerx.ads.error.ns'] = 'Не указан баннер';
 
 $_lang['bannerx.positions'] = 'Позиции';
 $_lang['bannerx.positions.name'] = 'Название';
@@ -33,10 +35,12 @@ $_lang['bannerx.positions.update'] = 'Обновить позицию';
 $_lang['bannerx.positions.remove'] = 'Удалить позицию';
 $_lang['bannerx.positions.remove.confirm'] = 'Вы уверены, что хотите удалить эту позицию?';
 $_lang['bannerx.positions.error.nf'] = 'Позиция не найдена';
+$_lang['bannerx.positions.error.ns'] = 'Не указана позиция';
 
 $_lang['bannerx.adposition.idx'] = 'Индекс';
 $_lang['bannerx.adposition.remove'] = 'Убрать';
-$_lang['bannerx.adposition.remove.confirm'] = 'Вы уверены ,что хотите убрать показ баннера в этой позиции?';
+$_lang['bannerx.adposition.remove.confirm'] = 'Вы уверены, что хотите убрать показ баннера в этой позиции?';
+$_lang['bannerx.adposition.error.ae'] = 'Этот баннер уже включен для показа в данной позиции.';
 
 
 $_lang['bannerx.stats'] = 'Статистика';

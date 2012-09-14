@@ -60,8 +60,59 @@ Ext.reg('bannerx-panel-home',Bannerx.panel.Home);
 
 
 
+// Search and combos
+/******************************************************/
+MODx.combo.positions = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		name: 'position'
+		,hiddenName: 'position'
+		,displayField: 'name'
+		,valueField: 'id'
+		,editable: true
+		,fields: ['name','id']
+		,pageSize: 10
+		//,value: ''
+		,emptyText: _('bannerx.ads.add')
+		,url: Bannerx.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/ads/getlist'
+			,position: config.position || 0
+			,mode: config.mode || 0
+		}
+	});
+	MODx.combo.positions.superclass.constructor.call(this,config);
+};
+Ext.extend(MODx.combo.positions,MODx.combo.ComboBox);
+Ext.reg('bannerx-filter-positions',MODx.combo.positions);
 
 
+MODx.form.FilterByQuery = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		xtype: 'textfield'
+		,emptyText: _('search')
+		,width: 200
+	});
+	MODx.form.FilterByQuery.superclass.constructor.call(this,config);
+};
+Ext.extend(MODx.form.FilterByQuery,Ext.form.TextField);
+Ext.reg('bannerx-filter-byquery',MODx.form.FilterByQuery);
+
+MODx.form.FilterClear = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		xtype: 'button'
+		,text: _('clear_filter')
+	});
+	MODx.form.FilterClear.superclass.constructor.call(this,config);
+};
+Ext.extend(MODx.form.FilterClear,Ext.Button);
+Ext.reg('bannerx-filter-clear',MODx.form.FilterClear);
+
+
+// Functions
+/******************************************************/
 function renderGridImage(img, height) {
 	if (height == '') {height = 50;}
 	if (img.length > 0) {

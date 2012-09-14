@@ -65,6 +65,17 @@ Bannerx.grid.Ads = function(config) {
 		,tbar: [{
 			text: _('bannerx.ads.new')
 			,handler: this.createAd
+		},{
+			xtype: 'tbfill'
+		},{
+			xtype: 'bannerx-filter-byquery'
+			,id: 'bannerx-ads-filter-byquery'
+			,listeners: {
+				render: {fn: function(tf) {tf.getEl().addKeyListener(Ext.EventObject.ENTER, function() {this.FilterByQuery(tf);}, this);},scope: this}
+			}
+		},{
+			xtype: 'bannerx-filter-clear'
+			,listeners: {click: {fn: this.FilterClear, scope: this}}
 		}]
 		,listeners: {
 			rowDblClick: function(grid, rowIndex, e) {
@@ -111,6 +122,19 @@ Ext.extend(Bannerx.grid.Ads,MODx.grid.Grid,{
 		);
 		this.addContextMenuItem(m);
 		return true;
+	}
+	,FilterClear: function() {
+		var s = this.getStore();
+		s.baseParams.query = '';
+		Ext.getCmp('bannerx-ads-filter-byquery').reset();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
+	}
+	,FilterByQuery: function(tf, nv, ov) {
+		var s = this.getStore();
+		s.baseParams.query = tf.getValue();
+		this.getBottomToolbar().changePage(1);
+		this.refresh();
 	}
 	,createAd: function(btn,e) {
 		if (Bannerx.positionsArray.length == 0) {
