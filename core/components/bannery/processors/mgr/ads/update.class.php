@@ -8,49 +8,30 @@ class AdUpdateProcessor extends modObjectUpdateProcessor {
 		$positions = $this->getProperty('positions');
 		$ad = $this->object->get('id');
 
-		//user selected one or more positions, so update
 		if(is_array($positions)) {
 			//remove unused current positions
 			$q = $this->modx->newQuery('byAdPosition', array('position:NOT IN' => $positions, 'ad' => $ad));
 			$adpositions = $this->modx->getCollection('byAdPosition', $q);
-			foreach ($adpositions as $v) {
-				$tmp = $v->get('position');
-				$v->remove();
-				$this->modx->bannery->refreshIdx($tmp);
+			foreach ($adpositions as $adposition) {
+				$position = $adposition->get('position');
+				$adposition->remove();
+				$this->modx->bannery->refreshIdx($position);
 			}
-			/*
-			$this->modx->removeCollection('byAdPosition',
-									array(
-										'ad' => $this->object->get('id'),
-										'position NOT IN('.implode(',', $positions).')'
-									)
-			);
-			*/
+			// add ad to new postion
 			foreach($positions as $position) {
-				//get current position if it exists
-				$adPos = $this->modx->getObject('byAdPosition', array(
-															'ad' => $ad,
-															'position' => $position
-														  ));
-				//this position is new, so create one
-				if(!is_object($adPos)) {
+				$arr = array('ad' => $ad,'position' => $position);
+				
+				if (!$adPos = $this->modx->getObject('byAdPosition', $arr)) {
 					$adPos = $this->modx->newObject('byAdPosition');
+					$arr['idx'] = $this->modx->getCount('byAdPosition', array('position' => $position));		
 				}
-				//add settings
-				$idx = $this->modx->getCount('byAdPosition', array('position' => $position));
-				$adPos->fromArray(array(
-									'ad' => $ad,
-									'position' => $position,
-									'idx' => $idx
-								  ));
-				//save position
+				$adPos->fromArray($arr);
 				$adPos->save();
 			}
 		}
-
-		//no positions selected, so remove all of them
 		else {
-			$this->modx->removeCollection('byAdPosition', array('ad' => $this->object->get('id')));
+			//no positions selected, so remove all of them
+			$this->modx->removeCollection('byAdPosition', array('ad' => $ad));
 		}
 	}
 }

@@ -1,5 +1,9 @@
 Changelog for BannerY.
 
+1.0.1 pl (1*.09.2012)
+============
+- Fixed ads/update processor, so now it not change idx of existing AdPosition
+
 1.0.0 pl (13.09.2012)
 ============
 - Renamed to BannerY
@@ -10,8 +14,6 @@ Changelog for BannerY.
 - Added quick enable\disable ads in context menu.
 - Added filter by position in ads grid
 - Added search in ads and positions grids
-
-
 
 
 0.2.2 pl (06.09.2012)
