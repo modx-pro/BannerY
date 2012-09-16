@@ -11,6 +11,7 @@ $_lang['bannery.desc'] = 'BannerY - управление рекламой';
 $_lang['bannery.ads'] = 'Баннеры';
 $_lang['bannery.ads.name'] = 'Название';
 $_lang['bannery.ads.url'] = 'URL';
+$_lang['bannery.ads.url.description'] = 'Вы можете указать ресурс сайта или http адрес';
 $_lang['bannery.ads.image'] = 'Изображение';
 $_lang['bannery.ads.image.new'] = 'Новое изображение';
 $_lang['bannery.ads.image.current'] = 'Текущее изображение';

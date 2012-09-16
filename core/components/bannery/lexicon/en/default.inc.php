@@ -11,6 +11,7 @@ $_lang['bannery.desc'] = 'BannerY - manage ads';
 $_lang['bannery.ads'] = 'Ads';
 $_lang['bannery.ads.name'] = 'Name';
 $_lang['bannery.ads.url'] = 'URL';
+$_lang['bannery.ads.url.description'] = 'You can specify site resource or an http address';
 $_lang['bannery.ads.image'] = 'Image';
 $_lang['bannery.ads.image.new'] = 'New image';
 $_lang['bannery.ads.image.current'] = 'Current image';

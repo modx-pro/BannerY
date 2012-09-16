@@ -317,9 +317,10 @@ Bannery.window.Ad = function(config) {
 							,border: false
 							,layout: 'form'
 							,items: [{
-								xtype: 'textfield'
+								xtype: 'bannery-filter-resources'
 								,fieldLabel: _('bannery.ads.url')
 								,name: 'url'
+								,description: _('bannery.ads.url.description')
 								,anchor: '99%'
 								,allowBlank: true
 							}]

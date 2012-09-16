@@ -96,7 +96,6 @@ MODx.combo.positions = function(config) {
 		,editable: true
 		,fields: ['name','id']
 		,pageSize: 10
-		//,value: ''
 		,emptyText: _('bannery.positions.select')
 		,url: Bannery.config.connectorUrl
 		,baseParams: {
@@ -108,6 +107,27 @@ MODx.combo.positions = function(config) {
 Ext.extend(MODx.combo.positions,MODx.combo.ComboBox);
 Ext.reg('bannery-filter-positions',MODx.combo.positions);
 
+
+MODx.combo.resources = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		name: 'url'
+		,hiddenName: 'url'
+		,displayField: 'pagetitle'
+		,valueField: 'url'
+		,editable: true
+		,fields: ['pagetitle','url']
+		,pageSize: 10
+		,emptyText: ''
+		,url: Bannery.config.connectorUrl
+		,baseParams: {
+			action: 'mgr/resource/getlist'
+		}
+	});
+	MODx.combo.resources.superclass.constructor.call(this,config);
+};
+Ext.extend(MODx.combo.resources,MODx.combo.ComboBox);
+Ext.reg('bannery-filter-resources',MODx.combo.resources);
 
 MODx.form.FilterByQuery = function(config) {
 	config = config || {};
