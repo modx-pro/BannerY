@@ -27,6 +27,7 @@ class BannerY {
 			'cssUrl' => $assetsUrl.'css/',
 			'assetsUrl' => $assetsUrl,
 			'connectorUrl' => $assetsUrl.'connector.php',
+			'managerUrl' => $this->modx->getOption('manager_url'),
 		),$config);
 
 		$this->modx->addPackage('bannery',$this->config['modelPath']);

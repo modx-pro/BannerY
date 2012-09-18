@@ -35,7 +35,7 @@ Bannery.panel.Stats = function(config) {
                         },{
                             xtype:'columnchart'
                             ,id: 'clickchart'
-                            ,url: Bannery.config.baseUrl + 'manager/assets/ext3/resources/charts.swf'
+                            ,url: Bannery.config.managerUrl + 'assets/ext3/resources/charts.swf'
                             ,xField: 'name'
                             ,yField: 'clicks'
                             ,height: 200
