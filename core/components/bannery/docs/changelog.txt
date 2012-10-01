@@ -1,9 +1,9 @@
 Changelog for BannerY.
 
-1.0.1 pl (1*.09.2012)
+1.0.1 pl (01.10.2012)
 ============
 - Fixed ads/update processor, so now it not change idx of existing AdPosition
-- Added combobox for easy selecting of site resources. Also you can specify http address.
+- Added combobox for easy selecting of site resources. Also you can specify custom urls (verificated by filter_var()).
 - Removed hardcoded manager url from stats.panel.js.
 
 1.0.0 pl (13.09.2012)
