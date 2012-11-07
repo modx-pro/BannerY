@@ -359,6 +359,39 @@ Bannery.window.Ad = function(config) {
 					}
 				}
 			},{
+				items: [{
+					layout: 'form'
+					,items: [{
+						layout: 'column'
+						,border: false
+						,items: [{
+							columnWidth: .5
+							,border: false
+							,layout: 'form'
+							,items: [{
+								xtype : 'datefield'
+								,fieldLabel: 'Старт показов'
+								,name: 'start'
+								,allowBlank: true
+				                                ,format: 'Y-m-d'
+				                                ,altFormats: 'Y-m-d 00:00:00'
+							}]
+						},{
+							columnWidth: .5
+							,border: false
+							,layout: 'form'
+							,items: [{
+								xtype : 'datefield'
+								,fieldLabel: 'Конец показов'
+								,name: 'end'
+								,allowBlank: true
+				                                ,format: 'Y-m-d'
+				                                ,altFormats: 'Y-m-d 00:00:00'
+							}]
+						}]
+					}]
+				}]
+			},{
 				xtype: 'textarea'
 				,fieldLabel: _('bannery.ads.description')
 				,name: 'description'
