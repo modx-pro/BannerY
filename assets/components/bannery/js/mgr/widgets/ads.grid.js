@@ -379,8 +379,8 @@ Bannery.window.Ad = function(config) {
 								,fieldLabel: 'Старт показов'
 								,name: 'start'
 								,allowBlank: true
-				                                ,format: 'Y-m-d'
-				                                ,altFormats: 'Y-m-d 00:00:00'
+				                                ,format: 'Y-m-d H:i:s'
+				                                ,altFormats: 'Y-m-d H:i:s'
 							}]
 						},{
 							columnWidth: .5
@@ -391,8 +391,8 @@ Bannery.window.Ad = function(config) {
 								,fieldLabel: 'Конец показов'
 								,name: 'end'
 								,allowBlank: true
-				                                ,format: 'Y-m-d'
-				                                ,altFormats: 'Y-m-d 00:00:00'
+				                                ,format: 'Y-m-d H:i:s'
+				                                ,altFormats: 'Y-m-d H:i:s'
 							}]
 						}]
 					}]
