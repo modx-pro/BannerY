@@ -14,9 +14,11 @@ if($position > 0) {
 	$c->select('byAd.id AS id, byAd.name AS name, byAd.image AS image, byAd.url AS url, pos.id AS adposition, pos.idx AS idx');
 	$c->leftJoin('byAdPosition', 'pos', 'pos.ad=byAd.id');
 	$c->where(array(
-					'byAd.active' => 1,
-					'pos.position' => $position
-			  )
+		'byAd.active' => 1,
+		'pos.position' => $position
+		'byAd.start:<' => date('Y-m-d H:i:s', time()),
+		'byAd.end:>' => date('Y-m-d H:i:s', time())
+	  )
 	);
 	if($sortby == 'RAND()') {
 		$c->sortby('RAND()');
