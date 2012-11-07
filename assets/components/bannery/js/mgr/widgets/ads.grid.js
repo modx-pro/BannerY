@@ -381,6 +381,7 @@ Bannery.window.Ad = function(config) {
 								,allowBlank: true
 				                                ,format: 'Y-m-d H:i:s'
 				                                ,altFormats: 'Y-m-d H:i:s'
+                                                                ,width: 170
 							}]
 						},{
 							columnWidth: .5
@@ -393,6 +394,7 @@ Bannery.window.Ad = function(config) {
 								,allowBlank: true
 				                                ,format: 'Y-m-d H:i:s'
 				                                ,altFormats: 'Y-m-d H:i:s'
+							        ,width: 170
 							}]
 						}]
 					}]
