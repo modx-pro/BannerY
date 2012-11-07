@@ -6,6 +6,8 @@
         <field key="image" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
         <field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
         <field key="description" dbtype="text" phptype="string" null="true" />
+	<field key="start" dbtype="datetime" phptype="timestamp" null="true" />
+	<field key="end" dbtype="datetime" phptype="timestamp" null="true" />
 
         <composite alias="Positions" class="byAdPosition" local="id" foreign="ad" cardinality="many" owner="local" />
         <composite alias="Clicks" class="byClick" local="id" foreign="ad" cardinality="many" owner="local" />
