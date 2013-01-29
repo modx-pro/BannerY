@@ -27,7 +27,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 			Ext.getCmp('currimg').hide();
 		}
 		else {
-			this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=mgr&h=100&zc=0';
+			this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=mgr&h=100&zc=0&source='+Bannery.config.media_source;
 			Ext.getCmp('currimg').show();
 		}
 	}
