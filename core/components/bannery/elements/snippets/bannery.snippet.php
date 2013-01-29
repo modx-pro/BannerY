@@ -40,7 +40,8 @@ if($position > 0) {
 	$ads = $modx->getCollection('byAd', $c);
 	foreach($ads as $ad) {
 		$ad = $ad->toArray();
-		$ad['image'] = $source->getObjectUrl($ad['image']);
+		if (!empty($ad['image']))
+			$ad['image'] = $source->getObjectUrl($ad['image']);
 		$output .= $modx->getChunk($tpl, $ad);
 	}
 }
