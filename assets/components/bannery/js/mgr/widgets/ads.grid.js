@@ -345,7 +345,7 @@ Bannery.window.Ad = function(config) {
 				xtype: 'modx-combo-browser'
 				,fieldLabel: config.update ? '' : _('bannery.ads.image.new')
 				,name: 'newimage'
-				,source: MODx.config.default_media_source
+				,source: Bannery.config.media_source
 				,hideFiles: true
 				,anchor: '99%'
 				,allowBlank: true

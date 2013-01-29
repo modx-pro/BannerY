@@ -29,9 +29,18 @@ if($position > 0) {
 	}
 	$c->limit($limit);
 
+	$sourceId = $modx->getOption('bannery.media_source', null, $modx->getOption('default_media_source'));
+	$source = $modx->getObject('sources.modMediaSource',array('id'=>$sourceId));
+	if (!$source)
+		$source = modMediaSource::getDefaultSource($modx);
+	$source->initialize();
+	$source->getWorkingContext();
+
+
 	$ads = $modx->getCollection('byAd', $c);
 	foreach($ads as $ad) {
 		$ad = $ad->toArray();
+		$ad['image'] = $source->getObjectUrl($ad['image']);
 		$output .= $modx->getChunk($tpl, $ad);
 	}
 }
