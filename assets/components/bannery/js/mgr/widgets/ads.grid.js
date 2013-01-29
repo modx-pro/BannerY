@@ -353,8 +353,8 @@ Bannery.window.Ad = function(config) {
 				,listeners: {
 					'select': {
 						fn:function(data) {
-							Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
-							Ext.getCmp('image').setValue(data.fullRelativeUrl);
+							Ext.getCmp('currimg').setSrc(data.relativeUrl);
+							Ext.getCmp('image').setValue(data.relativeUrl);
 						}
 					}
 				}
