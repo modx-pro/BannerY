@@ -34,8 +34,6 @@ if($position > 0) {
 	if (!$source)
 		$source = modMediaSource::getDefaultSource($modx);
 	$source->initialize();
-	$source->getWorkingContext();
-
 
 	$ads = $modx->getCollection('byAd', $c);
 	foreach($ads as $ad) {
