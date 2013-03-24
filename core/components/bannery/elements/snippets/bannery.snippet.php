@@ -44,7 +44,7 @@ if($position > 0) {
 			$ad['image'] = $source->getObjectUrl($ad['image']);
 		$output .= $modx->getChunk($tpl, $ad);
 	}
-	if (!empty($tplOuter)) {
+	if (!empty($tplOuter) && !empty($output)) {
 		$output = $modx->getChunk($tplOuter, array('items'=>$output));
 	}
 
