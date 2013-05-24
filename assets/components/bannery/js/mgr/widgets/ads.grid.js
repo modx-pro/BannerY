@@ -98,7 +98,7 @@ Bannery.grid.Ads = function(config) {
     Bannery.posStore = new Ext.data.JsonStore({
        url: Bannery.config.connectorUrl
       ,root: 'results'
-      ,baseParams: { action: 'mgr/positions/getlist' }
+      ,baseParams: { action: 'mgr/positions/getlist', limit : 0 }
       ,fields: ["id", "name"]
       ,autoLoad: true
       ,listeners: {
