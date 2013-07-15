@@ -1,5 +1,18 @@
 Changelog for BannerY.
 
+1.1.0 beta (15.07.2013)
+============
+- Special version by Evd.
+- Renamed "ads.grid.js" to "banners.grid.js" because of adBlock issue.
+- Support media source for image
+- Fixed empty image
+- Fixed displaying image in grid and update window
+- Fixed select image in browser
+- Add settings on install/upgrade
+- Removed unused getWorkingContext
+- New snippet parameters: "tplOuter" & "toPlaceholder".
+- Outer template don't render if output empty
+
 1.0.1 pl (01.10.2012)
 ============
 - Fixed ads/update processor, so now it not change idx of existing AdPosition
