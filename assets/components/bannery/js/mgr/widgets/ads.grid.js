@@ -27,7 +27,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 			Ext.getCmp('currimg').hide();
 		}
 		else {
-			this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=mgr&h=100&zc=0';
+			this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=mgr&h=100&zc=0&source='+Bannery.config.media_source;
 			Ext.getCmp('currimg').show();
 		}
 	}
@@ -345,7 +345,7 @@ Bannery.window.Ad = function(config) {
 				xtype: 'modx-combo-browser'
 				,fieldLabel: config.update ? '' : _('bannery.ads.image.new')
 				,name: 'newimage'
-				,source: MODx.config.default_media_source
+				,source: Bannery.config.media_source
 				,hideFiles: true
 				,anchor: '99%'
 				,allowBlank: true
@@ -353,8 +353,8 @@ Bannery.window.Ad = function(config) {
 				,listeners: {
 					'select': {
 						fn:function(data) {
-							Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
-							Ext.getCmp('image').setValue(data.fullRelativeUrl);
+							Ext.getCmp('currimg').setSrc(data.relativeUrl);
+							Ext.getCmp('image').setValue(data.relativeUrl);
 						}
 					}
 				}

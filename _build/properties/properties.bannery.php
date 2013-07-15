@@ -13,6 +13,12 @@ $properties[0] = array(
 		'desc' => 'Name of a chunk for templating an Ad.',
 	),
 	array(
+		'name' => 'tplOuter',
+		'value' => '',
+		'type' => 'textfield',
+		'desc' => 'Name of a chunk for outer templating.',
+	),
+	array(
 		'name' => 'limit',
 		'value' => 5,
 		'type' => 'numberfield',
@@ -43,6 +49,12 @@ $properties[0] = array(
             array('text' => 'DESC','value' => 'DESC'),
         ),
 	),
+	array(
+		'name' => 'toPlaceholder',
+		'value' => '',
+		'type' => 'textfield',
+		'desc' => 'If set, will assign the result to this placeholder instead of outputting it directly.',
+	)
 );
 
 return $properties;
