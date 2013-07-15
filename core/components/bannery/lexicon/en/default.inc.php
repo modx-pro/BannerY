@@ -54,3 +54,6 @@ $_lang['bannery.stats.today'] = 'Today';
 $_lang['bannery.stats.overall'] = 'Overall';
 
 $_lang['bannery.error.no_positions'] = 'You must create at least one position for placement of banners.';
+
+$_lang['setting_bannery.media_source'] = 'Media source';
+$_lang['setting_bannery.media_source_desc'] = 'Media source for banners images';

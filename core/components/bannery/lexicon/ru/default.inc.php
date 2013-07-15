@@ -55,3 +55,6 @@ $_lang['bannery.stats.today'] = 'Сегодня';
 $_lang['bannery.stats.overall'] = 'За все время';
 
 $_lang['bannery.error.no_positions'] = 'Вы должны создать хотя бы одну позицию для размещения баннеров.';
+
+$_lang['setting_bannery.media_source'] = 'Источник файлов';
+$_lang['setting_bannery.media_source_desc'] = 'Источник файлов для изображений баннеров';
