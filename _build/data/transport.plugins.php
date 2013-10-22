@@ -1,19 +1,53 @@
 <?php
+
 $plugins = array();
 
-$plugins[0] = $modx->newObject('modPlugin');
-$plugins[0]->set('id', 0);
-$plugins[0]->set('name', 'BannerYClickout');
-$plugins[0]->set('description', 'Handle ad clicks');
-$plugins[0]->set('plugincode', file_get_contents($sources['source_core'].'/elements/plugins/banneryclickout.plugin.php'));
+$tmp = array(
+	'BannerYClickout' => array(
+		'file' => 'banneryclickout',
+		'description' => 'Handle ad clicks',
+		'events' => array(
+			'OnPageNotFound' => array()
+		)
+	)
+);
 
-/* add plugin events */
-$events = include $sources['data'].'transport.plugins.events.php';
-if (is_array($events) && !empty($events)) {
-    $plugins[0]->addMany($events);
-    $modx->log(xPDO::LOG_LEVEL_INFO,'Packaged in '.count($events).' Plugin Events.'); flush();
-} else {
-    $modx->log(xPDO::LOG_LEVEL_ERROR,'Could not find plugin events!');
+foreach ($tmp as $k => $v) {
+	/* @avr modplugin $plugin */
+	$plugin = $modx->newObject('modPlugin');
+	$plugin->fromArray(array(
+		'name' => $k,
+		'category' => 0,
+		'description' => @$v['description'],
+		'plugincode' => getSnippetContent($sources['source_core'].'/elements/plugins/plugin.'.$v['file'].'.php'),
+		'static' => BUILD_PLUGIN_STATIC,
+		'source' => 1,
+		'static_file' => 'core/components/'.PKG_NAME_LOWER.'/elements/plugins/plugin.'.$v['file'].'.php'
+	),'',true,true);
+
+	$events = array();
+	if (!empty($v['events'])) {
+		foreach ($v['events'] as $k2 => $v2) {
+			/* @var modPluginEvent $event */
+			$event = $modx->newObject('modPluginEvent');
+			$event->fromArray(array_merge(
+				array(
+					'event' => $k2,
+					'priority' => 0,
+					'propertyset' => 0,
+				), $v2
+			),'',true,true);
+			$events[] = $event;
+		}
+		unset($v['events']);
+	}
+
+	if (!empty($events)) {
+		$plugin->addMany($events);
+	}
+
+	$plugins[] = $plugin;
 }
 
+unset($tmp, $properties);
 return $plugins;

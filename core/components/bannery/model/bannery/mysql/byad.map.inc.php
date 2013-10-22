@@ -1,14 +1,16 @@
 <?php
 $xpdo_meta_map['byAd']= array (
   'package' => 'bannery',
+  'version' => '1.1',
   'table' => 'bannery_ads',
+  'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
     'name' => '',
     'url' => '',
     'image' => '',
     'active' => 0,
-	'description' => '',
+    'description' => NULL,
   ),
   'fieldMeta' => 
   array (

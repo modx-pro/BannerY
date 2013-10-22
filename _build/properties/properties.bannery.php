@@ -1,5 +1,8 @@
 <?php
-$properties[0] = array(
+
+$properties = array();
+
+$tmp = array(
 	array(
 		'name' => 'position',
 		'value' => 0,
@@ -29,25 +32,25 @@ $properties[0] = array(
 		'value' => 'RAND()',
 		'type' => 'list',
 		'desc' => 'Return results in specified order. It can be any field of byAd, "RAND()" or "idx" - index of ad in position.',
-        'options' => array(
-            array('text' => 'Random','value' => 'RAND()'),
-            array('text' => 'Index','value' => 'idx'),
-            array('text' => 'Name','value' => 'name'),
-            array('text' => 'Url','value' => 'url'),
-            array('text' => 'Image','value' => 'image'),
-            array('text' => 'Active','value' => 'active'),
-            array('text' => 'Description','value' => 'description'),
-        ),
+		'options' => array(
+			array('text' => 'Random','value' => 'RAND()'),
+			array('text' => 'Index','value' => 'idx'),
+			array('text' => 'Name','value' => 'name'),
+			array('text' => 'Url','value' => 'url'),
+			array('text' => 'Image','value' => 'image'),
+			array('text' => 'Active','value' => 'active'),
+			array('text' => 'Description','value' => 'description'),
+		),
 	),
 	array(
 		'name' => 'sortdir',
 		'value' => 'ASC',
 		'type' => 'list',
 		'desc' => 'Order of the results',
-        'options' => array(
-            array('text' => 'ASC','value' => 'ASC'),
-            array('text' => 'DESC','value' => 'DESC'),
-        ),
+		'options' => array(
+			array('text' => 'ASC','value' => 'ASC'),
+			array('text' => 'DESC','value' => 'DESC'),
+		),
 	),
 	array(
 		'name' => 'toPlaceholder',
@@ -57,5 +60,14 @@ $properties[0] = array(
 	)
 );
 
+foreach ($tmp as $k => $v) {
+	$properties[] = array_merge(
+		array(
+			'name' => $k,
+			'desc' => PKG_NAME_LOWER . '_prop_' . $k,
+			'lexicon' => PKG_NAME_LOWER . ':properties',
+		), $v
+	);
+}
+
 return $properties;
-?>

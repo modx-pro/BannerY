@@ -1,7 +1,9 @@
 <?php
 $xpdo_meta_map['byPosition']= array (
   'package' => 'bannery',
+  'version' => '1.1',
   'table' => 'bannery_positions',
+  'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
     'name' => '',

@@ -1,7 +1,9 @@
 <?php
 $xpdo_meta_map['byClick']= array (
   'package' => 'bannery',
+  'version' => '1.1',
   'table' => 'bannery_clicks',
+  'extends' => 'xPDOSimpleObject',
   'fields' => 
   array (
     'ad' => NULL,

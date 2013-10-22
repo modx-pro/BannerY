@@ -1,10 +1,29 @@
 <?php
+
 $chunks = array();
 
-$chunks[0] = $modx->newObject('modChunk');
-$chunks[0]->set('id', 0);
-$chunks[0]->set('name', 'byAd');
-$chunks[0]->set('description', 'BannerY Ad');
-$chunks[0]->set('snippet', file_get_contents($sources['source_core'].'/elements/chunks/byAd.chunk.tpl'));
+$tmp = array(
+	'byAd' => array(
+		'file' => 'byad',
+		'description' => 'BannerY Ad',
+	),
+);
 
+foreach ($tmp as $k => $v) {
+	/* @avr modChunk $chunk */
+	$chunk = $modx->newObject('modChunk');
+	$chunk->fromArray(array(
+		'id' => 0,
+		'name' => $k,
+		'description' => @$v['description'],
+		'snippet' => file_get_contents($sources['source_core'].'/elements/chunks/chunk.'.$v['file'].'.tpl'),
+		'static' => BUILD_CHUNK_STATIC,
+		'source' => 1,
+		'static_file' => 'core/components/'.PKG_NAME_LOWER.'/elements/chunks/chunk.'.$v['file'].'.tpl',
+	),'',true,true);
+
+	$chunks[] = $chunk;
+}
+
+unset($tmp);
 return $chunks;

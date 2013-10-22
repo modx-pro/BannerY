@@ -1,12 +1,32 @@
 <?php
+
 $snippets = array();
-$properties = include $sources['build'].'properties/properties.bannery.php';
 
-$snippets[0] = $modx->newObject('modSnippet');
-$snippets[0]->set('id', 0);
-$snippets[0]->set('name', 'BannerY');
-$snippets[0]->set('description', 'Show ads on your site');
-$snippets[0]->set('snippet', file_get_contents($sources['source_core'].'/elements/snippets/bannery.snippet.php'));
-$snippets[0]->setProperties($properties[0]);
+$tmp = array(
+	'BannerY' => array(
+		'file' => 'bannery',
+		'description' => 'Show ads on your site',
+	),
+);
 
+foreach ($tmp as $k => $v) {
+	/* @avr modSnippet $snippet */
+	$snippet = $modx->newObject('modSnippet');
+	$snippet->fromArray(array(
+		'id' => 0,
+		'name' => $k,
+		'description' => @$v['description'],
+		'snippet' => getSnippetContent($sources['source_core'].'/elements/snippets/snippet.'.$v['file'].'.php'),
+		'static' => BUILD_SNIPPET_STATIC,
+		'source' => 1,
+		'static_file' => 'core/components/'.PKG_NAME_LOWER.'/elements/snippets/snippet.'.$v['file'].'.php',
+	),'',true,true);
+
+	$properties = include $sources['build'].'properties/properties.'.$v['file'].'.php';
+	$snippet->setProperties($properties);
+
+	$snippets[] = $snippet;
+}
+
+unset($tmp, $properties);
 return $snippets;
