@@ -85,7 +85,7 @@ $tmp = array(
 		'type' => 'textfield',
 		'value' => '',
 	),
-	'toSeparatePlaceholder' => array(
+	'toSeparatePlaceholders' => array(
 		'type' => 'textfield',
 		'value' => '',
 	),
