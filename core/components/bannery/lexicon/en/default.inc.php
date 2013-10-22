@@ -27,6 +27,7 @@ $_lang['bannery.ads.enable'] = 'Enable ad';
 $_lang['bannery.ads.disable'] = 'Disable ad';
 $_lang['bannery.ads.add'] = 'Add ad';
 $_lang['bannery.ads.error.ns'] = 'Ad not set';
+$_lang['bannery.ads.source'] = 'Media source';
 
 $_lang['bannery.positions'] = 'Positions';
 $_lang['bannery.positions.name'] = 'Name';
@@ -54,6 +55,3 @@ $_lang['bannery.stats.today'] = 'Today';
 $_lang['bannery.stats.overall'] = 'Overall';
 
 $_lang['bannery.error.no_positions'] = 'You must create at least one position for placement of banners.';
-
-$_lang['setting_bannery.media_source'] = 'Media source';
-$_lang['setting_bannery.media_source_desc'] = 'Media source for banners images';

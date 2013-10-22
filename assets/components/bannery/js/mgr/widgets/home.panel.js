@@ -58,10 +58,46 @@ Ext.reg('bannery-panel-home',Bannery.panel.Home);
 
 
 
+/******************************************************/
+// Image preview
+Ext.BLANK_IMAGE_URL = '/assets/components/bannery/img/_blank.png'
+
+Ext.ux.Image = Ext.extend(Ext.Component, {
+	url  : Ext.BLANK_IMAGE_URL  //for initial src value
+	,autoEl: {
+		tag: 'img'
+		,src: Ext.BLANK_IMAGE_URL
+		,cls: 'tng-managed-image'
+		,width: 'auto'
+		,height: 100
+	}
+//  Add our custom processing to the onRender phase.
+//  We add a ‘load’ listener to our element.
+	,onRender: function() {
+		Ext.ux.Image.superclass.onRender.apply(this, arguments);
+		this.el.on('load', this.onLoad, this);
+		if(this.url){
+			this.setSrc(this.url);
+		}
+	}
+	,onLoad: function() {
+		this.fireEvent('load', this);
+	}
+	,setSrc: function(src) {
+		if(src == '' || src == undefined) {
+			this.el.dom.src = Ext.BLANK_IMAGE_URL;
+			Ext.getCmp('currimg').hide();
+		}
+		else {
+			this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=mgr&h=100&zc=0';
+			Ext.getCmp('currimg').show();
+		}
+	}
+});
+Ext.reg('image', Ext.ux.Image);
 
 
 // Search and combos
-/******************************************************/
 MODx.combo.ads = function(config) {
 	config = config || {};
 	Ext.applyIf(config,{
@@ -85,6 +121,7 @@ MODx.combo.ads = function(config) {
 };
 Ext.extend(MODx.combo.ads,MODx.combo.ComboBox);
 Ext.reg('bannery-filter-ads',MODx.combo.ads);
+
 
 MODx.combo.positions = function(config) {
 	config = config || {};
@@ -129,6 +166,7 @@ MODx.combo.resources = function(config) {
 Ext.extend(MODx.combo.resources,MODx.combo.ComboBox);
 Ext.reg('bannery-filter-resources',MODx.combo.resources);
 
+
 MODx.form.FilterByQuery = function(config) {
 	config = config || {};
 	Ext.applyIf(config,{
@@ -141,6 +179,7 @@ MODx.form.FilterByQuery = function(config) {
 Ext.extend(MODx.form.FilterByQuery,Ext.form.TextField);
 Ext.reg('bannery-filter-byquery',MODx.form.FilterByQuery);
 
+
 MODx.form.FilterClear = function(config) {
 	config = config || {};
 	Ext.applyIf(config,{
@@ -151,6 +190,67 @@ MODx.form.FilterClear = function(config) {
 };
 Ext.extend(MODx.form.FilterClear,Ext.Button);
 Ext.reg('bannery-filter-clear',MODx.form.FilterClear);
+
+
+MODx.combo.AdBrowser = function(config) {
+	config = config || {};
+	Ext.applyIf(config,{
+		width: 300
+		,triggerAction: 'all'
+		,source: config.source || 1
+	});
+	MODx.combo.AdBrowser.superclass.constructor.call(this,config);
+	this.config = config;
+	this.browser = [];
+};
+Ext.extend(MODx.combo.AdBrowser,MODx.combo.Browser,{
+	browser: null
+
+	,onTriggerClick : function(btn){
+		if (this.disabled){
+			return false;
+		}
+
+		var source = Ext.getCmp('modx-combo-source')
+		var source_id = source.getValue() || 1;
+		if (!this.browser[source]) {
+			this.browser[source] = MODx.load({
+				xtype: 'modx-browser'
+				,id: Ext.id()
+				,multiple: true
+				,source: source_id
+				,hideFiles: this.config.hideFiles || false
+				,rootVisible: this.config.rootVisible || false
+				,allowedFileTypes: this.config.allowedFileTypes || ''
+				,wctx: this.config.wctx || 'web'
+				,openTo: this.config.openTo || ''
+				,rootId: this.config.rootId || '/'
+				,hideSourceCombo: this.config.hideSourceCombo || false
+				,listeners: {
+					'select': {fn: function(data) {
+						this.setValue(data.relativeUrl);
+						this.fireEvent('select',data);
+						var matched = data.thumb.match(/source=([0-9]{1,})$/);
+						if  (matched && matched[1]) {
+							source.setValue(matched[1]);
+						}
+						else {
+							source.setValue('');
+						}
+					},scope:this}
+				}
+			});
+		}
+		this.browser[source].show(btn);
+
+		return true;
+	}
+
+	,onDestroy: function(){
+		MODx.combo.AdBrowser.superclass.onDestroy.call(this);
+	}
+});
+Ext.reg('modx-combo-adbrowser',MODx.combo.AdBrowser);
 
 
 // Functions

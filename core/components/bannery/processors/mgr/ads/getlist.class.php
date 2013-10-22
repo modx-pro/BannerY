@@ -33,11 +33,14 @@ class AdGetListProcessor extends modObjectGetListProcessor {
 		
 		return $c;
 	}
-	
+
 	function prepareRow(xPDOObject $object) {
-		$object = $object->toArray();
-		$object['clicks'] = $this->modx->getCount('byClick', array('ad' => $object['id']));
-		return $object;
+		/** @var byAd $object */
+		$row = $object->toArray();
+		$row['clicks'] = $this->modx->getCount('byClick', array('ad' => $row['id']));
+		$row['current_image'] = $object->getImageUrl();
+
+		return $row;
 	}
 }
 return 'AdGetListProcessor';

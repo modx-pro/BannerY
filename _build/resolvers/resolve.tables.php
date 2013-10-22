@@ -17,8 +17,8 @@ if ($object->xpdo) {
 				'byAdPosition',
 				'byClick',
 			);
-			foreach ($objects as $object) {
-				$manager->createObjectContainer($object);
+			foreach ($objects as $v) {
+				$manager->createObjectContainer($v);
 			}
 
 			$level = $modx->getLogLevel();
