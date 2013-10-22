@@ -1,58 +1,142 @@
 <?php
 /** @var array $scriptProperties */
-$modx->addPackage('bannery', $modx->getOption('core_path').'components/bannery/model/');
+/* @var pdoFetch $pdoFetch */
+if (!$modx->getService('pdoFetch')) {return 'You need to install pdoTools to use this snippet!';}
+$pdoFetch = new pdoFetch($modx, $scriptProperties);
+$pdoFetch->addTime('pdoTools loaded');
 $modx->lexicon->load('bannery:default');
+$modx->addPackage('bannery', MODX_CORE_PATH . 'components/bannery/model/');
 
-$limit = $modx->getOption('limit', $scriptProperties, 5);
-$sortdir = $modx->getOption('sortdir', $scriptProperties, 'ASC');
-$sortby = $modx->getOption('sortby', $scriptProperties, 'RAND()');
-$tpl = $modx->getOption('tpl', $scriptProperties, 'byAd');
-$tplOuter = $modx->getOption('tplOuter', $scriptProperties, null);
-$position = $modx->getOption('position', $scriptProperties, 0);
-$toPlaceholder = $modx->getOption('toPlaceholder', $scriptProperties, null);
-$output = '';
+if (!empty($tplOuter)) {$tplWrapper = $tplOuter;}
+if (empty($outputSeparator)) {$outputSeparator = "\n";}
+$class = 'byAd';
 
-if($position > 0) {
-	$c = $modx->newQuery('byAd');
-	$c->select('byAd.id AS id, byAd.name AS name, byAd.image AS image, byAd.url AS url, pos.id AS adposition, pos.idx AS idx');
-	$c->leftJoin('byAdPosition', 'pos', 'pos.ad=byAd.id');
-	$c->where(array(
-					'byAd.active' => 1,
-					'pos.position' => $position
-			  )
-	);
-	if($sortby == 'RAND()') {
-		$c->sortby('RAND()');
+// Adding extra parameters into special place so we can put them in results
+/** @var modSnippet $snippet */
+$additionalPlaceholders = array();
+if ($snippet = $modx->getObject('modSnippet', array('name' => 'BannerY'))) {
+	$properties = unserialize($snippet->properties);
+	foreach ($scriptProperties as $k => $v) {
+		if (!isset($properties[$k])) {
+			$additionalPlaceholders[$k] = $v;
+		}
 	}
-	else if($sortby == 'idx' || $sortby == 'index') {
-		$c->sortby('pos.idx', $sortdir);
+}
+// ---
+
+$where = array();
+if (empty($showInactive)) {
+	$where[$class.'.active'] = 1;
+}
+if (!empty($position)) {
+	$where['byAdPosition.position'] = $position;
+}
+elseif (!empty($positions)) {
+	$where['byAdPosition.position:IN'] = array_map('trim', explode(',', $positions));
+}
+
+if (empty($sortby)) {
+	$sortby = 'RAND()';
+}
+elseif ($sortby == 'idx' || $sortby == 'index') {
+	$sortby = 'byAdPosition.idx';
+}
+else {
+	$sortby = 'byAd.'.$sortby;
+}
+
+$innerJoin = array(
+	'byAdPosition' => array(
+		'alias' => 'byAdPosition',
+		'on' => $class.'.id = byAdPosition.ad'
+	)
+);
+
+// Fields to select
+$select = array(
+	$class => 'all',
+	'byAdPosition' => '`byAdPosition`.`id` as `adposition`, `byAdPosition`.`ad`'
+);
+
+// Add custom parameters
+foreach (array('where','innerJoin','select') as $v) {
+	if (!empty($scriptProperties[$v])) {
+		$tmp = $modx->fromJSON($scriptProperties[$v]);
+		if (is_array($tmp)) {
+			$$v = array_merge($$v, $tmp);
+		}
+	}
+	unset($scriptProperties[$v]);
+}
+$pdoFetch->addTime('Conditions prepared');
+
+$default = array(
+	'class' => $class,
+	'innerJoin' => $modx->toJSON($innerJoin),
+	'where' => $modx->toJSON($where),
+	'select' => $modx->toJSON($select),
+	'sortby' => $sortby,
+	'groupby' => $class.'.id',
+	'return' => 'data',
+	'disableConditions' => true,
+);
+
+$pdoFetch->setConfig(array_merge($default, $scriptProperties));
+$rows = $pdoFetch->run();
+
+$output = array();
+$default_source = $modx->getOption('bannery.media_source', null, $modx->getOption('default_media_source'));
+$sources = array();
+foreach ($rows as $row) {
+	$source = !empty($row['source'])
+		? $row['source']
+		: $default_source;
+
+	if (!isset($sources[$row['source']])) {
+		/** @var modMediaSource $source */
+		if ($source = $modx->getObject('sources.modMediaSource', $source)) {
+			$source->initialize($modx->context->key);
+		}
+		$sources[$row['source']] = $source;
 	}
 	else {
-		$c->sortby('byAd.'.$sortby, $sortdir);
+		$source = $sources[$row['source']];
 	}
-	$c->limit($limit);
 
-	$sourceId = $modx->getOption('bannery.media_source', null, $modx->getOption('default_media_source'));
-	$source = $modx->getObject('sources.modMediaSource',array('id'=>$sourceId));
-	if (!$source)
-		$source = modMediaSource::getDefaultSource($modx);
-	$source->initialize();
-
-	$ads = $modx->getCollection('byAd', $c);
-	/** @var byAd $ad */
-	foreach($ads as $ad) {
-		$ad = $ad->toArray();
-		if (!empty($ad['image']))
-			$ad['image'] = $source->getObjectUrl($ad['image']);
-		$output .= $modx->getChunk($tpl, $ad);
+	if (!empty($source) && $source instanceof modMediaSource) {
+		$row['image'] = $source->getObjectUrl($row['image']);
 	}
-	if (!empty($tplOuter) && !empty($output)) {
-		$output = $modx->getChunk($tplOuter, array('items'=>$output));
+
+	$row['idx'] = $pdoFetch->idx++;
+	$tpl = $pdoFetch->defineChunk($row);
+	if (!empty($additionalPlaceholders)) {
+		$row = array_merge($additionalPlaceholders, $row);
+	}
+
+	$output[] = !empty($tpl)
+		? $pdoFetch->getChunk($tpl, $row, $pdoFetch->config['fastMode'])
+		: '<pre>'.$pdoFetch->getChunk('', $row).'</pre>';
+}
+
+if ($modx->user->hasSessionContext('mgr') && !empty($showLog)) {
+	$output['log'] = '<pre class="pdoUsersLog">' . print_r($pdoFetch->getTime(), 1) . '</pre>';
+}
+
+// Return output
+if (!empty($toSeparatePlaceholders)) {
+	$modx->setPlaceholders($output, $toSeparatePlaceholders);
+}
+else {
+	$output = implode($outputSeparator, $output);
+
+	if (!empty($tplWrapper) && (!empty($wrapIfEmpty) || !empty($output))) {
+		$output = $pdoFetch->getChunk($tplWrapper, array('output' => $output), $pdoFetch->config['fastMode']);
 	}
 
 	if (!empty($toPlaceholder)) {
 		$modx->setPlaceholder($toPlaceholder, $output);
-		$output = '';
+	}
+	else {
+		return $output;
 	}
 }
-return $output;

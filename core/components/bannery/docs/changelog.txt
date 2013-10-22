@@ -6,6 +6,7 @@ Changelog for BannerY.
 - Added russian lexicon with snippet parameters.
 - Added property "source" in object byAd. Now you can select separate media sources for each ad.
 - Removed system setting "bannery.media_source".
+- Rewritten snippet "BannerY". Now it works through pdoTools and has many new features.
 
 1.1.0 beta (15.07.2013)
 ============

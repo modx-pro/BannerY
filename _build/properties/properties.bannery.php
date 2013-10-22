@@ -3,24 +3,27 @@
 $properties = array();
 
 $tmp = array(
-	'position' => array(
-		'value' => 0,
-		'type' => 'numberfield',
-	),
-	'tpl' => array(
-		'value' => 'byAd',
+	'positions' => array(
 		'type' => 'textfield',
-	),
-	'tplOuter' => array(
 		'value' => '',
-		'type' => 'textfield',
+	),
+	'showLog' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
+	),
+	'fastMode' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
 	),
 	'limit' => array(
 		'value' => 5,
 		'type' => 'numberfield',
 	),
+	'offset' => array(
+		'type' => 'numberfield',
+		'value' => 0,
+	),
 	'sortby' => array(
-		'value' => 'RAND()',
 		'type' => 'list',
 		'options' => array(
 			array('text' => 'Random','value' => 'RAND()'),
@@ -31,19 +34,62 @@ $tmp = array(
 			array('text' => 'Active','value' => 'active'),
 			array('text' => 'Description','value' => 'description'),
 		),
+		'value' => 'RAND()',
 	),
 	'sortdir' => array(
-		'value' => 'ASC',
 		'type' => 'list',
 		'options' => array(
 			array('text' => 'ASC','value' => 'ASC'),
 			array('text' => 'DESC','value' => 'DESC'),
 		),
+		'value' => 'ASC',
+	),
+	'outputSeparator' => array(
+		'type' => 'textfield',
+		'value' => "\n",
+	),
+	'where' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'showInactive' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
+	),
+
+	'tpl' => array(
+		'type' => 'textfield',
+		'value' => 'byAd',
+	),
+	'tplFirst' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'tplLast' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'tplOdd' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'tplWrapper' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+	'wrapIfEmpty' => array(
+		'type' => 'combo-boolean',
+		'value' => false,
 	),
 	'toPlaceholder' => array(
-		'value' => '',
 		'type' => 'textfield',
+		'value' => '',
 	),
+	'toSeparatePlaceholder' => array(
+		'type' => 'textfield',
+		'value' => '',
+	),
+
 );
 
 foreach ($tmp as $k => $v) {
