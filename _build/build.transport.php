@@ -32,7 +32,7 @@ require_once $sources['build'] . '/includes/functions.php';
 $modx= new modX();
 $modx->initialize('mgr');
 echo '<pre>'; /* used for nice formatting of log messages */
-$modx->setLogLevel(modX::LOG_LEVEL_INFO);
+$modx->setLogLevel(modX::LOG_LEVEL_WARN);
 $modx->setLogTarget('ECHO');
 $modx->getService('error','error.modError');
 
