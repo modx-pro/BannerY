@@ -6,9 +6,10 @@ if ($object->xpdo) {
 
 	switch ($options[xPDOTransport::PACKAGE_ACTION]) {
 		case xPDOTransport::ACTION_INSTALL:
+		case xPDOTransport::ACTION_UPGRADE:
+
 			$modelPath = $modx->getOption('core_path').'components/'.PKG_NAME_LOWER.'/model/';
 			$modx->addPackage(PKG_NAME_LOWER, $modelPath);
-
 			$manager = $modx->getManager();
 			$objects = array(
 				'byAd',
@@ -19,9 +20,13 @@ if ($object->xpdo) {
 			foreach ($objects as $object) {
 				$manager->createObjectContainer($object);
 			}
-			break;
 
-		case xPDOTransport::ACTION_UPGRADE:
+			$level = $modx->getLogLevel();
+
+			$modx->setLogLevel(xPDO::LOG_LEVEL_FATAL);
+			$manager->addField('byAd', 'source');
+			$modx->setLogLevel($level);
+
 			break;
 
 		case xPDOTransport::ACTION_UNINSTALL:

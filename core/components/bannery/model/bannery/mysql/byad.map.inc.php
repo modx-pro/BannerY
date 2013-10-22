@@ -9,6 +9,7 @@ $xpdo_meta_map['byAd']= array (
     'name' => '',
     'url' => '',
     'image' => '',
+    'source' => 0,
     'active' => 0,
     'description' => NULL,
   ),
@@ -37,6 +38,15 @@ $xpdo_meta_map['byAd']= array (
       'phptype' => 'string',
       'null' => true,
       'default' => '',
+    ),
+    'source' => 
+    array (
+      'dbtype' => 'integer',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'attributes' => 'unsigned',
+      'null' => true,
+      'default' => 0,
     ),
     'active' => 
     array (

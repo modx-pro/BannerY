@@ -5,6 +5,7 @@
 		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
 		<field key="url" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
 		<field key="image" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
+		<field key="source" dbtype="integer" precision="10" phptype="integer" attributes="unsigned" null="null" default="0"/>
 		<field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
 		<field key="description" dbtype="text" phptype="string" null="true" />
 
