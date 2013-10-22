@@ -8,8 +8,8 @@ if ($object->xpdo) {
 		case xPDOTransport::ACTION_INSTALL:
 		case xPDOTransport::ACTION_UPGRADE:
 
-			$modelPath = $modx->getOption('core_path').'components/'.PKG_NAME_LOWER.'/model/';
-			$modx->addPackage(PKG_NAME_LOWER, $modelPath);
+			$modelPath = $modx->getOption('core_path').'components/bannery/model/';
+			$modx->addPackage('bannery', $modelPath);
 			$manager = $modx->getManager();
 			$objects = array(
 				'byAd',

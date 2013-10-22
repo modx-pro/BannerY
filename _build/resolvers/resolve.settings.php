@@ -11,10 +11,11 @@ if ($object->xpdo) {
 			$setting = $modx->getObject('modSystemSetting', array('key' => 'bannery.media_source'));
 			if (!is_null($setting) && $setting !== false && is_object($setting)) {
 				if ($source = $setting->get('value')) {
-					$modelPath = $modx->getOption('core_path').'components/'.PKG_NAME_LOWER.'/model/';
-					$modx->addPackage(PKG_NAME_LOWER, $modelPath);
+					$modelPath = $modx->getOption('core_path').'components/bannery/model/';
+					$modx->addPackage('bannery', $modelPath);
 
 					$collection = $modx->getCollection('byAd');
+					/** @var byAd $v */
 					foreach ($collection as $v) {
 						$v->set('source', $source);
 						$v->save();
