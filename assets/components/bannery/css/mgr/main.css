@@ -1,0 +1,29 @@
+.bannery-resource-list-item, .minishop2-product-list-item, .minishop2-user-list-item {
+    font:normal 11px tahoma, arial, helvetica, sans-serif;
+    padding:3px 10px 3px 10px;
+    border:1px solid #fff;
+    border-bottom:1px solid #eeeeee;
+    white-space:normal;
+    color:#555;
+    cursor: pointer;
+}
+.bannery-resource-list-item:hover, .minishop2-product-list-item:hover, .minishop2-user-list-item:hover {
+    background: #efefef;
+}
+
+.bannery-resource-list-item h3, .minishop2-product-list-item h3, .minishop2-user-list-item h3 {
+    display:block;
+    font:inherit;
+    font-weight:bold;
+    font-size: 1.1em;
+    line-height: 1.1em;
+}
+
+.bannery-resource-list-item .parents, .minishop2-product-list-item .parents {
+    display:block;
+    font:inherit;
+    font-weight:normal;
+    color:#555;
+    font-size: 1em;
+    line-height: 1em;
+}

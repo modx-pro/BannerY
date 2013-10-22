@@ -153,13 +153,27 @@ MODx.combo.resources = function(config) {
 		,displayField: 'pagetitle'
 		,valueField: 'url'
 		,editable: true
-		,fields: ['pagetitle','url']
+		,fields: ['id','pagetitle','url','parents']
 		,pageSize: 10
 		,emptyText: ''
 		,url: Bannery.config.connectorUrl
 		,baseParams: {
 			action: 'mgr/resource/getlist'
 		}
+		,tpl: new Ext.XTemplate(''
+			+'<tpl for="."><div class="bannery-resource-list-item">'
+				+'<tpl if="parents">'
+					+'<span class="parents">'
+						+'<tpl for="parents">'
+							+'<nobr><small>{pagetitle} / </small></nobr>'
+						+'</tpl>'
+					+'</span>'
+				+'</tpl>'
+			+'<span><small>({id})</small> <b>{pagetitle}</b></span>'
+			+'</div></tpl>',{
+			compiled: true
+		})
+		,itemSelector: 'div.bannery-resource-list-item'
 	});
 	MODx.combo.resources.superclass.constructor.call(this,config);
 };
