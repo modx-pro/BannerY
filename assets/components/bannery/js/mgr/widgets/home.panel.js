@@ -169,7 +169,7 @@ MODx.combo.resources = function(config) {
 						+'</tpl>'
 					+'</span>'
 				+'</tpl>'
-			+'<span><small>({id})</small> <b>{pagetitle}</b></span>'
+			+'<span><tpl if="id"><small>({id})</small> </tpl><b>{pagetitle}</b></span>'
 			+'</div></tpl>',{
 			compiled: true
 		})

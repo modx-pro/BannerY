@@ -17,6 +17,15 @@ class byResourceGetListProcessor extends modResourceGetListProcessor {
 		return $this->outputArray($list,$data['total']);
 	}
 
+	function afterIteration(array $list) {
+		if ($query = $this->getProperty('query')) {
+			if (strpos($query, '/') === 0 || strpos($query, '://') !== false) {
+				$list[] = array('pagetitle' => $query, 'url' => $query);
+			}
+		}
+		return $list;
+	}
+
 
 	/**
 	 * Get the data of the query

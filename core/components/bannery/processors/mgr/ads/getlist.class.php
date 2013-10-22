@@ -40,6 +40,12 @@ class AdGetListProcessor extends modObjectGetListProcessor {
 		$row['clicks'] = $this->modx->getCount('byClick', array('ad' => $row['id']));
 		$row['current_image'] = $object->getImageUrl();
 
+		if (preg_match('/\[\[\~([0-9]{1,})\]\]$/', $row['url'], $matches)) {
+			if ($resource = $this->modx->getObject('modResource', $matches[1])) {
+				$row['url'] = '<sup>('.$resource->id .')</sup> '.$resource->pagetitle;
+			}
+		}
+
 		return $row;
 	}
 }
