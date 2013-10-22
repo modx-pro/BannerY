@@ -12,6 +12,7 @@ class AdUpdateProcessor extends modObjectUpdateProcessor {
 			//remove unused current positions
 			$q = $this->modx->newQuery('byAdPosition', array('position:NOT IN' => $positions, 'ad' => $ad));
 			$adpositions = $this->modx->getCollection('byAdPosition', $q);
+			/** @var byAdPosition $adposition */
 			foreach ($adpositions as $adposition) {
 				$position = $adposition->get('position');
 				$adposition->remove();
@@ -23,7 +24,7 @@ class AdUpdateProcessor extends modObjectUpdateProcessor {
 				
 				if (!$adPos = $this->modx->getObject('byAdPosition', $arr)) {
 					$adPos = $this->modx->newObject('byAdPosition');
-					$arr['idx'] = $this->modx->getCount('byAdPosition', array('position' => $position));		
+					$arr['idx'] = $this->modx->getCount('byAdPosition', array('position' => $position));
 				}
 				$adPos->fromArray($arr);
 				$adPos->save();

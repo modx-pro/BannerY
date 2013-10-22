@@ -310,12 +310,15 @@ Bannery.window.Ad = function(config) {
 				,allowBlank: true
 				,openTo: config.openTo || '/'
 				,listeners: {
-					select: {
-						fn:function(data) {
-							Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
-							Ext.getCmp('image').setValue(data.relativeUrl);
-						}
-					}
+					select: {fn:function(data) {
+						Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
+						Ext.getCmp('image').setValue(data.relativeUrl);
+					}}
+					,change: {fn:function(data) {
+						var value = this.getValue();
+						Ext.getCmp('currimg').setSrc(value);
+						Ext.getCmp('image').setValue(value);
+					}}
 				}
 			},{
 				id: 'currimg'
