@@ -107,6 +107,7 @@ class byResourceGetListProcessor extends modResourceGetListProcessor {
 			}
 			$resourceArray['parents'] = array_reverse($parents);
 		}
+		$resourceArray['url'] = '[[~'.$resourceArray['id'].']]';
 
 		return $resourceArray;
 	}
