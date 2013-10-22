@@ -1,4 +1,5 @@
 <?php
+/** @var array $scriptProperties */
 $modx->addPackage('bannery', $modx->getOption('core_path').'components/bannery/model/');
 $modx->lexicon->load('bannery:default');
 
@@ -22,7 +23,7 @@ if($position > 0) {
 	);
 	if($sortby == 'RAND()') {
 		$c->sortby('RAND()');
-	}    
+	}
 	else if($sortby == 'idx' || $sortby == 'index') {
 		$c->sortby('pos.idx', $sortdir);
 	}
@@ -38,6 +39,7 @@ if($position > 0) {
 	$source->initialize();
 
 	$ads = $modx->getCollection('byAd', $c);
+	/** @var byAd $ad */
 	foreach($ads as $ad) {
 		$ad = $ad->toArray();
 		if (!empty($ad['image']))

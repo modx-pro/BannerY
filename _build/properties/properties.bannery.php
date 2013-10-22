@@ -3,35 +3,25 @@
 $properties = array();
 
 $tmp = array(
-	array(
-		'name' => 'position',
+	'position' => array(
 		'value' => 0,
 		'type' => 'numberfield',
-		'desc' => 'If set to non-zero, will retrieve only ads that are assigned to the position given.',
 	),
-	array(
-		'name' => 'tpl',
+	'tpl' => array(
 		'value' => 'byAd',
 		'type' => 'textfield',
-		'desc' => 'Name of a chunk for templating an Ad.',
 	),
-	array(
-		'name' => 'tplOuter',
+	'tplOuter' => array(
 		'value' => '',
 		'type' => 'textfield',
-		'desc' => 'Name of a chunk for outer templating.',
 	),
-	array(
-		'name' => 'limit',
+	'limit' => array(
 		'value' => 5,
 		'type' => 'numberfield',
-		'desc' => 'If set to non-zero, will only show X number of items.',
 	),
-	array(
-		'name' => 'sortby',
+	'sortby' => array(
 		'value' => 'RAND()',
 		'type' => 'list',
-		'desc' => 'Return results in specified order. It can be any field of byAd, "RAND()" or "idx" - index of ad in position.',
 		'options' => array(
 			array('text' => 'Random','value' => 'RAND()'),
 			array('text' => 'Index','value' => 'idx'),
@@ -42,22 +32,18 @@ $tmp = array(
 			array('text' => 'Description','value' => 'description'),
 		),
 	),
-	array(
-		'name' => 'sortdir',
+	'sortdir' => array(
 		'value' => 'ASC',
 		'type' => 'list',
-		'desc' => 'Order of the results',
 		'options' => array(
 			array('text' => 'ASC','value' => 'ASC'),
 			array('text' => 'DESC','value' => 'DESC'),
 		),
 	),
-	array(
-		'name' => 'toPlaceholder',
+	'toPlaceholder' => array(
 		'value' => '',
 		'type' => 'textfield',
-		'desc' => 'If set, will assign the result to this placeholder instead of outputting it directly.',
-	)
+	),
 );
 
 foreach ($tmp as $k => $v) {
