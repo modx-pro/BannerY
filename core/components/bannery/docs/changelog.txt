@@ -1,6 +1,6 @@
 Changelog for BannerY.
 
-1.2.0 beta (22.10.2013)
+1.2.0 beta1 (22.10.2013)
 ============
 - Improved builder.
 - Added russian lexicon with snippet parameters.
