@@ -286,6 +286,7 @@ Bannery.window.Ad = function(config) {
 								,id: 'modx-combo-source'
 								,name: 'source'
 								,anchor: '100%'
+								,value: MODx.config.default_media_source
 							}]
 						},{
 							columnWidth: .2
