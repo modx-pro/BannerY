@@ -12,6 +12,8 @@ $xpdo_meta_map['byAd']= array (
     'source' => 1,
     'active' => 0,
     'description' => NULL,
+    'start' => NULL,
+    'end' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -61,6 +63,18 @@ $xpdo_meta_map['byAd']= array (
     array (
       'dbtype' => 'text',
       'phptype' => 'string',
+      'null' => true,
+    ),
+    'start' => 
+    array (
+      'dbtype' => 'datetime',
+      'phptype' => 'timestamp',
+      'null' => true,
+    ),
+    'end' => 
+    array (
+      'dbtype' => 'datetime',
+      'phptype' => 'timestamp',
       'null' => true,
     ),
   ),

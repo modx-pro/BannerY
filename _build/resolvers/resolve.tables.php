@@ -25,8 +25,15 @@ if ($object->xpdo) {
 
 			$modx->setLogLevel(xPDO::LOG_LEVEL_FATAL);
 			$manager->addField('byAd', 'source');
+			$manager->addField('byAd', 'start');
+			$manager->addField('byAd', 'end');
+			$manager->addIndex('byAd', 'active');
+			$manager->addIndex('byAd', 'start');
+			$manager->addIndex('byAd', 'end');
+			$manager->addIndex('byPosition', 'name');
+			$manager->addIndex('byAdPosition', 'ad');
+			$manager->addIndex('byAdPosition', 'position');
 			$modx->setLogLevel($level);
-
 			break;
 
 		case xPDOTransport::ACTION_UNINSTALL:

@@ -28,6 +28,8 @@ $_lang['bannery.ads.disable'] = 'Disable ad';
 $_lang['bannery.ads.add'] = 'Add ad';
 $_lang['bannery.ads.error.ns'] = 'Ad not set';
 $_lang['bannery.ads.source'] = 'Media source';
+$_lang['bannery.ads.start'] = 'Start of display';
+$_lang['bannery.ads.end'] = 'End of display';
 
 $_lang['bannery.positions'] = 'Positions';
 $_lang['bannery.positions.name'] = 'Name';

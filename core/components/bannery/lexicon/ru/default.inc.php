@@ -18,7 +18,7 @@ $_lang['bannery.ads.image.current'] = 'Текущее изображение';
 $_lang['bannery.ads.active'] = 'Включен';
 $_lang['bannery.ads.clicks'] = 'Клики';
 $_lang['bannery.ads.new'] = 'Новый баннер';
-$_lang['bannery.ads.update'] = 'Обновить баннер';
+$_lang['bannery.ads.update'] = 'Изменить баннер';
 $_lang['bannery.ads.remove'] = 'Удалить баннер';
 $_lang['bannery.ads.remove.confirm'] = 'Вы уверены, что хотите удалить этот баннер?';
 $_lang['bannery.ads.error.nf'] = 'Баннер не найден';
@@ -28,6 +28,8 @@ $_lang['bannery.ads.disable'] = 'Выключить баннер';
 $_lang['bannery.ads.add'] = 'Добавить баннер';
 $_lang['bannery.ads.error.ns'] = 'Не указан баннер';
 $_lang['bannery.ads.source'] = 'Источник медиа';
+$_lang['bannery.ads.start'] = 'Начало показов';
+$_lang['bannery.ads.end'] = 'Окончание показов';
 
 $_lang['bannery.positions'] = 'Позиции';
 $_lang['bannery.positions.name'] = 'Название';

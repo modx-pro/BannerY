@@ -68,14 +68,15 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 		tag: 'img'
 		,src: Ext.BLANK_IMAGE_URL
 		,cls: 'tng-managed-image'
-		,width: 'auto'
-		,height: 100
+		,width: 166
+		//,height: 100
 	}
 //  Add our custom processing to the onRender phase.
 //  We add a ‘load’ listener to our element.
 	,onRender: function() {
 		Ext.ux.Image.superclass.onRender.apply(this, arguments);
 		this.el.on('load', this.onLoad, this);
+		this.el.on('click', this.onClick, this);
 		if(this.url){
 			this.setSrc(this.url);
 		}
@@ -83,13 +84,22 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 	,onLoad: function() {
 		this.fireEvent('load', this);
 	}
-	,setSrc: function(src) {
-		if(src == '' || src == undefined) {
+	,onClick: function() {
+		window.open(this.el.dom.getAttribute('data-link'));
+	}
+	,setSrc: function(src, source, width, height) {
+		if (src == '' || src == undefined) {
 			this.el.dom.src = Ext.BLANK_IMAGE_URL;
 			Ext.getCmp('currimg').hide();
 		}
 		else {
-			this.el.dom.src = MODx.config.connectors_url+'system/phpthumb.php?&src='+src+'&wctx=mgr&h=100&zc=0';
+			if (!source) {source = MODx.config.default_media_source;}
+			if (!height) {height = 200;}
+			if (!width) {width = 166;}
+
+			this.el.dom.src = MODx.config.connectors_url + 'system/phpthumb.php?src=' + src + '&w='+width+'&h='+height+'&f=jpg&q=90&HTTP_MODAUTH=' + MODx.siteId + '&far=1&wctx=mgr&source=' + source;
+			this.el.dom.setAttribute('data-link', '/' + src.replace(/^\//, ''));
+
 			Ext.getCmp('currimg').show();
 		}
 	}
@@ -161,7 +171,7 @@ MODx.combo.resources = function(config) {
 			action: 'mgr/resource/getlist'
 		}
 		,tpl: new Ext.XTemplate(''
-			+'<tpl for="."><div class="bannery-resource-list-item">'
+			+'<tpl for="."><div class="x-combo-list-item bannery-resource-list-item">'
 				+'<tpl if="parents">'
 					+'<span class="parents">'
 						+'<tpl for="parents">'
@@ -169,7 +179,7 @@ MODx.combo.resources = function(config) {
 						+'</tpl>'
 					+'</span>'
 				+'</tpl>'
-			+'<span><tpl if="id"><small>({id})</small> </tpl><b>{pagetitle}</b></span>'
+			+'<span><tpl if="id"><sup><small>({id})</small></sup> </tpl><b>{pagetitle}</b></span>'
 			+'</div></tpl>',{
 			compiled: true
 		})
@@ -269,12 +279,23 @@ Ext.reg('modx-combo-adbrowser',MODx.combo.AdBrowser);
 
 // Functions
 /******************************************************/
-function renderGridImage(img, height) {
-	if (height == '') {height = 50;}
+Bannery.renderGridImage = function(img) {
+	var height = MODx.modx23
+		? 45
+		: 40;
+
 	if (img.length > 0) {
-		if (!/(jpg|jpeg|png|gif|bmp)$/.test(img)) {return img;}
-		else if (/^(http|https)/.test(img)) {return '<img src="'+img+'" alt="" style="display:block;margin:auto;height:'+height+'px;" />'}
-		else {return '<img src="'+MODx.config.connectors_url+'system/phpthumb.php?&src='+img+'&wctx=web&h='+height+'&zc=0&source='+Bannery.config.media_source+'" alt="" style="display:block;margin:auto;height:'+height+'px;" />'}
+		if (!/(jpg|jpeg|png|gif|bmp)$/.test(img)) {
+			return img;
+		}
+		else if (/^(http|https)/.test(img)) {
+			return '<img src="'+img+'" alt="" />'
+		}
+		else {
+			return '<img src="'+MODx.config.connectors_url+'system/phpthumb.php?&src='+img+'&wctx=web&h='+height+'&zc=0&source='+Bannery.config.media_source+'" alt="" />'
+		}
 	}
-	else {return '';}
+	else {
+		return '';
+	}
 }

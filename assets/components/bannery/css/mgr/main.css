@@ -1,29 +1,33 @@
-.bannery-resource-list-item, .minishop2-product-list-item, .minishop2-user-list-item {
-    font:normal 11px tahoma, arial, helvetica, sans-serif;
-    padding:3px 10px 3px 10px;
-    border:1px solid #fff;
-    border-bottom:1px solid #eeeeee;
-    white-space:normal;
-    color:#555;
-    cursor: pointer;
-}
-.bannery-resource-list-item:hover, .minishop2-product-list-item:hover, .minishop2-user-list-item:hover {
-    background: #efefef;
+.bannery-resource-list-item .parents {
+	display:block;
+	font:inherit;
+	font-weight:normal;
+	color:#555;
+	font-size: 1em;
+	line-height: 1em;
 }
 
-.bannery-resource-list-item h3, .minishop2-product-list-item h3, .minishop2-user-list-item h3 {
-    display:block;
-    font:inherit;
-    font-weight:bold;
-    font-size: 1.1em;
-    line-height: 1.1em;
+.x-grid3-col-byad-thumb,
+.x-grid3-col-byad-thumb2 {padding: 0;}
+
+.x-grid3-col-byad-thumb img,
+.x-grid3-col-byad-thumb2 img {display:block; height: 100%; min-height:40px; margin:auto;}
+
+.bannery-row-disabled {font-style: italic; opacity: .6; color: #555;}
+
+/* Menu icons */
+a.x-menu-item .x-menu-item-text,
+a.x-menu-item .x-menu-item-text .fa {cursor: pointer;}
+a.x-menu-item .x-menu-item-text .fa {line-height:16px; top:auto;}
+.x-menu-list .fa {min-width: 1em; text-align:center;}
+
+#bannery-window-ad label.x-form-item-label {
+	padding: 5px 0 0 0;
 }
 
-.bannery-resource-list-item .parents, .minishop2-product-list-item .parents {
-    display:block;
-    font:inherit;
-    font-weight:normal;
-    color:#555;
-    font-size: 1em;
-    line-height: 1em;
+.bannery-thumb-window {
+	width: 166px;
+	max-height: 200px;
+	cursor: pointer;
+	display: block !important;
 }

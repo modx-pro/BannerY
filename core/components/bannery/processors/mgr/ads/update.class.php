@@ -4,11 +4,22 @@ class AdUpdateProcessor extends modObjectUpdateProcessor {
 	public $languageTopics = array('bannery:default');
 	public $objectType = 'bannery.ad';
 
+	function beforeSet() {
+		if (!$this->getProperty('start')) {
+			$this->setProperty('start', null);
+		}
+		if (!$this->getProperty('end')) {
+			$this->setProperty('end', null);
+		}
+
+		return parent::beforeSet();
+	}
+
 	function afterSave() {
 		$positions = $this->getProperty('positions');
 		$ad = $this->object->get('id');
 
-		if(is_array($positions)) {
+		if (is_array($positions)) {
 			//remove unused current positions
 			$q = $this->modx->newQuery('byAdPosition', array('position:NOT IN' => $positions, 'ad' => $ad));
 			$adpositions = $this->modx->getCollection('byAdPosition', $q);

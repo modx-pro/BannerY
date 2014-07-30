@@ -8,6 +8,18 @@
 		<field key="source" dbtype="integer" precision="10" phptype="integer" attributes="unsigned" null="null" default="1"/>
 		<field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
 		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="start" dbtype="datetime" phptype="timestamp" null="true" />
+		<field key="end" dbtype="datetime" phptype="timestamp" null="true" />
+
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE">
+			<column key="active" length="" collation="A" null="false" />
+		</index>
+		<index alias="start" name="start" primary="false" unique="false" type="BTREE">
+			<column key="start" length="" collation="A" null="false" />
+		</index>
+		<index alias="end" name="end" primary="false" unique="false" type="BTREE">
+			<column key="end" length="" collation="A" null="false" />
+		</index>
 
 		<composite alias="Positions" class="byAdPosition" local="id" foreign="ad" cardinality="many" owner="local" />
 		<composite alias="Clicks" class="byClick" local="id" foreign="ad" cardinality="many" owner="local" />
@@ -15,6 +27,10 @@
 
 	<object class="byPosition" table="bannery_positions" extends="xPDOSimpleObject">
 		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+
+		<index alias="name" name="name" primary="false" unique="false" type="BTREE">
+			<column key="name" length="" collation="A" null="false" />
+		</index>
 
 		<composite alias="Ads" class="byAdPosition" local="id" foreign="position" cardinality="many" owner="local" />
 		<composite alias="Clicks" class="byClick" local="id" foreign="position" cardinality="many" owner="local" />
@@ -24,6 +40,13 @@
 		<field key="ad" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
 		<field key="position" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
 		<field key="idx" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+
+		<index alias="ad" name="ad" primary="false" unique="false" type="BTREE">
+			<column key="ad" length="" collation="A" null="false" />
+		</index>
+		<index alias="position" name="position" primary="false" unique="false" type="BTREE">
+			<column key="position" length="" collation="A" null="false" />
+		</index>
 
 		<aggregate alias="Ad" class="byAd" local="ad" foreign="id" cardinality="one" owner="foreign" />
 		<aggregate alias="Position" class="byPosition" local="position" foreign="id" cardinality="one" owner="foreign" />

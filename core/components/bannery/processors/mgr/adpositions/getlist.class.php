@@ -22,12 +22,13 @@ class AdPositionGetListProcessor extends modObjectGetListProcessor {
 
 
 	function prepareRow(xPDOObject $object) {
-		$ad = $object->getOne('Ad')->toArray();
-		$adposition = $object->toArray();
-		
-		$object = array_merge($ad, $adposition);
-		
-		return $object;
+		/** @var byAd $ad */
+		$ad = $object->getOne('Ad');
+
+		$row = array_merge($ad->toArray(), $object->toArray());
+		$row['image'] = $ad->getImageUrl();
+
+		return $row;
 	}
 
 }

@@ -1,5 +1,12 @@
 Changelog for BannerY.
 
+1.3.0 rc (31.07.2014)
+============
+- Added ability to set range of dates for banner display.
+- Added icons to context menu.
+- Improved user interface.
+- [#9] Fixed url of image in positions window.
+
 1.2.0 beta1 (22.10.2013)
 ============
 - Improved builder.

@@ -24,7 +24,10 @@ if ($snippet = $modx->getObject('modSnippet', array('name' => 'BannerY'))) {
 }
 // ---
 
-$where = array();
+$date = date('Y-m-d H:i:s');
+$where = array(
+	"({$class}.start IS NULL OR {$class}.start <= '{$date}') AND ({$class}.end IS NULL OR {$class}.end >= '{$date}')"
+);
 if (empty($showInactive)) {
 	$where[$class.'.active'] = 1;
 }
@@ -42,7 +45,7 @@ elseif ($sortby == 'idx' || $sortby == 'index') {
 	$sortby = 'byAdPosition.idx';
 }
 else {
-	$sortby = 'byAd.'.$sortby;
+	$sortby = $class.'.'.$sortby;
 }
 
 $innerJoin = array(

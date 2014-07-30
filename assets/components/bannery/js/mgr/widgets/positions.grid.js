@@ -5,12 +5,9 @@ Bannery.grid.Positions = function(config) {
 		,url: Bannery.config.connectorUrl
 		,baseParams: { action: 'mgr/positions/getlist' }
 		,fields: ['id','name','clicks']
-		,paging: true
 		,border: false
-		,frame: false
 		,remoteSort: true
-		,anchor: '97%'
-		,autoExpandColumn: 'name'
+		,paging: true
 		,columns: [{
 			header: _('id')
 			,dataIndex: 'id'
@@ -38,6 +35,7 @@ Bannery.grid.Positions = function(config) {
 			}
 		},{
 			xtype: 'bannery-filter-clear'
+			,text: '<i class="'+ (MODx.modx23 ? 'icon icon-times' : 'fa fa-times') + '"></i>'
 			,listeners: {click: {fn: this.FilterClear, scope: this}}
 		}]
 		,listeners: {
@@ -51,11 +49,14 @@ Bannery.grid.Positions = function(config) {
 };
 Ext.extend(Bannery.grid.Positions,MODx.grid.Grid,{
 	getMenu: function() {
+		var icon = MODx.modx23
+			? 'x-menu-item-icon icon icon-'
+			: 'x-menu-item-icon fa fa-';
 		var m = [{
-				text: _('bannery.positions.update')
+				text: '<i class="' + icon + 'edit"></i>' + _('bannery.positions.update')
 				,handler: this.updatePosition
 			},'-',{
-				text: _('bannery.positions.remove')
+			text: '<i class="' + icon + 'times"></i>' + _('bannery.positions.remove')
 				,handler: this.removePosition
 			}];
 		this.addContextMenuItem(m);
@@ -75,19 +76,16 @@ Ext.extend(Bannery.grid.Positions,MODx.grid.Grid,{
 		this.refresh();
 	}
 	,createPosition: function(btn,e) {
-		w = MODx.load({
+		var w = MODx.load({
 			xtype: 'bannery-window-position'
 			,update: 0
 			,position: 0
+			,closeAction: 'close'
 			,listeners: {
-				'success':{fn:function() {
+				success:{fn:function() {
 					Ext.getCmp('bannery-grid-positions').store.reload();
 					Bannery.posStore.reload();
 				},scope:this}
-				,'hide': {fn:function() {
-					this.getEl().remove();
-					//this.destroy();
-				}}
 			}
 			,baseParams: {
 				action: 'mgr/positions/create'
@@ -98,19 +96,16 @@ Ext.extend(Bannery.grid.Positions,MODx.grid.Grid,{
 	}
 	,updatePosition: function(btn,e, row) {
 		if (typeof(row) != 'undefined') {this.menu.record = row.data;}
-		w = MODx.load({
+		var w = MODx.load({
 			xtype: 'bannery-window-position'
 			,update: 1
 			,position: this.menu.record.id
+			,closeAction: 'close'
 			,listeners: {
 				'success':{fn:function() {
 					Ext.getCmp('bannery-grid-positions').store.reload();
 					Bannery.posStore.reload();
 				},scope:this}
-				,'hide': {fn:function() {
-					this.getEl().remove();
-					//this.destroy();
-				}}
 			}
 		});
 		w.setTitle(_('bannery.positions.update')).show(e.target,function() {w.setPosition(null,50)},this);
@@ -145,6 +140,7 @@ Bannery.window.Position = function(config) {
 		,url: Bannery.config.connectorUrl
 		,modal: true
 		,width: 600
+		,autoHeight: true
 		,baseParams: {
 			action: 'mgr/positions/update'
 		}
@@ -161,14 +157,10 @@ Bannery.window.Position = function(config) {
 				xtype: 'bannery-grid-adpositions'
 				,update: config.update
 				,position: config.position
+				,pageSize: 5
 			}
 		]
-		,keys: [{
-			key: Ext.EventObject.ENTER
-			,shift: false
-			,fn:  function() {this.submit()}
-			,scope: this
-		}]
+		,keys: [{key: Ext.EventObject.ENTER,shift: true,fn:  function() {this.submit()},scope: this}]
 	});
 	Bannery.window.Position.superclass.constructor.call(this,config);
 };
@@ -187,21 +179,21 @@ Bannery.grid.AdPositions = function(config) {
 			,position: config.position || 0
 		}
 		,fields: ['id','name','idx','image']
+		,autoHeight: true
 		,paging: true
-		,anchor: '99%'
 		,disabled: config.update == 0 ? 1 : 0
 		,hidden: config.update == 0 ? 1 : 0
-		,pageSize: Math.round(MODx.config.default_per_page / 3)
+		,pageSize: config.pageSize || 5
 		,columns: [
 			{header: _('bannery.adposition.idx'),dataIndex: 'idx',sortable: false, width: 25}
 			,{header: _('bannery.ads.name'),dataIndex: 'name',sortable: false}
-			,{header: _('bannery.ads.image'),dataIndex: 'image',sortable: false, width: 50, renderer: {fn:function(img) {return renderGridImage(img,30)}}}
+			,{header: _('bannery.ads.image'),dataIndex: 'image',sortable: false, width: 50, renderer: {fn:function(img) {return Bannery.renderGridImage(img)}}, id: 'byad-thumb2'}
 		]
 		,plugins: [new Ext.ux.dd.GridDragDropRowOrder({
 			listeners: {
 				'afterrowmove': {
 					fn: function(drag, old_order, new_order, row) {
-						var row = row[0];
+						row = row[0];
 						var grid = drag.grid;
 						var el = Ext.get('bannery-grid-adpositions');
 						el.mask(_('loading'),'x-mask-loading')
@@ -233,6 +225,7 @@ Bannery.grid.AdPositions = function(config) {
 			,id: 'bannery-grid-adpositions-adsfilter'
 			,position: config.position
 			,mode: 'exclude'
+			,width: 250
 			,listeners: {
 				'select': {fn:function(combo,row,idx) {
 					this.addAdPosition(row.id, config.position, combo)
@@ -245,8 +238,11 @@ Bannery.grid.AdPositions = function(config) {
 };
 Ext.extend(Bannery.grid.AdPositions,MODx.grid.Grid,{
 	getMenu: function() {
+		var icon = MODx.modx23
+			? 'x-menu-item-icon icon icon-'
+			: 'x-menu-item-icon fa fa-';
 		var m = [{
-				text: _('bannery.adposition.remove')
+				text: '<i class="' + icon + 'times"></i> ' + _('bannery.adposition.remove')
 				,handler: this.removeAdPosition
 			}];
 		this.addContextMenuItem(m);
