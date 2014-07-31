@@ -3,8 +3,8 @@
 define('PKG_NAME', 'BannerY');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 
-define('PKG_VERSION', '1.2.0');
-define('PKG_RELEASE', 'beta1');
+define('PKG_VERSION', '1.3.0');
+define('PKG_RELEASE', 'rc1');
 define('PKG_AUTO_INSTALL', true);
 
 /* define paths */
@@ -32,7 +32,7 @@ define('MODX_ASSETS_URL', MODX_BASE_URL . 'assets/');
 /* define build options */
 define('BUILD_MENU_UPDATE', false);
 define('BUILD_ACTION_UPDATE', false);
-//define('BUILD_SETTING_UPDATE', false);
+define('BUILD_SETTING_UPDATE', false);
 define('BUILD_CHUNK_UPDATE', false);
 
 define('BUILD_SNIPPET_UPDATE', true);
@@ -48,5 +48,4 @@ define('BUILD_PLUGIN_STATIC', false);
 
 $BUILD_RESOLVERS = array(
 	'tables',
-	'settings'
 );

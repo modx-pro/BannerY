@@ -6,7 +6,7 @@ if ($modx->event->name == 'OnPageNotFound') {
 
 		$id = $matches[1];
 		$c = $modx->newQuery('byAd');
-		$c->select($modx->getSelectColumns('byAd', 'byAd', '', array('id', 'position', 'url')));
+		$c->select('`byAd`.`id`, `Position`.`position`, `byAd`.`url`');
 		$c->leftJoin('byAdPosition', 'Position', 'Position.ad = byAd.id');
 		$c->where(array('Position.id' => $id));
 		if ($ad = $modx->getObject('byAd', $c)) {
@@ -14,13 +14,13 @@ if ($modx->event->name == 'OnPageNotFound') {
 				'ad' => $ad->get('id'),
 				'position' => $ad->get('position'),
 				'ip' => $_SERVER['REMOTE_ADDR'],
-				'clickdate:LIKE' => strftime("%Y-%m-%d") . '%'
+				'clickdate:LIKE' => date('Y-m-d') . '%'
 			);
 			if (!$modx->getCount('byClick', $key)) {
 				$click = $modx->newObject('byClick', array(
 					'ad' => $ad->get('id'),
 					'position' => $ad->get('position'),
-					'clickdate' => strftime("%Y-%m-%d %H:%M:%S"),
+					'clickdate' => date('Y-m-d H:i:s'),
 					'referrer' => $_SERVER['HTTP_REFERER'],
 					'ip' => $_SERVER['REMOTE_ADDR']
 				));
