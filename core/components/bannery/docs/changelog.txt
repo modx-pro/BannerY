@@ -6,6 +6,7 @@ Changelog for BannerY.
 - Added icons to context menu.
 - Improved user interface.
 - [#9] Fixed url of image in positions window.
+- [#8] Added ability to set the click variable in system settings.
 
 1.2.0 beta1 (22.10.2013)
 ============
