@@ -39,6 +39,41 @@ $xpdo_meta_map['byAdPosition']= array (
       'default' => 0,
     ),
   ),
+  'indexes' => 
+  array (
+    'ad' => 
+    array (
+      'alias' => 'ad',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'ad' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+    'position' => 
+    array (
+      'alias' => 'position',
+      'primary' => false,
+      'unique' => false,
+      'type' => 'BTREE',
+      'columns' => 
+      array (
+        'position' => 
+        array (
+          'length' => '',
+          'collation' => 'A',
+          'null' => false,
+        ),
+      ),
+    ),
+  ),
   'aggregates' => 
   array (
     'Ad' => 
