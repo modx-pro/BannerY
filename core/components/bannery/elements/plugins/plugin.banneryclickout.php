@@ -1,7 +1,7 @@
 <?php
 if ($modx->event->name == 'OnPageNotFound') {
 	$bannery_click = $modx->getOption('bannery_click', null, 'bannerclick', true);
-	if (preg_match('/'.$bannery_click.'\/([0-9])+/', $_SERVER['REQUEST_URI'], $matches)) {
+	if (preg_match('/'.$bannery_click.'\/([0-9]+)/', $_SERVER['REQUEST_URI'], $matches)) {
 		$modx->addPackage('bannery', $modx->getOption('core_path') . 'components/bannery/model/');
 
 		$id = $matches[1];
