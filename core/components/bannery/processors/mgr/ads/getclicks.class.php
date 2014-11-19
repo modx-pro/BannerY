@@ -6,7 +6,7 @@ class GetClicksProcessor extends modObjectGetListProcessor {
     public $defaultSortDirection = 'ASC';
     public $objectType = 'bannery.ad';
 
-    function prepareRow($object) {
+    function prepareRow(xPDOObject $object) {
         $period = $this->getProperty('period');
 
         $object = $object->toArray();
