@@ -356,7 +356,7 @@ Bannery.window.Ad = function(config) {
 							,openTo: config.openTo || '/'
 							,listeners: {
 								select: {fn:function(data) {
-									Ext.getCmp('currimg').setSrc(data.fullRelativeUrl);
+									Ext.getCmp('currimg').setSrc(data.relativeUrl);
 									Ext.getCmp('image').setValue(data.relativeUrl);
 								}}
 								,change: {fn:function(data) {
