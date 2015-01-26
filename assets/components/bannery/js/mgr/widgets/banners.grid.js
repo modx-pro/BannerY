@@ -356,12 +356,12 @@ Bannery.window.Ad = function(config) {
 							,openTo: config.openTo || '/'
 							,listeners: {
 								select: {fn:function(data) {
-									Ext.getCmp('currimg').setSrc(data.relativeUrl);
+                                    Ext.getCmp('currimg').setSrc(data.url, Ext.getCmp('modx-combo-source').getValue());
 									Ext.getCmp('image').setValue(data.relativeUrl);
 								}}
 								,change: {fn:function(data) {
 									var value = this.getValue();
-									Ext.getCmp('currimg').setSrc(value);
+									Ext.getCmp('currimg').setSrc(value, Ext.getCmp('modx-combo-source').getValue());
 									Ext.getCmp('image').setValue(value);
 								}}
 							}

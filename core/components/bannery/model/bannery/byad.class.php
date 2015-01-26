@@ -11,7 +11,8 @@ class byAd extends xPDOSimpleObject {
 			/** @var modMediaSource $source */
 			if ($source = $this->xpdo->getObject('sources.modMediaSource', $source)) {
 				$source->initialize();
-				$image = $source->getObjectUrl($image);
+				//$image = $source->getObjectUrl($image);
+				$image = $source->getBasePath($image) . $image;
 			}
 		}
 
