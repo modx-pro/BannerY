@@ -98,7 +98,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 			if (!width) {width = 166;}
 
 			this.el.dom.src = MODx.config.connectors_url + 'system/phpthumb.php?src=' + src + '&w='+width+'&h='+height+'&f=jpg&q=90&HTTP_MODAUTH=' + MODx.siteId + '&far=1&wctx=mgr&source=' + source;
-			this.el.dom.setAttribute('data-link', '/' + src.replace(/^\//, ''));
+			this.el.dom.setAttribute('data-link', '/' + src.replace(MODx.config.base_path, ''));
 
 			Ext.getCmp('currimg').show();
 		}

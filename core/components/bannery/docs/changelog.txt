@@ -1,5 +1,9 @@
 Changelog for BannerY.
 
+1.3.0 pl (26.01.2015)
+============
+- Fixes to handle non standard media sources.
+
 1.3.0 rc2 (03.08.2014)
 ============
 - Added ability to set range of dates for banner display.
