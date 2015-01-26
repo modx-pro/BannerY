@@ -106,7 +106,7 @@ foreach ($rows as $row) {
 		$source = $sources[$row['source']];
 	}
 
-	if (!empty($source) && $source instanceof modMediaSource) {
+	if (!empty($source) && $source instanceof modMediaSource && !empty($row['image'])) {
 		$row['image'] = $source->getObjectUrl($row['image']);
 	}
 
