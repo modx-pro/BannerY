@@ -200,9 +200,9 @@ Ext.extend(Bannery.grid.Ads,MODx.grid.Grid,{
 					});
 
 					record.newimage = record.image;
-					w.setTitle(_('bannery.ads.update')).show(e.target,function() {w.setPosition(null,50)},this);
 					w.reset();
 					w.setValues(record);
+					w.setTitle(_('bannery.ads.update')).show(e.target,function() {w.setPosition(null,50)},this);
 					Ext.getCmp('currimg').setSrc(record.current_image);
 					this.enablePositions(record.positions);
 				},scope:this}

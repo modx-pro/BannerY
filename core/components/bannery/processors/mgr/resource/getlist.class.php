@@ -100,7 +100,7 @@ class byResourceGetListProcessor extends modResourceGetListProcessor {
 	public function prepareResult(array $resourceArray) {
 		$resourceArray['parents'] = array();
 		$parents = $this->modx->getParentIds($resourceArray['id'], 2, array('context' => $resourceArray['context_key']));
-		if ($parents[count($parents) - 1] == 0) {
+		if (!empty($parents) && $parents[count($parents) - 1] == 0) {
 			unset($parents[count($parents) - 1]);
 		}
 		if (!empty($parents) && is_array($parents)) {

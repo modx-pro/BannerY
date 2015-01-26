@@ -170,6 +170,7 @@ MODx.combo.resources = function(config) {
 		,baseParams: {
 			action: 'mgr/resource/getlist'
 		}
+		,forceSelection: false
 		,tpl: new Ext.XTemplate(''
 			+'<tpl for="."><div class="x-combo-list-item bannery-resource-list-item">'
 				+'<tpl if="parents">'
