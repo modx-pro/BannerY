@@ -286,7 +286,7 @@ Bannery.renderGridImage = function(img) {
 		: 40;
 
 	if (img.length > 0) {
-		if (!/(jpg|jpeg|png|gif|bmp)$/.test(img)) {
+		if (!/(jpg|jpeg|png|gif|bmp)$/.test(img.toLowerCase())) {
 			return img;
 		}
 		else if (/^(http|https)/.test(img)) {
