@@ -1,8 +1,9 @@
 Changelog for BannerY.
 
-1.3.1 pl (*.04.2015)
+1.3.1 pl (03.04.2015)
 ============
 - [#23] Added system setting "bannery_media_source" for specifying default media source for banners.
+- [#22] Allow uppercase file extension to be rendered in grid.
 
 1.3.0 pl (26.01.2015)
 ============

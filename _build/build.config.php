@@ -3,7 +3,7 @@
 define('PKG_NAME', 'BannerY');
 define('PKG_NAME_LOWER', strtolower(PKG_NAME));
 
-define('PKG_VERSION', '1.3.0');
+define('PKG_VERSION', '1.3.1');
 define('PKG_RELEASE', 'pl');
 define('PKG_AUTO_INSTALL', true);
 
