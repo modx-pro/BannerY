@@ -93,7 +93,7 @@ Ext.ux.Image = Ext.extend(Ext.Component, {
 			Ext.getCmp('currimg').hide();
 		}
 		else {
-			if (!source) {source = MODx.config.default_media_source;}
+			if (!source) {source = Bannery.config['media_source'];}
 			if (!height) {height = 200;}
 			if (!width) {width = 166;}
 
@@ -293,7 +293,7 @@ Bannery.renderGridImage = function(img) {
 			return '<img src="'+img+'" alt="" />'
 		}
 		else {
-			return '<img src="'+MODx.config.connectors_url+'system/phpthumb.php?&src='+img+'&wctx=web&h='+height+'&zc=0&source='+Bannery.config.media_source+'" alt="" />'
+			return '<img src="'+MODx.config.connectors_url+'system/phpthumb.php?&src='+img+'&wctx=web&h='+height+'&zc=0&source='+Bannery.config['media_source']+'" alt="" />'
 		}
 	}
 	else {

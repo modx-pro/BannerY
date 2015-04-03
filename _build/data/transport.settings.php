@@ -8,6 +8,11 @@ $tmp = array(
 		'value' => 'bannerclick',
 		'area' => PKG_NAME_LOWER.'_main',
 	),
+	'media_source' => array(
+		'xtype' => 'numberfield',
+		'value' => '',
+		'area' => PKG_NAME_LOWER.'_main',
+	),
 );
 
 foreach ($tmp as $k => $v) {

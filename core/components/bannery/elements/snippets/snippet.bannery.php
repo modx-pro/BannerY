@@ -88,7 +88,7 @@ $pdoFetch->setConfig(array_merge($default, $scriptProperties));
 $rows = $pdoFetch->run();
 
 $output = array();
-$default_source = $modx->getOption('bannery.media_source', null, $modx->getOption('default_media_source'));
+$default_source = $modx->getOption('bannery_media_source', null, $modx->getOption('default_media_source'), true);
 $sources = array();
 foreach ($rows as $row) {
 	$source = !empty($row['source'])

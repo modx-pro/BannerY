@@ -310,7 +310,7 @@ Bannery.window.Ad = function(config) {
 								,id: 'modx-combo-source'
 								,name: 'source'
 								,anchor: '100%'
-								,value: config.record ? config.record.source : MODx.config.default_media_source
+								,value: config.record ? config.record.source : Bannery.config['media_source']
 							}]
 						},{
 							columnWidth: .2
