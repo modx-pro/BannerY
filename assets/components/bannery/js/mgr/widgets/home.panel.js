@@ -59,9 +59,6 @@ Ext.reg('bannery-panel-home',Bannery.panel.Home);
 
 
 /******************************************************/
-// Image preview
-Ext.BLANK_IMAGE_URL = '/assets/components/bannery/img/_blank.png'
-
 Ext.ux.Image = Ext.extend(Ext.Component, {
 	url  : Ext.BLANK_IMAGE_URL  //for initial src value
 	,autoEl: {
@@ -281,10 +278,7 @@ Ext.reg('modx-combo-adbrowser',MODx.combo.AdBrowser);
 // Functions
 /******************************************************/
 Bannery.renderGridImage = function(img) {
-	var height = MODx.modx23
-		? 45
-		: 40;
-
+	var height = 45;
 	if (img.length > 0) {
 		if (!/(jpg|jpeg|png|gif|bmp)$/.test(img.toLowerCase())) {
 			return img;

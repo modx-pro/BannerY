@@ -35,7 +35,7 @@ Bannery.grid.Positions = function(config) {
 			}
 		},{
 			xtype: 'bannery-filter-clear'
-			,text: '<i class="'+ (MODx.modx23 ? 'icon icon-times' : 'fa fa-times') + '"></i>'
+			,text: '<i class="icon icon-times"></i>'
 			,listeners: {click: {fn: this.FilterClear, scope: this}}
 		}]
 		,listeners: {
@@ -49,9 +49,7 @@ Bannery.grid.Positions = function(config) {
 };
 Ext.extend(Bannery.grid.Positions,MODx.grid.Grid,{
 	getMenu: function() {
-		var icon = MODx.modx23
-			? 'x-menu-item-icon icon icon-'
-			: 'x-menu-item-icon fa fa-';
+		var icon = 'x-menu-item-icon icon icon-';
 		var m = [{
 				text: '<i class="' + icon + 'edit"></i>' + _('bannery.positions.update')
 				,handler: this.updatePosition
@@ -238,9 +236,7 @@ Bannery.grid.AdPositions = function(config) {
 };
 Ext.extend(Bannery.grid.AdPositions,MODx.grid.Grid,{
 	getMenu: function() {
-		var icon = MODx.modx23
-			? 'x-menu-item-icon icon icon-'
-			: 'x-menu-item-icon fa fa-';
+		var icon = 'x-menu-item-icon icon icon-';
 		var m = [{
 				text: '<i class="' + icon + 'times"></i> ' + _('bannery.adposition.remove')
 				,handler: this.removeAdPosition

@@ -4,6 +4,10 @@ $xpdo_meta_map['byAdPosition']= array (
   'version' => '1.1',
   'table' => 'bannery_ads_positions',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'InnoDB',
+  ),
   'fields' => 
   array (
     'ad' => NULL,

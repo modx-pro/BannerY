@@ -1,3 +1,3 @@
 <?php
-require_once (dirname(dirname(__FILE__)) . '/byad.class.php');
+require_once (dirname(__DIR__) . '/byad.class.php');
 class byAd_mysql extends byAd {}

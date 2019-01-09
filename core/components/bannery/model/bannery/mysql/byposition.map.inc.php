@@ -4,6 +4,10 @@ $xpdo_meta_map['byPosition']= array (
   'version' => '1.1',
   'table' => 'bannery_positions',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'InnoDB',
+  ),
   'fields' => 
   array (
     'name' => '',

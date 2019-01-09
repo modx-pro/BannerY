@@ -86,9 +86,7 @@ Bannery.grid.Ads = function(config) {
 };
 Ext.extend(Bannery.grid.Ads,MODx.grid.Grid,{
 	getMenu: function(grid,idx) {
-		var icon = MODx.modx23
-			? 'x-menu-item-icon icon icon-'
-			: 'x-menu-item-icon fa fa-';
+		var icon = 'x-menu-item-icon icon icon-';
 		var row = grid.store.data.items[idx]
 		var m = [{
 			text: '<i class="' + icon + 'edit"></i> ' + _('bannery.ads.update')

@@ -4,6 +4,10 @@ $xpdo_meta_map['byClick']= array (
   'version' => '1.1',
   'table' => 'bannery_clicks',
   'extends' => 'xPDOSimpleObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'InnoDB',
+  ),
   'fields' => 
   array (
     'ad' => NULL,
