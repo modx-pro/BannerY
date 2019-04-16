@@ -1,5 +1,9 @@
 Changelog for BannerY.
 
+1.4.1 pl (16.04.2019)
+============
+- Improved support of MySQL 5.7+.
+
 1.4.0 pl (09.01.2019)
 ============
 - Improved support of MODX 2.7.

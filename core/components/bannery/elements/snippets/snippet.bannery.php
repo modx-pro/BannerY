@@ -79,7 +79,6 @@ $default = array(
 	'where' => $modx->toJSON($where),
 	'select' => $modx->toJSON($select),
 	'sortby' => $sortby,
-	'groupby' => $class.'.id',
 	'return' => 'data',
 	'disableConditions' => true,
 );
