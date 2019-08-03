@@ -10,13 +10,13 @@ Bannery.grid.Ads = function(config) {
 		,paging: true
 		,columns: [
 			{header: _('id'),dataIndex: 'id',sortable: true,width: 10}
-			,{header: _('bannery.ads.name'),dataIndex: 'name',sortable: true, width: 75}
-			,{header: _('bannery.ads.url'),dataIndex: 'url',sortable: true, width: 100}
-			,{header: _('bannery.ads.clicks'),dataIndex: 'clicks',sortable: false, width: 50}
-			,{header: _('bannery.ads.active'),dataIndex: 'active',sortable: true, renderer: this.renderBoolean, width: 50}
+			,{header: _('bannery.ads.name'),dataIndex: 'name',sortable: true,width: 75}
+			,{header: _('bannery.ads.url'),dataIndex: 'url',sortable: true,width: 100}
+			,{header: _('bannery.ads.clicks'),dataIndex: 'clicks',sortable: false,width: 50}
+			,{header: _('bannery.ads.active'),dataIndex: 'active',sortable: true,renderer: this.renderBoolean, width: 50}
 			,{header: _('bannery.ads.image'),dataIndex: 'current_image',sortable: false,renderer: {fn:function(img) {return Bannery.renderGridImage(img)}}, id: "byad-thumb", width: 100}
-			,{header: _('bannery.ads.start'),dataIndex: 'start',sortable: true, width: 75}
-			,{header: _('bannery.ads.end'),dataIndex: 'end',sortable: true, width: 75}
+			,{header: _('bannery.ads.start'),dataIndex: 'start',sortable: true,width: 75}
+			,{header: _('bannery.ads.end'),dataIndex: 'end',sortable: true,width: 75}
 			//,{header: _('bannery.ads.description'),dataIndex: 'description',sortable: false, hidden: true}
 		]
 		,tbar: [{
@@ -94,7 +94,7 @@ Ext.extend(Bannery.grid.Ads,MODx.grid.Grid,{
 		}];
 		if (row.data.active == 0) {
 			m.push({
-					text: '<i class="' + icon + 'check"></i> ' +  _('bannery.ads.enable')
+				text: '<i class="' + icon + 'check"></i> ' +  _('bannery.ads.enable')
 				,handler: this.enableAd}
 			);
 		}
@@ -272,9 +272,9 @@ Bannery.window.Ad = function(config) {
 		//,fileUpload: true
 		,modal: true
 		,resizable: false
-		,maximizable: false
-		,autoHeight: true
-		,width: 600
+		,maximizable: true
+		,style: 'width: 1100px; min-width: 70%; height: 700px; max-height: 90%;'
+		,bodyStyle:'overflow: hidden !important;'
 		,baseParams: {
 			action: 'mgr/ads/update'
 		}
@@ -374,10 +374,20 @@ Bannery.window.Ad = function(config) {
 							xtype: 'textarea'
 							,fieldLabel: _('bannery.ads.description')
 							,name: 'description'
+							,id: 'bannery.ads.description'
 							,anchor: '99%'
-							,height: 75
+							,height: 100
 							,allowBlank: true
 							,resize: true
+							,listeners: {
+                                render: function () {
+                                    if (MODx.loadRTE) {
+                                        window.setTimeout(function() {
+                                            MODx.loadRTE('bannery.ads.description');
+                                        }, 50);
+                                    }
+                                }
+                            }
 						}]
 					}]
 				}]

@@ -137,7 +137,7 @@ Bannery.window.Position = function(config) {
 		,title: _('bannery.positions.new')
 		,url: Bannery.config.connectorUrl
 		,modal: true
-		,width: 600
+		,width: 1000
 		,autoHeight: true
 		,baseParams: {
 			action: 'mgr/positions/update'
