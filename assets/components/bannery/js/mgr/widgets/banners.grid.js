@@ -56,11 +56,14 @@ Bannery.grid.Ads = function(config) {
 				return '';
 			}
 		}
+		,ddGroup: 'dd'
+		,enableDragDrop: true
 		,listeners: {
-			rowDblClick: function(grid, rowIndex, e) {
+			rowDblClick: function (grid, rowIndex, e) {
 				var row = grid.store.getAt(rowIndex);
 				this.updateAd(grid, e, row);
-			}
+			},
+			render: {fn: this._initDD, scope: this}
 		}
 	});
 
@@ -85,8 +88,39 @@ Bannery.grid.Ads = function(config) {
 	Bannery.grid.Ads.superclass.constructor.call(this,config);
 };
 Ext.extend(Bannery.grid.Ads,MODx.grid.Grid,{
-	getMenu: function(grid,idx) {
-		var icon = 'x-menu-item-icon icon icon-';
+	_initDD: function(grid) {
+		new Ext.dd.DropTarget(grid.el, {
+			ddGroup : 'dd',
+			copy:false,
+			notifyDrop : function(dd, e, data) {
+				var store = grid.store.data.items;
+				var target = store[dd.getDragData(e).rowIndex].data;
+				var source = store[data.rowIndex].data;
+				var position = grid.store.baseParams.position;
+				if (position === undefined || position == "") { return; }
+				if ((target.parent == source.parent) && (target.id != source.id)) {
+					dd.el.mask(_('loading'),'x-mask-loading');
+					MODx.Ajax.request({
+						url: Bannery.config.connectorUrl
+						,params: {
+							action: 'mgr/ads/sort'
+							,source: source.id
+							,target: target.id
+							,position: position
+						}
+						,listeners: {
+							success: {fn:function(r) { dd.el.unmask(); grid.refresh();},scope:grid}
+							,failure: {fn:function(r) { dd.el.unmask();},scope:grid}
+						}
+					});
+				}
+			}
+		});
+	}
+	,getMenu: function(grid,idx) {
+		var icon = MODx.modx23
+			? 'x-menu-item-icon icon icon-'
+			: 'x-menu-item-icon fa fa-';
 		var row = grid.store.data.items[idx]
 		var m = [{
 			text: '<i class="' + icon + 'edit"></i> ' + _('bannery.ads.update')
