@@ -1,0 +1,309 @@
+# Changelog - BannerPro
+
+Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+Versioning: [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+
+## [4.8.1] - 2026-06-26
+
+Patch 4.8.x: воронка в статистике, настройки webhook/A/B в mgr, conversions на графиках.
+
+### Added
+
+- `FunnelChart` на вкладке «Статистика» — воронка показ → клик → заказ за период.
+- Вкладка «Настройки»: блок «Webhook и A/B» (`settings_integrations_get/update`).
+- Линии conversions на `StatsLineChart` и `CompareLineChart`.
+- `conversions` в `stats_by_day` / `stats_by_weekday`.
+
+### Changed
+
+- `SettingsTab`: UTM + интеграции в одной вкладке, единое сохранение.
+
+## [4.8.0] - 2026-06-25
+
+Релиз 4.8.x: HTTP webhook на показ, A/B split, FormIt cookbook.
+
+### Added
+
+- Webhook на показ: `bannerpro_webhook_impression_url`, payload `event: impression`, общий HMAC secret с кликом.
+- A/B split: `&sortby=ab` — sticky 50/50 по cookie `bannerpro_ab_{positionId}` при ровно двух баннерах в слоте; `bannerpro_ab_ttl`.
+- Документ `docs/integrations/formit.md` — lead-баннер + FormIt без ядра.
+
+### Changed
+
+- Click webhook payload: поле `event: click` (обратно совместимо для парсеров по ключам).
+- `bannerpro_dispatch_webhook()` принимает ключ настройки URL (click / impression).
+
+## [4.6.0] - 2026-06-26
+
+Релиз 4.6.x: Admin UX, аналитика, snippet targeting, MS3 e-commerce.
+
+### Added
+
+- Admin: расширенные фильтры баннеров (active, type, product_id, tag); массовые действия; шаблоны баннеров; audit log; режим stats-only; OverviewWidget (7 дней).
+- Stats: периоды last_7_days, this_week, last_week; stats_compare с % delta и CompareLineChart.
+- Bot filter: `bannerpro_filter_bots` + soft-интеграция CrawlerDetect (клики и показы).
+- Targeting: dayparting (`show_hours`), resource/parent (`target_resource_id`, `&resource=`, `&parent=`), tags (`&tags=`, `tagsMode`).
+- Frontend: плейсхолдер `click_url`; lazy-load `impression.js` (`bannerpro_impression_lazy`).
+- MS3: `category_id`, catalog positions (`bannerpro_ms_catalog_positions`), UTM `{product_pagetitle}` / `{order_id}`.
+
+### Changed
+
+- Vue admin: AuditTab, TemplatePicker, bulk selection в AdsTab.
+- `query.php`: daypart/resource/tags filters; fix `bannerpro_fetch_counts_by_day`.
+
+## [4.5.0] - 2026-06-25
+
+Релиз 4.5.x: webhook на клик, дублирование позиции, context-aware вывод.
+
+### Added
+
+- Дублирование позиции в админке (`positions_duplicate`) с копированием баннеров, idx и weight.
+- Webhook на клик: настройки `bannerpro_webhook_url`, `bannerpro_webhook_secret`; POST JSON с HMAC-подписью.
+- Поле `context_key` на позиции (resolver схемы) и фильтр сниппета `&context=`.
+- Колонка «Контекст» в списке позиций; поле в форме создания/редактирования.
+- Лексикон ru/en/uk для duplicate position, webhook settings, context.
+
+### Changed
+
+- Ключ кэша сниппета: `activeContext` (текущий или явный `&context=`).
+- Фильтр `context_key` вынесен в `query.php` (`bannerpro_apply_position_context_filter`).
+- Webhook: единый payload (`bannerpro_click_webhook_payload`), проверка URL от SSRF.
+
+### Fixed
+
+- Фильтры статистики «Сегодня», «Этот месяц», «Этот год»: константы периода ломались при повторном `normalize_period` (strtolower от `'%Y-%m-%d'`), из‑за чего показывались все данные.
+
+## [4.4.0] - 2026-06-25
+
+Релиз 4.4.x: duplicate, UTM, превью HTML, качество кода.
+
+### Added
+
+- Дублирование баннера в админке (`ads_duplicate`) с копированием позиций, idx и weight.
+- UTM-параметры на redirect при клике: настройки `bannerpro_utm_*`, плейсхолдеры `{ad_id}`, `{position_id}`, `{adposition}`.
+- Превью HTML-баннера в форме (iframe sandbox) и компонент `AdPreviewPanel`.
+- Лексикон ru/en/uk для duplicate и preview.
+
+### Changed
+
+- Vue: переименование внутренних идентификаторов админки → `BannerProApp` / `BANNERPRO_*`.
+- Cookie `bannerpro_click_id`: `Secure` на HTTPS, `SameSite=Lax`, `HttpOnly`.
+- Connector: `bannerpro_post()` читает только `$_POST`.
+
+### Fixed
+
+- Пример `docs/examples/chunk-byad-product.fenom.tpl` — корректный URL клика.
+- Transport-чанк `byAd`: русский текст примера.
+- PSR-12: пустые строки в заголовках PHP-файлов.
+
+## [4.3.0] - 2026-06-08
+
+Read-only REST API (roadmap 4.3).
+
+### Added
+
+- `assets/components/bannerpro/api.php` — точка входа REST, Bearer auth по `bannerpro_api_key`.
+- `include/rest.php` — `GET /ads`, `GET /ads/{id}`, `GET /positions`, `GET /stats`.
+- Настройки `bannerpro_api_enabled`, `bannerpro_api_key` (автогенерация при пустом ключе).
+- Документ `docs/rest-api.md`.
+
+### Fixed
+
+- REST `/stats`: корректный `period` (по умолчанию `all`), алиасы `thismonth` и др.
+- REST `/ads`: фильтр `active`.
+- ACL: права `bannerpro_*` назначаются политикам Administrator и Manager при install/upgrade.
+- Vue: permissions в диалоге позиции (`AdPositionsList`).
+- Документация и версия сборки `_build/config.inc.php` приведены к 4.3.0.
+
+## [4.2.0] - 2026-06-08
+
+Атрибуция клик → заказ MiniShop3 (roadmap 4.8).
+
+### Added
+
+- Cookie `bannerpro_click_id` после клика (только ID записи `byClick`).
+- Поле `order_id` в `bannerpro_clicks`; `msOnSubmitOrder` в плагине BannerProMiniShop3.
+- Настройка `bannerpro_attribution_ttl` (дней).
+- Колонка «Заказы» / `conversions` в админке (баннеры, статистика).
+- `bannerpro_fetch_conversion_counts()` в `query.php`.
+
+## [4.1.0] - 2026-06-08
+
+Ротация, лимиты и гранулярные права (roadmap фаза 3 + 1.6).
+
+### Added
+
+- `weight` на связи ad↔position; режим `&sortby=weighted` (`RAND() * weight`).
+- `max_clicks`, `max_impressions` на баннер; реактивный SQL-фильтр в сниппете (без auto-disable `active`).
+- Плагин **BannerProMiniShop3** (`msOnProductPrepare`, `msOnProductsLoad`), выключен по умолчанию.
+- Права `bannerpro_save`, `bannerpro_remove`, `bannerpro_stats`; dispatch в connector из `handlers.php`.
+- Vue: лимиты в форме баннера, вес в списке позиции, UI по permissions, обработка HTTP 403.
+- Лексикон ru/en/uk для лимитов, веса, прав и REST/атрибуции.
+
+### Changed
+
+- `bannerpro_action_handlers()` возвращает `[handler, permission|null]` для всех действий connector.
+
+## [4.0.0] - 2026-06-07
+
+Major 4.x: единый namespace `bannerpro`, публичные имена элементов и клиентских событий.
+
+### Changed
+
+- Namespace MODX: `bannerpro`; пути `core/components/bannerpro/`, `assets/components/bannerpro/`.
+- Сниппет **BannerPro**; плагины **BannerProClickout**, **BannerProImpression**, **BannerProAnalytics**.
+- Системные настройки: ключи `bannerpro_*`, area `bannerpro`.
+- PHP-функции: префикс `bannerpro_*`.
+- Таблицы БД: `bannerpro_ads`, `bannerpro_positions`, `bannerpro_ads_positions`, `bannerpro_clicks`, `bannerpro_impressions`.
+- xPDO-пакет `bannerpro`; схема `bannerpro.mysql.schema.xml`.
+- Админка: bundle `bannerpro-admin.min.js`, `window.bannerproConfig`, `#bannerpro-mgr-app`.
+- Клиент: `data-bannerpro-*`, события `bannerpro:click` / `bannerpro:impression`, `OnBannerProClick` / `OnBannerProImpression`.
+- Демо: `bannerpro_test.tpl`, `seed_bannerpro_demo.php`, `tpl_bannerpro_*`.
+
+### Added
+
+- Resolver install/upgrade: создание и обновление таблиц `bannerpro_*`, элементов MODX и системных настроек пакета.
+
+### Removed
+
+- Устаревшие алиасы имён элементов и data-атрибутов, не входящие в публичный API BannerPro.
+
+## [3.8.0] - 2026-06-07
+
+События внешней аналитики (roadmap 4.2).
+
+### Fixed
+
+- Статистика: график «по дням» показывал 0 кликов при ненулевой сводке — упрощён `stats_by_day`, исправлено обновление Chart.js.
+- Демо-чанк `tpl_bannerpro_byad_product`: глобальные shop-баннеры (`product_id=0`) снова показывают имя и картинку баннера.
+- Сниппет без `productId` выводит только глобальные баннеры (`product_id=0`), как в документации MS3.
+- `bannerpro_ads_get_list`: при `position` + `mode=include` и пустой позиции возвращался весь список баннеров.
+- Клик: загрузка через `byAdPosition`, пустой URL → `sendErrorPage` вместо редиректа на пустой адрес.
+- Клиентская аналитика: очередь показов до загрузки `analytics.js`, без двойного учёта в GA4/Matomo/Метрике.
+- Плагин BannerProAnalytics: событие `OnLoadWebDocument` вместо `OnWebPagePrerender` — иначе `analytics.js` не попадал в HTML.
+- Алиас сниппета `positionKey` → `positionName`.
+- Сниппет: пустой `positionName` (только запятые/пробелы) больше не возвращает все баннеры.
+- Сборка плагинов: `events`/`file` не попадают в `modPlugin::fromArray`.
+- Админка: отступы контента и вертикальный скролл в MODX Manager (layout CSS; без `modParsedManagerController`, совместимо с Vue).
+- Админка: скролл в модальных формах баннера/позиции; раскладка полей (превью, даты, позиции).
+- Пикер товара MS3: поиск по `class_key:LIKE '%msProduct'` (MiniShop3\Model\msProduct), как в ms3ProductSets.
+- Грид баннеров: колонка URL без сырых HTML-тегов; ссылки на ресурсы показываются как `(id) pagetitle`.
+- Грид позиций: колонка действий закреплена справа, как на вкладке «Баннеры».
+- Тестовая страница: демо-фолбэк `analytics.js`, если плагин выключен или аналитика выключена; исправлен Fenom `{extends}` (переменные только внутри `{block}`).
+
+### Changed
+
+- Пикер товара в форме баннера: MultiSelect (1 товар) с серверным поиском по названию, как в ms3ProductSets.
+- Экспорт CSV статистики: полный отчёт (метаданные, сводка, по дням, по баннерам, рефереры) вместо одной строки итогов.
+
+### Added
+
+- MODX-события `OnBannerProClick`, `OnBannerProImpression` (`include/events.php`).
+- Клиентское событие `bannerpro:impression` в `impression.js`; data-атрибуты на обёртке показов и ссылках клика.
+- Плагин **BannerProAnalytics** (выключен по умолчанию): мост в GA4 dataLayer, Matomo `_paq`, Яндекс Метрику `ym()`.
+- Настройки `bannerpro_analytics_*`, документ `docs/integrations/analytics.md`.
+- Лексикон UK: `uk/default.inc.php`, `uk/properties.inc.php`, `uk/setting.inc.php` (замена FR, roadmap 4.5).
+- Документация: пути `npm` из корня репозитория; индекс `docs/README.md`.
+
+## [3.7.0] - 2026-06-07
+
+MVP интеграции MiniShop3 (roadmap 4.7).
+
+### Changed
+
+- Лексикон админки: `include/lexicon.php`, загрузка с `manager_language` (как msRussianPost); полный список ключей в Vue; убраны захардкоженные русские fallback.
+- Плейсхолдеры товара: bulk-load `msProduct` одним запросом (`bannerpro_load_product_resources`) вместо N+1 в цикле сниппета.
+- Сообщения об ошибках API: `bannerpro.ads.error.save/remove`, `bannerpro.adposition.error.save` (ru/en/uk).
+
+### Added
+
+- Поле `product_id` в `byAd` (resolver, schema, map).
+- Пикер товара `msProduct` в Vue-форме баннера; `resource_getlist` с `class_key`.
+- Плейсхолдеры `product_*` в `bannerpro_prepare_ad_row()` (`include/products.php`).
+- Параметр сниппета `productId` — фильтр глобальные + привязанные к товару.
+- Документ `docs/integrations/minishop3.md`, чанк `chunk-byad-product.fenom.tpl`.
+
+## [3.6.0] - 2026-06-07
+
+Релиз фазы 2: аналитика v2 (показы, CTR, CSV, retention).
+
+### Added
+
+- Модель `byImpression` / таблица `bannerpro_impressions`.
+- Плагин `BannerProImpression`, JS `impression.js`, обёртка `data-bannerpro-impression` в сниппете.
+- API `stats_summary`, `stats_by_day`, `stats_top_ads`, `stats_export`, `stats_purge`.
+- Дашборд: KPI, график по дням, топ баннеров, фильтр по позиции, экспорт CSV.
+- Настройки `bannerpro_track_impressions`, `bannerpro_impression`, retention для кликов и показов.
+- CLI `cron/purge.php` для очистки старых записей.
+
+### Changed
+
+- `ads_getclicks` и `clicks_getreferrers` поддерживают фильтр `position`.
+- Вкладка «Статистика» в Vue-админке расширена под CTR.
+
+## [3.5.0] - 2026-06-07
+
+Релиз фазы 4.3: кэширование HTML-вывода сниппета.
+
+### Added
+
+- Модуль `include/cache.php`: ключ, get/set, инвалидация по тегу `bannerpro`.
+- Системные настройки `bannerpro_cache`, `bannerpro_cache_lifetime`.
+- Свойства сниппета `cache`, `cacheLifetime`.
+
+### Changed
+
+- `bannerpro_render_snippet()` читает/пишет кэш готового HTML (partition `bannerpro`).
+- CRUD баннеров и позиций сбрасывает кэш через `bannerpro_cache_invalidate()`.
+
+## [3.2.0] - 2026-06-07
+
+Релиз фазы 1.1–1.4: типы баннеров, шаблоны по типу, positionName, DnD-сортировка.
+
+### Added
+
+- Поля `type` (`image` | `html`) и `html` в модели `byAd`, форма в Vue-админке.
+- Чанк `byHtml` и свойства сниппета `tplImage*` / `tplHtml*` с авто-выбором по типу.
+- Параметр сниппета `positionName` (фильтр по имени позиции).
+- Drag-and-drop сортировка баннеров в позиции (PrimeVue DataTable).
+
+### Changed
+
+- Быстрый старт и FAQ: `positionName` как основной способ выбора позиции.
+
+## [3.1.0] - 2026-06-07
+
+Релиз с Vue-админкой и модульной архитектурой для MODX 3.
+
+### Added
+
+- Админка на Vue 3 + Vite + PrimeVue (через VueTools).
+- Модульный PHP API в `include/` и JSON-коннектор вместо 18 processors.
+- Сборка пакета: `_build/build.php`, `config.inc.php`, `elements/`.
+
+### Changed
+
+- Единая логика URL изображений, фильтры периодов кликов (DateTime), права в менеджере.
+
+### Removed
+
+- Сервисный класс BannerPro и интерфейс менеджера на ExtJS.
+
+### Requirements
+
+- PHP 8.2+, MODX 3.x, pdoTools (сниппет), VueTools (админка).
+
+## [3.0.0] - 2026-06-07
+
+Первый релиз **BannerPro** для MODX Revolution 3.
+
+### Added
+
+- Пакет BannerPro: сниппет, плагины кликов, таблицы `bannerpro_*`, ExtJS-менеджер (до перехода на Vue в 3.1).
+- Требования: MODX >= 3.0.0, PHP >= 8.2.0.
+- Регистрация сервиса через bootstrap MODX 3.
+
+### Changed
+
+- Инициализация коннектора для MODX 3.
+- Совместимость с предупреждениями PHP 8.2.

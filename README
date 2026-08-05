@@ -1,6 +1,71 @@
-BannerY for MODX Revolution.
+# BannerPro for MODX 3
 
-Simple and handy way to manage your banner ads.
-Also this can be used without images, as only-text ads.
+Управление рекламными баннерами в MODX Revolution 3 (PHP 8.2+): позиции, ротация, клики, показы, CTR, кэш, опциональная связка с MiniShop3.
 
-It is fork from Jeroen Kenters BannerX with some good new features.
+## Требования
+
+- MODX Revolution >= 3.0.0
+- PHP >= 8.2.0
+- [pdoTools](https://modx.pro/components/pdotools) — для сниппета `BannerPro`
+- [VueTools](https://docs.modx.pro/components/vuetools/) — для админки (Vue 3 + PrimeVue)
+- [MiniShop3](https://docs.modx.pro/components/minishop3/) — опционально, для `product_id` и плейсхолдеров `product_*`
+
+## Установка
+
+1. Соберите транспорт: `php _build/build.php` (из корня дополнения, нужен доступ к MODX).
+2. Установите пакет через Менеджер пакетов.
+3. При первой установке resolver предложит установить pdoTools.
+
+## Сборка фронтенда админки
+
+```bash
+npm install
+npm run build
+```
+
+Бандл: `assets/components/bannerpro/js/mgr/vue-dist/bannerpro-admin.min.js`
+
+## Документация
+
+Подробная документация с примерами Fenom: [docs/README.md](docs/README.md).
+
+| Раздел | Ссылка |
+|--------|--------|
+| Быстрый старт на сайте | [docs/frontend-guide.md](docs/frontend-guide.md) |
+| MiniShop3 | [docs/integrations/minishop3.md](docs/integrations/minishop3.md) |
+| Аналитика (GA4, Matomo, Метрика) | [docs/integrations/analytics.md](docs/integrations/analytics.md) |
+| Роадмап | [docs/roadmap.md](docs/roadmap.md) |
+
+## Использование на сайте
+
+Рекомендуется **`positionName`** (имя позиции из админки) вместо числового ID.
+
+**Fenom:**
+
+```fenom
+{'!BannerPro' | snippet : ['positionName' => 'sidebar', 'tpl' => 'byAd', 'limit' => 5]}
+```
+
+**Карточка товара (MiniShop3):**
+
+```fenom
+{'!BannerPro' | snippet : [
+  'positionName' => 'shop-product-sidebar',
+  'productId' => $_modx->resource.id,
+  'tpl' => 'byAdProduct'
+]}
+```
+
+Клики — плагин `BannerProClickout` (`OnPageNotFound`), URL `/{bannerpro_click}/{adposition}`.
+Показы — плагин `BannerProImpression` (опционально, настройка `bannerpro_track_impressions`).
+Внешняя аналитика — плагин `BannerProAnalytics` (опционально, с 3.8.0).
+
+## Namespace
+
+- Пакет MODX: `bannerpro`
+- Пути: `core/components/bannerpro/`, `assets/components/bannerpro/`
+- Таблицы БД: `bannerpro_ads`, `bannerpro_positions`, `bannerpro_impressions`, …
+
+## Версия
+
+**4.5.0-pl** — webhook на клик, дублирование позиций, context-aware вывод (4.5); дублирование баннеров, UTM, превью HTML (4.4); взвешенная ротация и лимиты (4.1); атрибуция клик → заказ MS3 (4.2); REST API и ACL (4.3). Подробнее: `docs/roadmap.md`, `core/components/bannerpro/docs/changelog.txt`.
