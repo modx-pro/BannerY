@@ -10,21 +10,15 @@ class AdGetListProcessor extends modObjectGetListProcessor {
 		// Filter by position
 		if ($position = $this->getProperty('position')) {
 			$mode = $this->getProperty('mode','include');
+			$c->innerJoin('byAdPosition', 'byAdPosition', array('`byAdPosition`.`ad` = `byAd`.`id`'));
+			if ($mode == 'exclude') {
+				$c->where(array("byAdPosition.position:!="=>$position));
+			}
+			else {
+				$c->where(array("byAdPosition.position"=>$position));
+			}
 
-			$q = $this->modx->newQuery('byAdPosition');
-			$q->select('ad');
-			$q->where(array('position' => $position));
-			if ($q->prepare() && $q->stmt->execute()) {
-				$ads = array_unique($q->stmt->fetchAll(PDO::FETCH_COLUMN));
-			}
-			if (!empty($ads)) {
-				if ($mode == 'exclude') {
-					$c->where(array('id:NOT IN' => $ads));
-				}
-				else {
-					$c->where(array('id:IN' => $ads));
-				}
-			}
+			$c->sortby("byAdPosition.idx,id", "ASC");
 		}
 		// Filter by search query
 		if ($query = $this->getProperty('query')) {
