@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="bannerpro" baseClass="xPDOObject" platform="mysql" defaultEngine="InnoDB" version="1.1">
+
+	<object class="byAd" table="bannerpro_ads" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+		<field key="url" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
+		<field key="image" dbtype="varchar" precision="255" phptype="string" null="null" default=""/>
+		<field key="source" dbtype="integer" precision="10" phptype="integer" attributes="unsigned" null="null" default="1"/>
+		<field key="active" dbtype="tinyint" precision="1" attributes="unsigned" phptype="integer" null="false" default="0"/>
+		<field key="description" dbtype="text" phptype="string" null="true" />
+		<field key="type" dbtype="varchar" precision="16" phptype="string" null="false" default="image" />
+		<field key="html" dbtype="text" phptype="string" null="true" />
+		<field key="start" dbtype="datetime" phptype="timestamp" null="true" />
+		<field key="end" dbtype="datetime" phptype="timestamp" null="true" />
+		<field key="product_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="true" default="0" />
+		<field key="category_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="true" default="0" />
+		<field key="max_clicks" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
+		<field key="max_impressions" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
+		<field key="show_hours" dbtype="text" phptype="string" null="true" />
+		<field key="target_resource_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
+		<field key="target_parent_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
+		<field key="tags" dbtype="text" phptype="string" null="true" />
+
+		<index alias="active" name="active" primary="false" unique="false" type="BTREE">
+			<column key="active" length="" collation="A" null="false" />
+		</index>
+		<index alias="start" name="start" primary="false" unique="false" type="BTREE">
+			<column key="start" length="" collation="A" null="false" />
+		</index>
+		<index alias="end" name="end" primary="false" unique="false" type="BTREE">
+			<column key="end" length="" collation="A" null="false" />
+		</index>
+		<index alias="product_id" name="product_id" primary="false" unique="false" type="BTREE">
+			<column key="product_id" length="" collation="A" null="true" />
+		</index>
+		<index alias="category_id" name="category_id" primary="false" unique="false" type="BTREE">
+			<column key="category_id" length="" collation="A" null="true" />
+		</index>
+		<index alias="target_resource_id" name="target_resource_id" primary="false" unique="false" type="BTREE">
+			<column key="target_resource_id" length="" collation="A" null="false" />
+		</index>
+		<index alias="target_parent_id" name="target_parent_id" primary="false" unique="false" type="BTREE">
+			<column key="target_parent_id" length="" collation="A" null="false" />
+		</index>
+
+		<composite alias="Positions" class="byAdPosition" local="id" foreign="ad" cardinality="many" owner="local" />
+		<composite alias="Clicks" class="byClick" local="id" foreign="ad" cardinality="many" owner="local" />
+		<composite alias="Impressions" class="byImpression" local="id" foreign="ad" cardinality="many" owner="local" />
+	</object>
+
+	<object class="byPosition" table="bannerpro_positions" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+
+		<index alias="name" name="name" primary="false" unique="false" type="BTREE">
+			<column key="name" length="" collation="A" null="false" />
+		</index>
+
+		<composite alias="Ads" class="byAdPosition" local="id" foreign="position" cardinality="many" owner="local" />
+		<composite alias="Clicks" class="byClick" local="id" foreign="position" cardinality="many" owner="local" />
+		<composite alias="Impressions" class="byImpression" local="id" foreign="position" cardinality="many" owner="local" />
+	</object>
+
+	<object class="byAdPosition" table="bannerpro_ads_positions" extends="xPDOSimpleObject">
+		<field key="ad" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="position" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="idx" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+		<field key="weight" dbtype="int" precision="10" phptype="integer" null="false" default="1" />
+
+		<index alias="ad" name="ad" primary="false" unique="false" type="BTREE">
+			<column key="ad" length="" collation="A" null="false" />
+		</index>
+		<index alias="position" name="position" primary="false" unique="false" type="BTREE">
+			<column key="position" length="" collation="A" null="false" />
+		</index>
+
+		<aggregate alias="Ad" class="byAd" local="ad" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="Position" class="byPosition" local="position" foreign="id" cardinality="one" owner="foreign" />
+		<composite alias="Impressions" class="byImpression" local="id" foreign="adposition" cardinality="many" owner="local" />
+	</object>
+
+	<object class="byClick" table="bannerpro_clicks" extends="xPDOSimpleObject">
+		<field key="ad" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="position" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="clickdate" dbtype="datetime" phptype="datetime" null="true" />
+		<field key="referrer" dbtype="varchar" precision="255" phptype="string" null="false" />
+		<field key="ip" dbtype="varchar" precision="39" phptype="string" null="false" />
+		<field key="order_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0" />
+
+		<aggregate alias="Ad" class="byAd" local="ad" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="Position" class="byPosition" local="position" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+
+	<object class="byImpression" table="bannerpro_impressions" extends="xPDOSimpleObject">
+		<field key="ad" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="position" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="adposition" dbtype="integer" precision="10" attributes="unsigned" phptype="integer" null="false" index="index" />
+		<field key="impressiondate" dbtype="datetime" phptype="datetime" null="true" />
+		<field key="ip" dbtype="varchar" precision="39" phptype="string" null="false" />
+
+		<index alias="ad" name="ad" primary="false" unique="false" type="BTREE">
+			<column key="ad" length="" collation="A" null="false" />
+		</index>
+		<index alias="position" name="position" primary="false" unique="false" type="BTREE">
+			<column key="position" length="" collation="A" null="false" />
+		</index>
+		<index alias="impressiondate" name="impressiondate" primary="false" unique="false" type="BTREE">
+			<column key="impressiondate" length="" collation="A" null="false" />
+		</index>
+
+		<aggregate alias="Ad" class="byAd" local="ad" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="Position" class="byPosition" local="position" foreign="id" cardinality="one" owner="foreign" />
+		<aggregate alias="AdPosition" class="byAdPosition" local="adposition" foreign="id" cardinality="one" owner="foreign" />
+	</object>
+
+	<object class="byAdTemplate" table="bannerpro_ad_templates" extends="xPDOSimpleObject">
+		<field key="name" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+		<field key="type" dbtype="varchar" precision="16" phptype="string" null="false" default="image"/>
+		<field key="tpl" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+		<field key="defaults" dbtype="text" phptype="string" null="true"/>
+	</object>
+
+	<object class="byAudit" table="bannerpro_audit" extends="xPDOSimpleObject">
+		<field key="user" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0"/>
+		<field key="username" dbtype="varchar" precision="255" phptype="string" null="false" default=""/>
+		<field key="action" dbtype="varchar" precision="64" phptype="string" null="false" default=""/>
+		<field key="entity" dbtype="varchar" precision="32" phptype="string" null="false" default=""/>
+		<field key="entity_id" dbtype="int" precision="10" phptype="integer" attributes="unsigned" null="false" default="0"/>
+		<field key="payload" dbtype="text" phptype="string" null="true"/>
+		<field key="created_at" dbtype="datetime" phptype="datetime" null="true"/>
+
+		<index alias="entity" name="entity" primary="false" unique="false" type="BTREE">
+			<column key="entity" length="" collation="A" null="false" />
+		</index>
+		<index alias="action" name="action" primary="false" unique="false" type="BTREE">
+			<column key="action" length="" collation="A" null="false" />
+		</index>
+		<index alias="created_at" name="created_at" primary="false" unique="false" type="BTREE">
+			<column key="created_at" length="" collation="A" null="false" />
+		</index>
+	</object>
+
+</model>

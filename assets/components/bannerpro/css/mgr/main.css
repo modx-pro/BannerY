@@ -1,0 +1,1209 @@
+/* BannerPro manager — PrimeVue shell (viewport + dialog fixes) */
+
+/* Design tokens (BannerPro layer on PrimeVue vars) */
+.vueApp,
+#bannerpro-mgr-app.vueApp {
+  --bp-space-1: 0.25rem;
+  --bp-space-2: 0.5rem;
+  --bp-space-3: 0.75rem;
+  --bp-space-4: 1rem;
+  --bp-space-5: 1.5rem;
+  --bp-space-6: 2rem;
+  --bp-radius: var(--p-border-radius-md);
+  --bp-radius-lg: var(--p-border-radius-lg, 8px);
+  --bp-shadow-sm: 0 1px 2px color-mix(in srgb, var(--p-text-color) 6%, transparent),
+    0 4px 12px color-mix(in srgb, var(--p-text-color) 5%, transparent);
+  --bp-shadow-md: 0 2px 4px color-mix(in srgb, var(--p-text-color) 6%, transparent),
+    0 8px 24px color-mix(in srgb, var(--p-text-color) 8%, transparent);
+  --bp-text-delta-up: var(--p-green-600, #16a34a);
+  --bp-text-delta-down: var(--p-red-600, #dc2626);
+  --bp-text-delta-neutral: var(--p-text-muted-color);
+  --bp-panel-bg: var(--p-content-background);
+  --bp-panel-border: color-mix(in srgb, var(--p-primary-color) 14%, var(--p-content-border-color));
+  --bp-surface-page: color-mix(in srgb, var(--p-primary-color) 4%, var(--p-surface-100, #f1f5f3));
+  --bp-surface-tint: color-mix(in srgb, var(--p-primary-color) 8%, var(--p-content-background));
+  --bp-accent-bar: linear-gradient(90deg, var(--p-primary-600), var(--p-primary-400));
+}
+
+#bannerpro-mgr-root.bannerpro-mgr-root,
+#bannerpro-mgr-app.vueApp {
+  padding: var(--bp-space-4) var(--bp-space-5) var(--bp-space-6);
+  box-sizing: border-box;
+  background: var(--bp-surface-page);
+  border-radius: var(--bp-radius-lg);
+  min-height: 100%;
+}
+
+.vueApp .bannerpro-mgr-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--bp-space-5);
+  max-width: 90rem;
+}
+
+/* Main tabs panel */
+.vueApp .bannerpro-mgr-main {
+  background: var(--bp-panel-bg);
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  box-shadow: var(--bp-shadow-md);
+  padding: var(--bp-space-4) var(--bp-space-5) var(--bp-space-5);
+}
+
+body.bannerpro-manager-page #modx-content {
+  bottom: 0 !important;
+  height: auto !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.bannerpro-manager-page #modx-content > .x-panel-bwrap,
+body.bannerpro-manager-page #modx-content > .x-panel-bwrap > .x-panel-body {
+  overflow: visible !important;
+  height: auto !important;
+  max-height: none !important;
+  min-height: 0;
+}
+
+.vueApp .bannerpro-mgr-tabs .p-tabpanels,
+.vueApp .bannerpro-tab-panel {
+  overflow: visible;
+  min-width: 0;
+}
+
+.vueApp .bannerpro-datatable-shell {
+  overflow-x: auto;
+  min-width: 0;
+}
+
+/* Tabs — pill active state */
+.vueApp .bannerpro-mgr-tabs.p-tabs .p-tablist {
+  border-bottom: 1px solid var(--bp-panel-border);
+  gap: var(--bp-space-2);
+  padding-bottom: var(--bp-space-1);
+  background: var(--bp-surface-tint);
+  border-radius: var(--bp-radius) var(--bp-radius) 0 0;
+  padding: var(--bp-space-2) var(--bp-space-2) 0;
+}
+
+body .p-dialog .bannerpro-form-tabs.p-tabs .p-tablist {
+  border-bottom: 1px solid var(--bp-panel-border);
+  gap: var(--bp-space-2);
+  background: var(--bp-surface-tint);
+  border-radius: var(--bp-radius) var(--bp-radius) 0 0;
+  padding: var(--bp-space-2) 1.125rem 0;
+}
+
+.vueApp .bannerpro-mgr-main > .bannerpro-mgr-tabs.p-tabs .p-tablist {
+  margin: calc(-1 * var(--bp-space-4)) calc(-1 * var(--bp-space-5)) var(--bp-space-4);
+}
+
+.vueApp .bannerpro-mgr-tabs.p-tabs .p-tab,
+body .p-dialog .bannerpro-form-tabs.p-tabs .p-tab {
+  border-bottom: 2px solid transparent;
+  margin-bottom: 0;
+  border-radius: var(--bp-radius) var(--bp-radius) 0 0;
+  padding: 0.65rem 1rem;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.vueApp .bannerpro-mgr-tabs.p-tabs .p-tab:hover,
+body .p-dialog .bannerpro-form-tabs.p-tabs .p-tab:hover {
+  background: color-mix(in srgb, var(--p-primary-color) 6%, transparent);
+}
+
+.vueApp .bannerpro-mgr-tabs.p-tabs .p-tab[data-p-active="true"],
+body .p-dialog .bannerpro-form-tabs.p-tabs .p-tab[data-p-active="true"] {
+  border-bottom-color: var(--p-primary-color);
+  color: var(--p-primary-700, var(--p-primary-color));
+  background: var(--bp-panel-bg);
+  font-weight: 600;
+  box-shadow: 0 -1px 0 var(--bp-panel-bg);
+}
+
+.vueApp .bannerpro-mgr-tabs.p-tabs .p-tabpanels,
+body .p-dialog .bannerpro-form-tabs .p-tabpanels {
+  padding-top: var(--bp-space-4);
+}
+
+/* KPI cards */
+.vueApp .bannerpro-stat-card.p-card {
+  box-shadow: var(--bp-shadow-sm);
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  overflow: hidden;
+  position: relative;
+  background: var(--bp-panel-bg);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.vueApp .bannerpro-stat-card.p-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--p-primary-400, var(--p-primary-color));
+}
+
+.vueApp .bannerpro-stat-card--accent.p-card::before {
+  background: var(--bp-accent-bar);
+}
+
+.vueApp .bannerpro-stat-card.p-card:hover {
+  box-shadow: var(--bp-shadow-md);
+  border-color: color-mix(in srgb, var(--p-primary-color) 28%, var(--p-content-border-color));
+}
+
+.vueApp .bannerpro-stat-card .p-card-body {
+  padding: var(--bp-space-4) var(--bp-space-5) var(--bp-space-4) calc(var(--bp-space-5) + 2px);
+}
+
+.vueApp .bannerpro-stat-card__label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--p-text-muted-color);
+  margin-bottom: var(--bp-space-2);
+}
+
+.vueApp .bannerpro-stat-card__value {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--p-text-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.vueApp .bannerpro-stat-card__value--accent {
+  color: var(--p-primary-700, var(--p-primary-color));
+}
+
+.vueApp .bannerpro-stat-card__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--bp-radius-lg);
+  flex-shrink: 0;
+  background: color-mix(in srgb, var(--p-primary-color) 12%, var(--p-content-background));
+}
+
+.vueApp .bannerpro-stat-card--accent .bannerpro-stat-card__icon-wrap {
+  background: color-mix(in srgb, var(--p-primary-color) 18%, var(--p-content-background));
+}
+
+.vueApp .bannerpro-stat-card__icon {
+  font-size: 1.25rem;
+  color: var(--p-primary-600, var(--p-primary-color));
+}
+
+.vueApp .bannerpro-stat-delta {
+  font-size: 0.875rem;
+  margin-top: var(--bp-space-2);
+}
+
+.vueApp .bannerpro-stat-delta--up {
+  color: var(--bp-text-delta-up);
+}
+
+.vueApp .bannerpro-stat-delta--down {
+  color: var(--bp-text-delta-down);
+}
+
+.vueApp .bannerpro-stat-delta--neutral {
+  color: var(--bp-text-delta-neutral);
+}
+
+/* Page sections */
+.vueApp .bannerpro-page-section {
+  margin-bottom: var(--bp-space-5);
+}
+
+.vueApp .bannerpro-page-section__header {
+  margin-bottom: var(--bp-space-3);
+  padding-left: var(--bp-space-1);
+  border-left: 3px solid var(--p-primary-color);
+}
+
+.vueApp .bannerpro-page-section__title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+  letter-spacing: -0.01em;
+}
+
+.vueApp .bannerpro-page-section__subtitle {
+  font-size: 0.875rem;
+  color: var(--p-text-muted-color);
+  margin-top: var(--bp-space-1);
+}
+
+.vueApp .bannerpro-page-section__panel {
+  background: var(--bp-surface-tint);
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  padding: var(--bp-space-4);
+  box-shadow: var(--bp-shadow-sm);
+}
+
+/* Overview widget */
+.vueApp .bannerpro-overview-widget.p-card {
+  box-shadow: var(--bp-shadow-md);
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.vueApp .bannerpro-overview-widget.p-card::before {
+  content: '';
+  display: block;
+  height: 4px;
+  background: var(--bp-accent-bar);
+}
+
+.vueApp .bannerpro-overview-widget .p-card-body {
+  padding: var(--bp-space-5);
+}
+
+.vueApp .bannerpro-overview-widget__header {
+  margin-bottom: var(--bp-space-4);
+  padding-bottom: var(--bp-space-3);
+  border-bottom: 1px solid var(--bp-panel-border);
+}
+
+.vueApp .bannerpro-overview-widget__eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--p-primary-600, var(--p-primary-color));
+  margin-bottom: var(--bp-space-1);
+}
+
+/* Empty state */
+.vueApp .bannerpro-empty-state {
+  max-width: 28rem;
+  margin: 0 auto;
+  padding: var(--bp-space-6) var(--bp-space-4);
+  text-align: center;
+}
+
+.vueApp .bannerpro-empty-state__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  margin-bottom: var(--bp-space-3);
+  background: color-mix(in srgb, var(--p-primary-color) 12%, var(--p-content-background));
+}
+
+.vueApp .bannerpro-empty-state__icon {
+  font-size: 1.5rem;
+  color: var(--p-primary-color);
+}
+
+.vueApp .bannerpro-empty-state__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--p-text-color);
+  margin: 0 0 var(--bp-space-2);
+}
+
+.vueApp .bannerpro-empty-state__detail {
+  font-size: 0.875rem;
+  color: var(--p-text-muted-color);
+  margin: 0;
+}
+
+.vueApp .bannerpro-filter-toolbar.p-toolbar {
+  padding: var(--bp-space-3) var(--bp-space-4);
+  background: var(--bp-surface-tint);
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  box-shadow: var(--bp-shadow-sm);
+  margin-bottom: var(--bp-space-4) !important;
+}
+
+.vueApp .bannerpro-filter-toolbar .p-toolbar-start,
+.vueApp .bannerpro-filter-toolbar .p-toolbar-end,
+.bannerpro-filter-toolbar .p-toolbar-start,
+.bannerpro-filter-toolbar .p-toolbar-end {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.vueApp .bannerpro-filter-search {
+  min-width: 12rem;
+}
+
+/* SplitButton: MODX/ExtJS иногда добавляет margin к button — убираем зазор между частями */
+.vueApp .bannerpro-filter-toolbar .p-splitbutton,
+.bannerpro-filter-toolbar .p-splitbutton {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0;
+}
+
+.vueApp .bannerpro-filter-toolbar .p-splitbutton > .p-button,
+.bannerpro-filter-toolbar .p-splitbutton > .p-button {
+  margin: 0;
+}
+
+.vueApp .bannerpro-filter-toolbar .p-splitbutton-button.p-button,
+.bannerpro-filter-toolbar .p-splitbutton-button.p-button {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+  border-inline-end: 0 none;
+}
+
+.vueApp .bannerpro-filter-toolbar .p-splitbutton-dropdown.p-button,
+.bannerpro-filter-toolbar .p-splitbutton-dropdown.p-button {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  margin-inline-start: 0;
+}
+
+/* Thumbnails */
+.bannerpro-thumb,
+.vueApp .bannerpro-thumb {
+  max-width: 80px;
+  max-height: 45px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  vertical-align: middle;
+  display: block;
+}
+
+.vueApp .bannerpro-thumb-image .p-image-preview-indicator {
+  border-radius: var(--p-border-radius-md);
+}
+
+body .p-dialog.bannerpro-position-dialog .bannerpro-thumb,
+body .p-dialog.bannerpro-form-dialog .bannerpro-thumb {
+  max-width: 72px;
+  max-height: 45px;
+}
+
+.vueApp .bannerpro-row-disabled {
+  opacity: 0.55;
+}
+
+.vueApp .bannerpro-col-actions {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.vueApp .bannerpro-chart-wrap {
+  min-height: 260px;
+}
+
+.vueApp .bannerpro-chart-panel {
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  padding: var(--bp-space-4) var(--bp-space-5);
+  background: var(--bp-panel-bg);
+  box-shadow: var(--bp-shadow-sm);
+}
+
+.vueApp .bannerpro-chart-panel__title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--p-text-color);
+  margin: 0;
+  padding-left: var(--bp-space-3);
+  border-left: 3px solid var(--p-primary-color);
+}
+
+.vueApp .bannerpro-chart-panel__header {
+  margin-bottom: var(--bp-space-3);
+}
+
+.vueApp .bannerpro-chart-panel__canvas {
+  min-height: 260px;
+}
+
+.vueApp .bannerpro-funnel-chart {
+  border: 1px solid var(--bp-panel-border);
+  border-radius: var(--bp-radius-lg);
+  padding: var(--bp-space-4) var(--bp-space-5);
+  background: var(--bp-panel-bg);
+  box-shadow: var(--bp-shadow-sm);
+}
+
+.vueApp .bannerpro-funnel-chart__header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.vueApp .bannerpro-funnel-chart__canvas {
+  min-height: 180px;
+}
+
+.vueApp .bannerpro-funnel-chart__rates {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.vueApp .bannerpro-bulk-selected {
+  font-size: 0.875rem;
+  color: var(--p-text-muted-color);
+}
+
+.vueApp .bannerpro-bulk-replace-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.vueApp .bannerpro-bulk-assign-positions {
+  width: 100%;
+}
+
+/* Forms and dialogs */
+.bannerpro-form-stack,
+.vueApp .bannerpro-form-stack,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-stack,
+body .p-dialog.bannerpro-form-dialog .bannerpro-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bannerpro-form-field,
+.vueApp .bannerpro-form-field,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field,
+body .p-dialog.bannerpro-form-dialog .bannerpro-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.bannerpro-form-row,
+.vueApp .bannerpro-form-row,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-row,
+body .p-dialog.bannerpro-form-dialog .bannerpro-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  align-items: flex-end;
+}
+
+.bannerpro-field-hint,
+.vueApp .bannerpro-field-hint,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-field-hint,
+body .p-dialog.bannerpro-form-dialog .bannerpro-field-hint {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--p-text-muted-color);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-stack,
+body .p-dialog.bannerpro-form-dialog .bannerpro-form-stack {
+  gap: 1rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-section-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid color-mix(in srgb, var(--p-primary-color) 14%, var(--p-content-border-color));
+  border-radius: var(--p-border-radius-lg, 8px);
+  background: color-mix(in srgb, var(--p-primary-color) 4%, var(--p-content-background));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-type-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-border-radius-lg, 8px);
+  background: var(--p-content-background);
+  width: fit-content;
+  max-width: 100%;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-type-switch__option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--p-text-muted-color);
+  transition: color 0.15s ease;
+  white-space: nowrap;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-type-switch__option--active {
+  color: var(--p-primary-700, var(--p-primary-color));
+  font-weight: 600;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field--type label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--p-text-muted-color);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--p-text-muted-color);
+}
+
+body .p-dialog.bannerpro-form-dialog .bannerpro-form-stack > .p-floatlabel,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-stack > .p-floatlabel {
+  display: block;
+  width: 100%;
+  min-height: 2.75rem;
+}
+
+.bannerpro-form-field--active,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field--active {
+  flex: 0 0 auto;
+  min-width: 4.5rem;
+  align-items: flex-start;
+}
+
+.bannerpro-form-field--active .p-toggleswitch,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field--active .p-toggleswitch {
+  margin-top: 0.15rem;
+}
+
+.bannerpro-form-content-grid,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-content-grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 260px) 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-content-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-content-stack--html {
+  gap: 1.25rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-html-editor {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  min-height: 14rem;
+  resize: vertical;
+  background: color-mix(in srgb, var(--p-primary-color) 3%, var(--p-content-background));
+  border-color: color-mix(in srgb, var(--p-primary-color) 18%, var(--p-content-border-color));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-url-field {
+  display: flex;
+  align-items: stretch;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-url-field__input {
+  min-width: 0;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-url-autocomplete.p-autocomplete,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-autocomplete-field.p-autocomplete,
+body .p-dialog.bannerpro-form-dialog .bannerpro-autocomplete-field.p-autocomplete {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: stretch;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-url-autocomplete .p-autocomplete-input,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-autocomplete-field .p-autocomplete-input,
+body .p-dialog.bannerpro-form-dialog .bannerpro-autocomplete-field .p-autocomplete-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 1%;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-url-autocomplete .p-autocomplete-dropdown,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-autocomplete-field .p-autocomplete-dropdown,
+body .p-dialog.bannerpro-form-dialog .bannerpro-autocomplete-field .p-autocomplete-dropdown {
+  flex: 0 0 auto;
+  width: 2.5rem;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+  background: color-mix(in srgb, var(--p-primary-color) 10%, var(--p-content-background));
+  border-color: var(--p-content-border-color);
+  color: var(--p-primary-700, var(--p-primary-color));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-url-autocomplete .p-autocomplete-dropdown:hover,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-autocomplete-field .p-autocomplete-dropdown:hover,
+body .p-dialog.bannerpro-form-dialog .bannerpro-autocomplete-field .p-autocomplete-dropdown:hover {
+  background: color-mix(in srgb, var(--p-primary-color) 16%, var(--p-content-background));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-autocomplete-field .p-autocomplete-dropdown .p-icon,
+body .p-dialog.bannerpro-form-dialog .bannerpro-autocomplete-field .p-autocomplete-dropdown .p-icon {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field--muted {
+  opacity: 0.72;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-targeting-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--p-text-muted-color);
+  background: color-mix(in srgb, var(--p-primary-color) 6%, var(--p-content-background));
+  border: 1px solid color-mix(in srgb, var(--p-primary-color) 14%, var(--p-content-border-color));
+  border-radius: var(--p-border-radius-md, 6px);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-targeting-hint .pi {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--p-primary-600, var(--p-primary-color));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-row--targeting {
+  gap: 0.875rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-target-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin-top: 0.125rem;
+  padding: 0.25rem 0.5rem;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--p-primary-700, var(--p-primary-color));
+  cursor: pointer;
+  border-radius: var(--p-border-radius-sm, 4px);
+  transition: background 0.15s ease;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-target-clear:hover {
+  background: color-mix(in srgb, var(--p-primary-color) 10%, transparent);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-target-clear:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 1px;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-minishop-field {
+  display: flex;
+  align-items: stretch;
+  gap: 0.375rem;
+  width: 100%;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-minishop-field__action {
+  flex: 0 0 auto;
+  align-self: center;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-minishop-multiselect.p-multiselect,
+body .p-dialog.bannerpro-form-dialog .bannerpro-minishop-multiselect.p-multiselect,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-product-multiselect.p-multiselect {
+  width: 100%;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-minishop-multiselect .p-multiselect-dropdown,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-product-multiselect .p-multiselect-dropdown {
+  color: var(--p-primary-700, var(--p-primary-color));
+}
+
+body .bannerpro-autocomplete-panel.p-autocomplete-overlay {
+  z-index: 1200;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-panel--stacked {
+  width: 100%;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-html-preview__frame {
+  min-height: 10rem;
+  border: 2px dashed color-mix(in srgb, var(--p-primary-color) 25%, var(--p-content-border-color));
+  border-radius: var(--p-border-radius-lg, 8px);
+  background: var(--p-content-background);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-html-preview__frame > .bannerpro-preview-iframe {
+  align-self: stretch;
+  width: 100%;
+  min-height: 10rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-html-preview__footer {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: var(--p-text-muted-color);
+  background: color-mix(in srgb, var(--p-primary-color) 6%, var(--p-content-background));
+  border-radius: var(--p-border-radius-md);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-html-preview__footer .pi {
+  margin-top: 0.1rem;
+  color: var(--p-primary-600, var(--p-primary-color));
+  flex-shrink: 0;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-tabs .p-tabpanels {
+  padding-top: 1.25rem;
+  margin-top: 0.125rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-section-card + .bannerpro-form-section-card {
+  margin-top: 0;
+}
+
+@media (max-width: 640px) {
+  .bannerpro-form-content-grid,
+  body .p-dialog.bannerpro-ad-dialog .bannerpro-form-content-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bannerpro-image-fields,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-image-fields {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-positions-multiselect,
+body .p-dialog.bannerpro-form-dialog .bannerpro-positions-multiselect {
+  width: 100%;
+}
+
+/* Dialog scroll + footer */
+.vueApp .bannerpro-form-dialog.p-dialog,
+body .p-dialog.bannerpro-form-dialog,
+body .p-dialog.bannerpro-ad-dialog {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+body .p-dialog.bannerpro-form-dialog--wide {
+  width: min(95vw, 52rem) !important;
+}
+
+.vueApp .bannerpro-form-dialog .p-dialog-header,
+body .p-dialog.bannerpro-form-dialog .p-dialog-header,
+body .p-dialog.bannerpro-ad-dialog .p-dialog-header {
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--p-content-border-color);
+  background: color-mix(in srgb, var(--p-primary-color) 4%, var(--p-content-background));
+}
+
+body .p-dialog.bannerpro-ad-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 700;
+}
+
+.vueApp .bannerpro-form-dialog .bannerpro-dialog-content,
+.vueApp .bannerpro-form-dialog .p-dialog-content,
+body .p-dialog.bannerpro-form-dialog .bannerpro-dialog-content,
+body .p-dialog.bannerpro-form-dialog .p-dialog-content,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-dialog-content,
+body .p-dialog.bannerpro-ad-dialog .p-dialog-content {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 1rem 1.25rem;
+  box-sizing: border-box;
+}
+
+.vueApp .bannerpro-form-dialog .bannerpro-dialog-footer,
+.vueApp .bannerpro-form-dialog .p-dialog-footer,
+body .p-dialog.bannerpro-form-dialog .bannerpro-dialog-footer,
+body .p-dialog.bannerpro-form-dialog .p-dialog-footer,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-dialog-footer,
+body .p-dialog.bannerpro-ad-dialog .p-dialog-footer {
+  flex-shrink: 0;
+  margin: 0;
+  padding: 0.875rem 1.25rem;
+  border-top: 1px solid var(--p-content-border-color);
+  background: color-mix(in srgb, var(--p-primary-color) 3%, var(--p-content-background));
+  box-sizing: border-box;
+  gap: 0.5rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-row--dates .bannerpro-form-field {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-datepicker-field.p-datepicker,
+body .p-dialog.bannerpro-form-dialog .bannerpro-datepicker-field.p-datepicker {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-datepicker-field .p-datepicker-input-icon,
+body .p-dialog.bannerpro-form-dialog .bannerpro-datepicker-field .p-datepicker-input-icon {
+  color: var(--p-text-muted-color);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-presets,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-presets {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin-bottom: 0.75rem;
+  padding: 0.1875rem;
+  border: 1px solid var(--p-content-border-color);
+  border-radius: var(--p-border-radius-lg, 8px);
+  background: var(--p-content-background);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-preset,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-preset {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0.4375rem 0.875rem;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: var(--p-text-muted-color);
+  background: transparent;
+  border-radius: calc(var(--p-border-radius-lg, 8px) - 2px);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+  white-space: nowrap;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-preset:hover,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-preset:hover {
+  color: var(--p-text-color);
+  background: color-mix(in srgb, var(--p-primary-color) 6%, var(--p-content-background));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-preset--active,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-preset--active {
+  color: var(--p-primary-700, var(--p-primary-color));
+  font-weight: 600;
+  background: color-mix(in srgb, var(--p-primary-color) 12%, var(--p-content-background));
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--p-primary-color) 18%, transparent);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-preset:focus-visible,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-preset:focus-visible {
+  outline: 2px solid var(--p-primary-color);
+  outline-offset: 1px;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  padding: 0.75rem 0.875rem;
+  border-radius: var(--p-border-radius-md, 6px);
+  border: 1px solid var(--p-content-border-color);
+  background: var(--p-content-background);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status--active,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status--active {
+  border-color: color-mix(in srgb, var(--p-green-500, #22c55e) 35%, var(--p-content-border-color));
+  background: color-mix(in srgb, var(--p-green-500, #22c55e) 8%, var(--p-content-background));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status--active .pi,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status--active .pi {
+  color: var(--p-green-600, #16a34a);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status--inactive,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status--inactive {
+  border-color: color-mix(in srgb, var(--p-orange-500, #f97316) 30%, var(--p-content-border-color));
+  background: color-mix(in srgb, var(--p-orange-500, #f97316) 7%, var(--p-content-background));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status--inactive .pi,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status--inactive .pi {
+  color: var(--p-orange-600, #ea580c);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status .pi,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status .pi {
+  flex: 0 0 auto;
+  margin-top: 0.125rem;
+  font-size: 1.125rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status__body,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status__title,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--p-text-color);
+  line-height: 1.35;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-schedule-status__hint,
+body .p-dialog.bannerpro-form-dialog .bannerpro-schedule-status__hint {
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--p-text-muted-color);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field--schedule > label:first-child {
+  margin-bottom: 0.25rem;
+}
+
+body .bannerpro-datepicker-panel.p-datepicker-panel,
+body .bannerpro-multiselect-panel.p-multiselect-overlay {
+  z-index: 1200;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-field--product {
+  overflow: visible;
+  position: relative;
+  z-index: 2;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-product-multiselect-panel.p-multiselect-overlay,
+body .bannerpro-product-multiselect-panel.p-multiselect-overlay {
+  z-index: 1201;
+}
+
+body .p-toast {
+  z-index: 20000;
+}
+
+.bannerpro-preview-panel,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-panel {
+  margin-bottom: 0;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-image-preview {
+  width: 100%;
+  min-height: 12rem;
+  max-height: 16rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed color-mix(in srgb, var(--p-primary-color) 25%, var(--p-content-border-color));
+  border-radius: var(--p-border-radius-lg, 8px);
+  background: color-mix(in srgb, var(--p-primary-color) 5%, var(--p-content-hover-background));
+  overflow: hidden;
+  padding: 0.75rem;
+  box-sizing: border-box;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-img {
+  max-width: 100%;
+  max-height: 15rem;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--p-text-muted-color);
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 1rem;
+  width: 100%;
+  min-height: inherit;
+  box-sizing: border-box;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-empty__icon {
+  font-size: 1.75rem;
+  color: color-mix(in srgb, var(--p-primary-color) 45%, var(--p-text-muted-color));
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--p-primary-700, var(--p-primary-color));
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+  padding-left: 0.625rem;
+  border-left: 3px solid var(--p-primary-color);
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-section-label + .bannerpro-form-field,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-section-label + .bannerpro-form-content-grid {
+  margin-top: 0.35rem;
+}
+
+body .p-dialog.bannerpro-ad-dialog .bannerpro-form-section-label:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.bannerpro-preview-iframe,
+body .p-dialog.bannerpro-ad-dialog .bannerpro-preview-iframe {
+  width: 100%;
+  min-height: 10rem;
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+  background: var(--p-content-background);
+  display: block;
+}
+
+.bannerpro-audit-payload {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-width: 24rem;
+}
+
+body .p-dialog.bannerpro-template-picker .bannerpro-template-grid,
+.vueApp .bannerpro-template-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--bp-space-3);
+}
+
+@media (min-width: 640px) {
+  body .p-dialog.bannerpro-template-picker .bannerpro-template-grid,
+  .vueApp .bannerpro-template-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+body .p-dialog.bannerpro-template-picker .bannerpro-template-card.p-card,
+.vueApp .bannerpro-template-card.p-card {
+  cursor: pointer;
+  border: 1px solid var(--p-content-border-color);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+body .p-dialog.bannerpro-template-picker .bannerpro-template-card.p-card:hover,
+.vueApp .bannerpro-template-card.p-card:hover {
+  border-color: var(--p-primary-200, var(--p-primary-color));
+}
+
+body .p-dialog.bannerpro-template-picker .bannerpro-template-card--selected.p-card,
+.vueApp .bannerpro-template-card--selected.p-card {
+  border-color: var(--p-primary-color);
+  background: color-mix(in srgb, var(--p-primary-color) 8%, var(--p-content-background));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--p-primary-color) 35%, transparent);
+}
+
+/* Settings form */
+.vueApp .bannerpro-settings-form {
+  max-width: 40rem;
+  gap: var(--bp-space-3);
+}
+
+.vueApp .bannerpro-settings-form .field label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--p-text-muted-color);
+}
+
+.vueApp .bannerpro-settings-form .field small {
+  display: block;
+  margin-top: var(--bp-space-1);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--p-text-muted-color);
+}
+
+/* DataTable — clean striped rows without gridlines */
+.vueApp .bannerpro-datatable-shell .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background: color-mix(in srgb, var(--p-content-hover-background) 50%, transparent);
+}
+
+/* Dark mode */
+.modx-dark-mode #bannerpro-mgr-app.vueApp {
+  --bp-surface-page: color-mix(in srgb, var(--p-primary-color) 6%, var(--p-surface-900, #18181b));
+  --bp-surface-tint: color-mix(in srgb, var(--p-primary-color) 10%, var(--p-content-background));
+  --bp-panel-border: color-mix(in srgb, var(--p-primary-color) 20%, var(--p-content-border-color));
+}
+
+.modx-dark-mode .vueApp .bannerpro-empty-state__icon-wrap {
+  background: color-mix(in srgb, var(--p-primary-color) 18%, var(--p-content-background));
+}
+
+.modx-dark-mode .vueApp .bannerpro-overview-widget.p-card,
+.modx-dark-mode .vueApp .bannerpro-stat-card.p-card,
+.modx-dark-mode .vueApp .bannerpro-chart-panel,
+.modx-dark-mode .vueApp .bannerpro-funnel-chart {
+  border-color: var(--p-content-border-color);
+  background: var(--p-content-background);
+}

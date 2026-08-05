@@ -1,2 +1,4 @@
 .idea
-core/packages/
+.DS_Store
+node_modules/
+core/packages/*.transport.zip

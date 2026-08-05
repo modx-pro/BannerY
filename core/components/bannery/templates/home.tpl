@@ -1,1 +1,0 @@
-<div id="bannery-panel-home-div"></div>
